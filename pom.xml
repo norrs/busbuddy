@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2011 BusBuddy (Roy Sindre Norangshol)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <groupId>no.norrs.busbuddy</groupId>
+    <artifactId>platform</artifactId>
+    <name>BusBuddy :: Platform</name>
+    <version>1.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <developers>
+        <developer>
+            <id>norrs</id>
+            <name>Roy Sindre Norangshol</name>
+            <email>busbuddy@norrs.no</email>
+            <organization>NORRS</organization>
+            <organizationUrl>http://www.norrs.no</organizationUrl>
+            <roles>
+                <role>Project leader</role>
+            </roles>
+            <timezone>CEST</timezone>
+            <url>http://www.roysindre.no</url>
+        </developer>
+    </developers>
+
+
+    <properties>
+        <cxf.version>2.4.0</cxf.version>
+        <jersey.version>1.3</jersey.version>
+        <jetty.version>6.1.10</jetty.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <!--    <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh-external</artifactId>
+                        <version>1.0-beta-7</version>
+                    </dependency>
+                </dependencies>
+            </plugin>-->
+        </plugins>
+    </build>
+
+    <modules>
+        <module>public-api</module>
+        <module>api</module>
+        <module>service</module>
+        <module>busbuddy-html5</module>
+    </modules>
+
+
+    <scm>
+        <connection>scm:git:git://github.com/norrs/busbuddy.git</connection>
+        <url>scm:git:git://github.com/norrs/busbuddy.git</url>
+    </scm>
+
+    <distributionManagement>
+        <!-- <repository>
+            <id>orsta-scp</id>
+            <name>norrs orsta home</name>
+            <url>scp://orsta.norrs.no/home/rockj/repo</url>
+        </repository>-->
+        <repository>
+            <id>local-pandora</id>
+            <name>norrs personal workstation - pandora</name>
+            <url>file:///home/rockj/repo</url>
+        </repository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>glassfish-maven2-repository.dev.java.net</id>
+            <name>Java.net Maven 2 Repository for GlassFish</name>
+            <url>http://download.java.net/maven/glassfish/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Maven 2 Repository</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>maven-repository.dev.java.net</id>
+            <name>Java.net Maven 1 Repository (legacy)</name>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </pluginRepository>
+        <pluginRepository>
+            <id>maven-repository.dev.java.net</id>
+            <name>Java.net Maven 1 Repository (legacy)</name>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

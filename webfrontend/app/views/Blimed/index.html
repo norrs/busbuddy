@@ -1,0 +1,71 @@
+#{extends 'main.html' /}
+#{set title:'BusBuddy API' /}
+
+<!--
+  ~ Copyright 2011 BusBuddy (Roy Sindre Norangshol)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<body>
+<div id="site-wrapper">
+
+    #{header /}
+
+
+    <div class="main" id="main-two-columns">
+
+        <div class="left" id="main-content">
+            <div class="section">
+                <div class="section-title label label-blue">
+                    <h2>Bli med!</h2>
+                </div>
+
+                <div class="section-content">
+                    <p>Har du et genialt konsept? En genial idé? Vi har dataene du behøver, ikke nøl, lag en genial
+                        tjeneste og publiser den for resten av befolkningen i Trondheim! Vis AtB og resten av samfunnet
+                        hvor bra det er med åpne data, når kreative sjeler setter seg ned for å lage applikasjoner!</p>
+                </div>
+
+
+            </div>
+
+            <div class="section">
+                <div class="section-title label label-orange">
+                    <h2>Hvordan får jeg tilgang?</h2>
+                </div>
+                <div class="section-content">
+                    <p>Hvis du mangler og ønsker en API-key, kontakt busbuddy 'at' norrs.no. Inkluder
+                        applikasjonsnavnet, link til applikasjonen og dens kontaktinformasjon og sett emne til 'Request
+                        AtB Real Time API-key - appname'</p></div>
+            </div>
+
+
+        </div>
+
+
+        <div class="right sidebar" id="sidebar">
+
+            #{sidebar /}
+
+        </div>
+
+        <div class="clearer">&nbsp;</div>
+
+    </div>
+
+    #{footer /}
+
+</div>
+
+</body>

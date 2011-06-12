@@ -1,0 +1,142 @@
+#{extends 'main.html' /}
+#{set title:'BusBuddy API' /}
+
+#{set "moreHead"}
+<!--
+  ~ Copyright 2011 BusBuddy (Roy Sindre Norangshol)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<script type="text/javascript">
+    #{verbatim}
+    ${usage}
+    #{/verbatim}
+</script>
+#{/set}
+
+<body onload="init()">
+<div id="site-wrapper">
+
+    #{header /}
+
+    <div id="splash">
+
+        <div class="col3 left">
+
+            <h2 class="label label-green">Kort introduksjon om hva dette handler om</h2>
+
+            <p class="quiet large">Sanntidsdata</p>
+
+
+            <p>AtB har inngått en avtale med Swarco Norge AS vedrørende kjøp og vedlikehold av system for
+                sanntidsinformasjon og signalprioritering av kollektivtrafikken i Trondheimsregionen (SISST). Sanntid er
+                et samarbeidsprosjekt mellom AtB, Sør-Trøndelag fylkeskommune, Statens vegvesen og Trondheim
+                kommune.</p>
+
+            <!--<p><a href="#" class="more">Learn more &raquo;</a></p> -->
+
+        </div>
+
+        <div class="col3-mid left">
+
+            <h2 class="label label-orange">Er dette en offisiell tjeneste av AtB?</h2>
+
+            <p class="quiet large">Er denne tjenesten godkjent og støttet av AtB, Sør-Trøndelag fylkeskommune, Statens
+                vegvesen og Trondheim kommune?</p>
+
+
+            <p>Dette API-et har ingen offisiell tilknytning til noen av de ovenstående. Tjenesten er utviklet av egen
+                interesse, og skaper et bedre tilbud for alle som lager buss-applikasjoner, som igjen fører til en bedre
+                opplevelse for brukerne.</p>
+
+            <p>Dette API-et vil forbli gratis og tilgjengelig så lenge AtB <span class="orange">ikke stenger døren for oss.</span>
+            </p>
+
+        </div>
+
+        <div class="col3 right">
+            <h2 class="label label-blue">Oppetid og Disclaimer</h2>
+
+            <p class="quiet large">Best effort, ingen garantier.</p>
+
+            <p>Vi tar sikte på å vise gyldig, offisielle AtB-data. AtBs datasystemer er under utbygging og vår
+                data kan derfor inneholde feil! Vi gir derfor ingen garantier, og brukere benytter vårt API-et
+                på egen risiko. Vær vennlig å rapporter eventuelle feil.</p>
+
+            <!-- <p><a href="#" class="more">Learn more &raquo;</a></p> -->
+
+        </div>
+
+        <div class="clearer">&nbsp;</div>
+
+    </div>
+
+
+    <div class="main" id="main-two-columns">
+
+        <div class="left" id="main-content">
+            <div class="section">
+                <div class="section-title label label-blue">
+                    <h2>API kall</h2>
+                </div>
+                <div class="section-content">
+                    <div id="container" style="width: 628px; height: 400px; margin: 0 auto"></div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <div class="section-title label label-green">
+                    <h2>Hvorfor lage et separat API?</h2>
+                </div>
+                <div class="section-content">
+                    <p>Systemet som er eksponert over internett av AtB har rar oppbygging og presentasjon av dataene.
+                        Det er bygd på tunge SOAP-meldinger som ikke er ideélt for mobile platformer, og i tillegg har
+                        også de originale dataene italienske identifikatorer, noe som gjør det vanskeligere å forstå for
+                        oss nordmenn. Dataene er derfor oversatt til engelskk, bearbeidet og representert i JSON-format
+                        som er et lettere, mer forståelig format, og det passer bedre for mobile enheter.</p>
+
+                    <p>Sist, men ikke minst, bør offentlig data være åpent og fritt for alle.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title label label-orange">
+                    <h2>Hvordan får jeg tilgang?</h2>
+                </div>
+                <div class="section-content">
+                    <p>Hvis du mangler og ønsker en API-key, kontakt busbuddy 'at' norrs.no. Inkluder
+                        applikasjonsnavnet, link til applikasjonen og dens kontaktinformasjon og sett emne til 'Request
+                        AtB Real Time API-key - appname'</p></div>
+            </div>
+
+
+        </div>
+
+        <div class="right sidebar" id="sidebar">
+
+            #{sidebar /}
+
+        </div>
+
+        <div class="clearer">&nbsp;</div>
+
+    </div>
+
+    #{footer /}
+
+</div>
+
+</body>
+

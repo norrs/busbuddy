@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:'BusBuddy API' /}
+
+<!--
+  ~ Copyright 2011 BusBuddy (Roy Sindre Norangshol)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<body>
+<div id="site-wrapper">
+
+    #{header /}
+
+
+    <div class="main" id="main-two-columns">
+
+        <div class="left" id="main-content">
+            <div class="section">
+                <div class="section-title label label-blue">
+                    <h2>Applikasjoner som bruker BusBuddy API</h2>
+                </div>
+
+                <div class="section-content">
+                    <ul class="nice-list">
+
+                        #{list apps, as : 'app'}
+                            <li>${app.appName}  <span class="quiet">-#{if app.person.homepage != null }<a href="${app.person.homepage}">${app.person.firstName} ${app.person.lastName}</a>#{/if} #{else}${app.person.firstName} ${app.person.lastName}#{/else}</span><span style="float:right">${app.type}</span></li>
+                        #{/list}
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="right sidebar" id="sidebar">
+
+            #{sidebar /}
+
+        </div>
+
+        <div class="clearer">&nbsp;</div>
+
+    </div>
+
+    #{footer /}
+
+</div>
+
+</body>

@@ -1,0 +1,46 @@
+/*
+ * Copyright 2011 BusBuddy (Roy Sindre Norangshol)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package no.norrs.busbuddy.pub.api.model;
+
+/**
+ * Roy Sindre Norangshol
+ * Date: 5/27/11
+ * Time: 4:08 PM
+ */
+public enum OracleServiceEnum {
+    ATB, BUSTUC_NTNU;
+
+    private OracleServiceEnum self;
+    private String[] endpoints = {
+            "http://www.atb.no/xmlhttprequest.php?service=routeplannerOracle.getOracleAnswer&question=%s",
+            "http://www.idi.ntnu.no/~tagore/cgi-bin/busstuc/busq.cgi?ques=%s"};
+
+    OracleServiceEnum() {
+        this.self = this;
+    };
+
+    public String getEndpoint() {
+        switch(self) {
+            case ATB: return endpoints[0];
+            case BUSTUC_NTNU: return endpoints[1];
+            default: throw new IllegalArgumentException("Invalid oracle service");
+        }
+    }
+
+
+
+}
