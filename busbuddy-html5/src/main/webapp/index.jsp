@@ -74,7 +74,7 @@
 	<script type="text/javascript">
 	var apikey = "82NV49lmavKaljw2";
 	//var apiHost = "http://localhost:8080/busbuddy";
-	var apiHost = "http://api.busbuddy.norrs.no:8080";
+	var apiHost = "http://api.busbuddy.no:8080";
 	var holdeplasser;
 	var markers;
 	var map;
