@@ -17,15 +17,14 @@ service$ mvn jetty:run
 # How to release
 
 Bump webfrontend/pom.xml to the release version your releasing manually & commit.
-Do normal mvn release goal in platform (root) and set the same same release version while prompted for it under prepare. When maven tags the repo with a tag, webfrontend project will get the correct dependencies when someone is checking out the tag. 
+Do normal mvn release goal in platform (root) and set the same same release version while prompted for it under prepare. When maven tags the repo with a tag, webfrontend project will get the correct dependencies when someone is checking out the tag.
+webfrontend$ play war --zip --%prod -o /tmp/api-webfrontend-1.1.4.war
+
 
 # Git note
 
 Make sure you dont commit the webfrontend/modules/crud , security modules for example
 tmp/generated files.
-
-
-
 
 # Example files
 
