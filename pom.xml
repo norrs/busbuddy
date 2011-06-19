@@ -15,8 +15,7 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
 
@@ -81,16 +80,12 @@
 
 
     <scm>
-        <connection>scm:git:git://github.com/norrs/busbuddy.git</connection>
-        <url>scm:git:git://github.com/norrs/busbuddy.git</url>
+        <developerConnection>scm:git:git@github.com:norrs/busbuddy.git</developerConnection>
+        <connection>scm:git:git@github.com:norrs/busbuddy.git</connection>
+        <url>scm:git:git@github.com:norrs/busbuddy.git</url>
     </scm>
 
     <distributionManagement>
-        <!-- <repository>
-            <id>orsta-scp</id>
-            <name>norrs orsta home</name>
-            <url>scp://orsta.norrs.no/home/rockj/repo</url>
-        </repository>-->
         <repository>
             <id>local-pandora</id>
             <name>norrs personal workstation - pandora</name>

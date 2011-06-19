@@ -101,7 +101,7 @@ public class SharedResources {
         List<String> referrer = headers.getRequestHeader("Referer");
         if (referrer != null && referrer.size() > 0) {
             String reffie = referrer.get(0);
-            if (reffie != null && reffie.startsWith("http://busbuddy.norrs.no"))
+            if (reffie != null && (reffie.startsWith("http://busbuddy.norrs.no") || reffie.startsWith("http://busbuddy.no")))
                 return true;
         }
         return false;
