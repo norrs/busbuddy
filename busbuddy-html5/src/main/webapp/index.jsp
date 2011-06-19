@@ -196,9 +196,9 @@
 <body onload="initialize()"> 
 	<img src="images/bb_100x100.png" alt="" id="busbuddy"> 
 	<div id="desc"> 
-		<h2>Om Busbuddy for web</h2> 
-		<p>Busbuddy for web er en webapplikasjon laget av <a href="http://trimn.net/">Tri M. Nguyen</a> som benytter seg av sanntidsdata-API fra <a href="http://api.busbuddy.norrs.no:8080/">busbuddy API @ norrs.no</a>.</p>
-		<p>Med Busbuddy får du informasjon om bussavgangene i Trondheim ved valgt holdeplass.</p> 
+		<h2>Om BusBuddy for web</h2>
+		<p>Busbuddy for web er en webapplikasjon laget av <a href="http://trimn.net/">Tri M. Nguyen</a> som benytter seg av sanntidsdata-API fra <a href="http://api.busbuddy.no:8080/">BusBuddy API</a>.</p>
+		<p>Med BusBuddy får du informasjon om bussavgangene i Trondheim ved valgt holdeplass.</p>
 	</div> 
 	<div id="map_canvas" style="width: 100%; height: 100%;"></div> 
 </body>

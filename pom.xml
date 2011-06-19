@@ -86,11 +86,6 @@
     </scm>
 
     <distributionManagement>
-        <!-- <repository>
-            <id>orsta-scp</id>
-            <name>norrs orsta home</name>
-            <url>scp://orsta.norrs.no/home/rockj/repo</url>
-        </repository>-->
         <repository>
             <id>local-pandora</id>
             <name>norrs personal workstation - pandora</name>
