@@ -85,7 +85,7 @@
                 x: -20 //center
             },
             subtitle: {
-                text: 'stats api.busbuddy.norrs.no',
+                text: 'stats api.busbuddy.no',
                 x: -20
             },
             xAxis:{
@@ -128,7 +128,7 @@
                 x: -20 //center
             },
             subtitle: {
-                text: 'stats api.busbuddy.norrs.no',
+                text: 'stats api.busbuddy.no',
                 x: -20
             },
             xAxis:{
@@ -169,7 +169,7 @@
                 x: -20 //center
             },
             subtitle: {
-                text: 'stats api.busbuddy.norrs.no',
+                text: 'stats api.busbuddy.no',
                 x: -20
             },
             xAxis:{
