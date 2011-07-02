@@ -20,7 +20,7 @@ package no.norrs.busbuddy.service.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
-import no.norrs.busbuddy.api.AtbSoapController;
+import no.norrs.busbuddy.api.AtbWebController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
 import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
@@ -48,7 +48,6 @@ import java.util.logging.Logger;
 @Path("/1.0")
 @Singleton
 public class AtbServiceVersion1Resource extends SharedResources {
-    private AtbSoapController soapService;
     private Gson gson;
 
 
@@ -60,13 +59,19 @@ public class AtbServiceVersion1Resource extends SharedResources {
     HttpHeaders headers;
     private ApiKeyLogDAO loggerDAO;
     private BusStopDAO busstopDAO;
+    private AtbWebController atbService;
 
 
     public AtbServiceVersion1Resource() throws IOException {
         super();
+/*
         Properties atbProperties = new Properties();
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
+*/
+        Properties atbWebProperties = new Properties();
+        atbWebProperties.load(getClass().getResourceAsStream("/atbweb.properties"));
+        atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));
 
         GsonBuilder builder = new GsonBuilder();
         gson = builder.serializeNulls()
@@ -137,11 +142,12 @@ public class AtbServiceVersion1Resource extends SharedResources {
             if (departureCache.containsKey(busStopId)) {
                 if (now.isBefore(departureCache.get(busStopId).getRequstTimestamp().plusMinutes(1))) {
                     container = departureCache.get(busStopId).getDepartureContainer();
+                    originalContainer = departureCache.get(busStopId).getOriginalContainerFromAtb();
                     Logger.getLogger(AtbServiceVersion1Resource.class.getName(), String.format("Cache hit on %s", busStopId));
                 }
             }
             if (container == null) {
-                originalContainer = soapService.getUserRealTimeForecast(busStopId);
+                originalContainer = atbService.getUserRealTimeForecast(busStopId);
                 container = originalContainer.convertToApi();
                 departureCache.put(busStopId, new DepartureCache(now, container, originalContainer));
             }
