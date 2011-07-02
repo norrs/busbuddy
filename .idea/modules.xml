@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/atb-realtime.iml" filepath="$PROJECT_DIR$/atb-realtime.iml" />
       <module fileurl="file://$PROJECT_DIR$/busbuddy-html5/busbuddy-html5.iml" filepath="$PROJECT_DIR$/busbuddy-html5/busbuddy-html5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webfrontend/busbuddyapi.iml" filepath="$PROJECT_DIR$/webfrontend/busbuddyapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/internal-tools/internal-tools.iml" filepath="$PROJECT_DIR$/internal-tools/internal-tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/public-api/public-api.iml" filepath="$PROJECT_DIR$/public-api/public-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
     </modules>

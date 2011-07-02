@@ -32,7 +32,7 @@ import java.net.MalformedURLException;
 /**
  * @author Roy Sindre Norangshol
  */
-public class AtbSoapController {
+public class AtbSoapController implements AtbController {
     WsAuthentication authentication = new WsAuthentication();
     private UserServicesSoap soap = null;
     private Gson gson;
@@ -57,10 +57,12 @@ public class AtbSoapController {
 
     }
 
+    @Override
     public BusStopForecastContainer getUserRealTimeForecast(int busStopId) {
         return getUserRealTimeForecastFromJson(soap.getUserRealTimeForecast(authentication, null, String.valueOf(busStopId)));
     }
 
+    @Override
     public BusListsContainer getAllBusStopsListInTrondheim() {
         return getBusStopsFromJson(soap.getBusStopsList(authentication));
     }

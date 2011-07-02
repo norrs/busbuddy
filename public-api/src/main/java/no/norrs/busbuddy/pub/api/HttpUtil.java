@@ -21,9 +21,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -31,6 +33,8 @@ import org.apache.http.params.HttpParams;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Roy Sindre Norangshol
@@ -40,6 +44,8 @@ import java.io.*;
  * Time: 4:33 PM
  */
 public class HttpUtil {
+
+    private static final String USER_AGENT = "BusBuddy/1.2";
 
     public static HttpResponse GET(String url) throws IOException, SSLException {
         return GET(null, url, null);
@@ -80,7 +86,7 @@ public class HttpUtil {
         HttpGet httpGet = new HttpGet(url);
 
         //  httpGet.addHeader("Accept", "application/json");
-        httpGet.addHeader("User-Agent", "BusBuddy/1.0");
+        httpGet.addHeader("User-Agent", USER_AGENT);
         if (apiKey != null) {
             httpGet.addHeader("X-norrs-busbuddy-apikey", apiKey);
         }
@@ -89,6 +95,22 @@ public class HttpUtil {
         return httpResponse;
 
 
+    }
+
+     public static HttpResponse POST(URL url, String payload) throws IOException, URISyntaxException {
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url.toURI());
+        post.addHeader("User-Agent", USER_AGENT);
+
+        StringEntity entity = new StringEntity(payload, "UTF-8");
+        entity.setContentType("application/json");
+        post.setEntity(entity);
+
+
+        HttpResponse response = httpClient.execute(post);
+
+        return response;
     }
 
 
