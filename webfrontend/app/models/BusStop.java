@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class BusStop extends Model {
     @Column(name = "name")
     public String name;
-    @Column(name = "name_abbreviation")
+    @Column(name = "name_abbreviation", nullable = true)
     public String abbreviationName;
-    @Column(name = "maintainer")
+    @Column(name = "maintainer", nullable = true)
     public String maintainer;
-    @Column(name = "location_id")
+    @Column(name = "location_id", nullable = true)
     public String location_id;
     @Column(name = "longitude")
     public double longitude;

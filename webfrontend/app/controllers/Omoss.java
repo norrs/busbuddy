@@ -28,7 +28,7 @@ public class Omoss extends Controller {
 
     public static void index() throws NoSuchAlgorithmException, SQLException {
 
-        //System.out.println(Security.createUser("rockj", "qacd2q86"));
+        //System.out.println(Security.createUser("tryll" ",fakeone"));
         render();
     }
 

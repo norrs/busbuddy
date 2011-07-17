@@ -30,8 +30,11 @@ public class Person extends Model {
     public String firstName;
     public String lastName;
     public String email;
+    @Column(nullable = true)
     public String username;
+    @Column(nullable = true)
     public String homepage;
+    @Column(nullable = true)
     public Integer access;
 
 
