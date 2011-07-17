@@ -26,7 +26,7 @@
 
     <groupId>no.norrs.busbuddy</groupId>
     <artifactId>webfrontend</artifactId>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <name>BusBuddy API Web Frontend</name>
     <description>Web Front end and help files for BusBuddy API</description>
 
@@ -34,12 +34,12 @@
         <dependency>
             <groupId>no.norrs.busbuddy</groupId>
             <artifactId>api</artifactId>
-            <version>1.1.7</version>
+            <version>1.1.8</version>
         </dependency>
         <dependency>
             <groupId>no.norrs.busbuddy</groupId>
             <artifactId>public-api</artifactId>
-            <version>1.1.7</version>
+            <version>1.1.8</version>
         </dependency>
         <dependency>
             <groupId>postgresql</groupId>
