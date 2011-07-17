@@ -37,6 +37,13 @@ public class Security extends Secure.Security {
     private final static int ITERATION_NUMBER = 1000;
 
 
+    static boolean check(String profile) {
+        if ("admin".equals(profile)) {
+            return Person.find("byUsername", connected()).<Person>first().isAdmin;
+        }
+        return false;
+    }
+
     /**
      * Authenticates the user with a given login and password
      * If password and/or login is null then always returns false.
