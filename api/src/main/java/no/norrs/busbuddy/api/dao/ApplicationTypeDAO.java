@@ -16,15 +16,19 @@
 
 package no.norrs.busbuddy.api.dao;
 
-import no.norrs.busbuddy.api.model.BusBuddyApiKey;
+
+
+import no.norrs.busbuddy.api.model.ApplicationType;
 
 import java.util.List;
 
 /**
+ * @todo Get rid of DAO's and simply use Play! in the future hopefully.
+ *
  * @author Roy Sindre Norangshol
  */
-public interface BusBuddyApiKeyDAO {
-    public void insert(BusBuddyApiKey apiKey);
-    public BusBuddyApiKey findByApiKey(String apiKey);
-    public List<BusBuddyApiKey> findAll();
+public interface ApplicationTypeDAO {
+    public ApplicationType findByApplicationType(String applicationType);
+    public List<ApplicationType> findAll();
+
 }

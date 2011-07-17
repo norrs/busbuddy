@@ -18,6 +18,7 @@ package controllers;
 
 
 import models.Credential;
+import models.Person;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -36,6 +37,15 @@ import java.util.List;
 public class Security extends Secure.Security {
     private final static int ITERATION_NUMBER = 1000;
 
+
+    static boolean check(String profile) {
+        if ("moderator".equals(profile)) {
+            return Person.find("byUsername", connected()).<Person>first().access > 0;
+        } else if ("admin".equals(profile)) {
+            return Person.find("byUsername", connected()).<Person>first().access > 1;
+        }
+        return false;
+    }
 
     /**
      * Authenticates the user with a given login and password

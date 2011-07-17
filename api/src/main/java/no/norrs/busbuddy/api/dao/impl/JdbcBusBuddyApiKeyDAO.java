@@ -17,6 +17,7 @@
 package no.norrs.busbuddy.api.dao.impl;
 
 import no.norrs.busbuddy.api.dao.BusBuddyApiKeyDAO;
+import no.norrs.busbuddy.api.model.ApplicationType;
 import no.norrs.busbuddy.api.model.BusBuddyApiKey;
 
 import javax.sql.DataSource;
@@ -63,7 +64,7 @@ public class JdbcBusBuddyApiKeyDAO implements BusBuddyApiKeyDAO {
     }
 
     public BusBuddyApiKey findByApiKey(String apiKey) {
-        String query = "SELECT api_key, app_name, contact_name , contact_email FROM apikeys WHERE api_key = ?";
+        String query = "SELECT a.api_key, a.app_name, a.contact_name , a.contact_email, at.type FROM apikeys a LEFT JOIN applicationtype at ON (a.type_id = at.id) WHERE a.api_key = ?";
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -76,6 +77,7 @@ public class JdbcBusBuddyApiKeyDAO implements BusBuddyApiKeyDAO {
                 result = new BusBuddyApiKey(resultSet.getString("api_key"), resultSet.getString("app_name"));
                 result.setContactName(resultSet.getString("contact_name"));
                 result.setContactEmail(resultSet.getString("contact_email"));
+                result.setApplicationType(new ApplicationType(resultSet.getString("type")));
 
             }
             resultSet.close();
@@ -97,43 +99,10 @@ public class JdbcBusBuddyApiKeyDAO implements BusBuddyApiKeyDAO {
         }
     }
 
-    public BusBuddyApiKey findByAppName(String appName) {
-        String query = "SELECT api_key, app_name, contact_name , contact_email FROM apikeys WHERE api_name = ?";
-        Connection connection = null;
-        try {
-            connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, appName);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            BusBuddyApiKey result = null;
-            if (resultSet.next()) {
-                result = new BusBuddyApiKey(resultSet.getString("api_key"), resultSet.getString("app_name"));
-                result.setContactName(resultSet.getString("contact_name"));
-                result.setContactEmail(resultSet.getString("contact_email"));
-
-            }
-            resultSet.close();
-            preparedStatement.close();
-            return result;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (connection != null) {
-
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    // ignore
-                }
-
-            }
-        }
-    }
 
     public List<BusBuddyApiKey> findAll() {
-        String query = "SELECT api_key, app_name, contact_name , contact_email FROM apikeys ORDER BY app_name";
+        String query = "SELECT a.api_key, a.app_name, a.contact_name , a.contact_email, at.type FROM apikeys a LEFT JOIN applicationtype at ON (a.type_id = at.id) ORDER BY a.app_name";
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -145,6 +114,7 @@ public class JdbcBusBuddyApiKeyDAO implements BusBuddyApiKeyDAO {
                 BusBuddyApiKey result = new BusBuddyApiKey(resultSet.getString("api_key"), resultSet.getString("app_name"));
                 result.setContactName(resultSet.getString("contact_name"));
                 result.setContactEmail(resultSet.getString("contact_email"));
+                result.setApplicationType(new ApplicationType(resultSet.getString("type")));
                 results.add(result);
             }
             resultSet.close();
