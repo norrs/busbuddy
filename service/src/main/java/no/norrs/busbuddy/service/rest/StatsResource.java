@@ -116,7 +116,7 @@ public class StatsResource extends SharedResources {
 
             Map<String, List<HitsPerDay>> hitsForAllApiKeys = new HashMap<String, List<HitsPerDay>>();
             for (BusBuddyApiKey apiKey : apiKeys) {
-                hitsForAllApiKeys.put(apiKey.getAppName(), loggerDAO.getHitCountByApiKeyFor30Days(apiKey.getApiKey()));
+                hitsForAllApiKeys.put(String.format("%s (%s)", apiKey.getAppName(), apiKey.getApplicationType().getType()), loggerDAO.getHitCountByApiKeyFor30Days(apiKey.getApiKey()));
             }
             String entity;
             if (callbackQueryParam != null) {

@@ -14,17 +14,34 @@
  * limitations under the License.
  */
 
-package no.norrs.busbuddy.api.dao;
-
-import no.norrs.busbuddy.api.model.BusBuddyApiKey;
-
-import java.util.List;
+package no.norrs.busbuddy.api.model;
 
 /**
  * @author Roy Sindre Norangshol
  */
-public interface BusBuddyApiKeyDAO {
-    public void insert(BusBuddyApiKey apiKey);
-    public BusBuddyApiKey findByApiKey(String apiKey);
-    public List<BusBuddyApiKey> findAll();
+public class ApplicationType {
+     private String type;
+
+    public ApplicationType() {
+
+    }
+
+    public ApplicationType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationType{" +
+                "type='" + type + '\'' +
+                '}';
+    }
 }

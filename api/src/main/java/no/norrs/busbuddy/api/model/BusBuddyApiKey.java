@@ -24,6 +24,7 @@ public class BusBuddyApiKey {
     private String appName;
     private String contactName;
     private String contactEmail;
+    private ApplicationType applicationType;
 
     public BusBuddyApiKey() {
     }
@@ -31,6 +32,12 @@ public class BusBuddyApiKey {
     public BusBuddyApiKey(String apiKey, String appName) {
         this.apiKey = apiKey;
         this.appName = appName;
+    }
+
+    public BusBuddyApiKey(String apiKey, String appName, ApplicationType applicationType) {
+        this.apiKey = apiKey;
+        this.appName = appName;
+        this.applicationType = applicationType;
     }
 
     public String getApiKey() {
@@ -65,6 +72,14 @@ public class BusBuddyApiKey {
         this.contactEmail = contactEmail;
     }
 
+    public ApplicationType getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(ApplicationType applicationType) {
+        this.applicationType = applicationType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +104,7 @@ public class BusBuddyApiKey {
                 ", appName='" + appName + '\'' +
                 ", contactName='" + contactName + '\'' +
                 ", contactEmail='" + contactEmail + '\'' +
+                ", applicationType=" + applicationType +
                 '}';
     }
 }
