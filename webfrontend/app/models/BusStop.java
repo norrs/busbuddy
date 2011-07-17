@@ -5,7 +5,6 @@ import play.db.jpa.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -27,7 +26,7 @@ public class BusStop extends Model {
     public double longitude;
     @Column(name = "latitude")
     public double latitude;
-    @Column(name = "id")
+    @Column(name = "id", insertable = false, updatable = false)
     public int busStopId;
 
     public String toString() {

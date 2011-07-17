@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 
 @Path("/1.0")
@@ -143,7 +142,7 @@ public class AtbServiceVersion1Resource extends SharedResources {
                 if (now.isBefore(departureCache.get(busStopId).getRequstTimestamp().plusMinutes(1))) {
                     container = departureCache.get(busStopId).getDepartureContainer();
                     originalContainer = departureCache.get(busStopId).getOriginalContainerFromAtb();
-                    Logger.getLogger(AtbServiceVersion1Resource.class.getName(), String.format("Cache hit on %s", busStopId));
+                    //Logger.getLogger(AtbServiceVersion1Resource.class.getName(), String.format("Cache hit on %s", busStopId));
                 }
             }
             if (container == null) {
