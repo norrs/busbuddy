@@ -21,7 +21,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <import resource="database/Spring-Datasource.xml"/>
     <import resource="apikeylog/Spring-ApiKeyLog.xml"/>
-    <import resource="appliactiontype/Spring-ApplicationType.xml"/>
+    <import resource="applicationtype/Spring-ApplicationType.xml"/>
     <import resource="busbuddyapikey/Spring-BusBuddyApiKey.xml"/>
     <import resource="busstop/Spring-BusStop.xml"/>
 
