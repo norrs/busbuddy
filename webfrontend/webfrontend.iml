@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Play" level="application" />
     <orderEntry type="library" name="Maven: no.norrs.busbuddy:api:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: no.norrs.busbuddy:public-api:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-rt-transports-http:2.4.0" level="project" />

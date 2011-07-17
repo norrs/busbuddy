@@ -40,7 +40,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
 
 
     public void insertOrUpdate(BusStop busStop) {
-        String insertSQL = "INSERT INTO busstop(busstop_id, name, name_abbreviation, maintainer, location_id, longitude, latitude) VALUES (?,?,?,?,?,?,?)";
+        String insertSQL = "INSERT INTO busstop(id, name, name_abbreviation, maintainer, location_id, longitude, latitude) VALUES (?,?,?,?,?,?,?)";
         Connection connection = null;
         try {
             BusStop busStopFromDb = findBusStopById(busStop.getBusStopId());
@@ -79,7 +79,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
 
 
     public void update(BusStop busStop) {
-        String updateSQL = "UPDATE busstop SET name = ?, name_abbreviation = ?, maintainer = ?, longitude = ?, latitude = ?, location_id = ? WHERE busstop_id = ?";
+        String updateSQL = "UPDATE busstop SET name = ?, name_abbreviation = ?, maintainer = ?, longitude = ?, latitude = ?, location_id = ? WHERE id = ?";
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -109,7 +109,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
 
 
     public BusStop findBusStopById(int busStopId) {
-        String querySQL = "SELECT busstop_id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop WHERE busstop_id = ?";
+        String querySQL = "SELECT id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop WHERE id = ?";
 
         Connection connection = null;
         try {
@@ -120,7 +120,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
             BusStop result = null;
             if (resultSet.next()) {
                 result = new BusStop(
-                        resultSet.getInt("busstop_id"),
+                        resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("name_abbreviation"),
                         resultSet.getString("maintainer"),
@@ -147,7 +147,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
     }
 
     public List<BusStop> findAll() {
-        String querySQL = "SELECT busstop_id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop";
+        String querySQL = "SELECT id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop";
 
         Connection connection = null;
         try {
@@ -157,7 +157,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
             List<BusStop> result = new ArrayList<BusStop>();
             while (resultSet.next()) {
                 result.add(new BusStop(
-                        resultSet.getInt("busstop_id"),
+                        resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("name_abbreviation"),
                         resultSet.getString("maintainer"),

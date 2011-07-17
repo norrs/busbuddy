@@ -1,12 +1,21 @@
 package models;
 
+
+import play.db.jpa.Model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+
 /**
  * @author Roy Sindre Norangshol
  */
 @Entity
 @Table(name = "busstop")
 public class BusStop extends Model {
-     @Column(name = "name")
+    @Column(name = "name")
     public String name;
     @Column(name = "name_abbreviation")
     public String abbreviationName;
@@ -16,9 +25,9 @@ public class BusStop extends Model {
     public String location_id;
     @Column(name = "longitude")
     public double longitude;
-    @Column(name= "latitude")
+    @Column(name = "latitude")
     public double latitude;
-    @Column(name="busstop_id")
+    @Column(name = "id")
     public int busStopId;
 
     public String toString() {

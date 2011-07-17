@@ -38,6 +38,9 @@ public class Application extends Controller {
 
     private static String loadAPIUsageData() throws IOException {
         apiHost = (String) Play.configuration.get("apiHost");
+        if (apiHost == null)
+            return "/** Missing apiHost in Play Configuration file */";
+
         InputStream input = null;
         try {
             input = new URL(apiHost + "/api/stats/total/lastdays/30").openStream();
@@ -47,5 +50,6 @@ public class Application extends Controller {
                 input.close();
 
         }
+
     }
 }

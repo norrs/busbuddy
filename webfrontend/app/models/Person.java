@@ -19,17 +19,21 @@ package models;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author Roy Sindre Norangshol
  */
 @Entity
+@Table(name = "person")
 public class Person extends Model {
     public String firstName;
     public String lastName;
     public String email;
     public String username;
     public String homepage;
+    public Integer access;
+
 
     public String toString() {
         return String.format("%s %s", firstName, lastName);

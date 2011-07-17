@@ -18,6 +18,7 @@ package controllers;
 
 
 import models.Credential;
+import models.Person;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -38,8 +39,10 @@ public class Security extends Secure.Security {
 
 
     static boolean check(String profile) {
-        if ("admin".equals(profile)) {
-            return Person.find("byUsername", connected()).<Person>first().isAdmin;
+        if ("moderator".equals(profile)) {
+            return Person.find("byUsername", connected()).<Person>first().access > 0;
+        } else if ("admin".equals(profile)) {
+            return Person.find("byUsername", connected()).<Person>first().access > 1;
         }
         return false;
     }
