@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/atb-realtime.iml" filepath="$PROJECT_DIR$/atb-realtime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/busbuddy api.iml" filepath="$PROJECT_DIR$/busbuddy api.iml" />
       <module fileurl="file://$PROJECT_DIR$/busbuddy-html5/busbuddy-html5.iml" filepath="$PROJECT_DIR$/busbuddy-html5/busbuddy-html5.iml" />
       <module fileurl="file://$PROJECT_DIR$/internal-tools/internal-tools.iml" filepath="$PROJECT_DIR$/internal-tools/internal-tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/public-api/public-api.iml" filepath="$PROJECT_DIR$/public-api/public-api.iml" />

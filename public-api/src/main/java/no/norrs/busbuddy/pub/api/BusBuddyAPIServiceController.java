@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import no.norrs.busbuddy.pub.api.model.BusStopContainer;
 import no.norrs.busbuddy.pub.api.model.DepartureContainer;
+import no.norrs.busbuddy.pub.api.model.Oracle;
 import org.apache.http.HttpResponse;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
@@ -107,6 +108,18 @@ public class BusBuddyAPIServiceController {
         HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, GET_BUS_STOPS));
         if (response.getStatusLine().getStatusCode() == 200) {
             return gson.fromJson(HttpUtil.readString(response.getEntity().getContent()), BusStopContainer.class);
+        }
+        return null;
+    }
+
+    public Oracle askOracle(Oracle question) throws IOException {
+        if (question.getQuestion() != null && !question.getQuestion().trim().equalsIgnoreCase("")) {
+            HttpResponse response = HttpUtil.GET(apiKey, question.getEndpointWithQuestion());
+            if (response.getStatusLine().getStatusCode() == 200) {
+                question.setAnswer(HttpUtil.readString(response.getEntity().getContent()));
+                question.setTimestamp(new LocalDateTime());
+                return question; // with answer
+            }
         }
         return null;
     }

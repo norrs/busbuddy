@@ -37,6 +37,7 @@ public class Oracle {
 
     public Oracle(String question) {
         this.question = question;
+        this.source = OracleServiceEnum.ATB;
     }
 
     public Oracle(OracleServiceEnum source, String question) {
@@ -93,6 +94,7 @@ public class Oracle {
                 "source=" + source +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }
