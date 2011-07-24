@@ -112,6 +112,12 @@ public class BusBuddyAPIServiceController {
         return null;
     }
 
+    /**
+     * Ask's the bus oracle a question and get a text reply with departures.
+     * @param question Question has to contain from, to [when]
+     * @return Oracle object filled with answer. Null if no valid answer from the service.
+     * @throws IOException
+     */
     public Oracle askOracle(Oracle question) throws IOException {
         if (question.getQuestion() != null && !question.getQuestion().trim().equalsIgnoreCase("")) {
             HttpResponse response = HttpUtil.GET(apiKey, question.getEndpointWithQuestion());
