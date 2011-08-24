@@ -27,21 +27,46 @@ public class Departure {
     private static final String FORMAT_NODE_DESCRIPTION = "\\d{0,4} \\((.*)\\)";
     private static final Pattern patternNodeDescription = Pattern.compile(FORMAT_NODE_DESCRIPTION);
 
+    private Integer tripId;
+
     private String line;
     private String destination;
+    private String operator;
     private LocalDateTime registeredDepartureTime; // sanntidsverdi
     private LocalDateTime scheduledDepartureTime; // rutetabell
     private boolean isRealtimeData;
 
+    public Departure() {
+
+    }
+
     @Override
     public String toString() {
         return "Departure{" +
-                "line=" + line +
+                "tripId=" + tripId +
+                ", line='" + line + '\'' +
                 ", destination='" + destination + '\'' +
+                ", operator='" + operator + '\'' +
                 ", registeredDepartureTime=" + registeredDepartureTime +
                 ", scheduledDepartureTime=" + scheduledDepartureTime +
                 ", isRealtimeData=" + isRealtimeData +
                 '}';
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public int getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(int tripId) {
+        this.tripId = tripId;
     }
 
     public String getLine() {

@@ -29,7 +29,7 @@ public class BusStopForecast {
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 
     @SerializedName("codAzLinea")
-    public int lineId;
+    public String lineId;
     @SerializedName("descrizioneLinea")
     public String lineDescription;
     @SerializedName("orario")
@@ -55,7 +55,7 @@ public class BusStopForecast {
 
     public Departure convertToApi() {
         Departure api = new Departure();
-        api.setLine(lineDescription.trim());
+        api.setLine(lineId.trim());  // lineDescription -  descrizioneLinea
         api.setDestination(destination.trim());
         api.setRealtimeData((stationForecast.equalsIgnoreCase("prev") ? true : false));
         api.setRegisteredDepartureTime(LocalDateTimeTypeConverter.getLocalDateTimeFromString(registeredDepartureTime));

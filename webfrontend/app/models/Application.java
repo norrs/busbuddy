@@ -33,13 +33,9 @@ public class Application extends Model {
     public String apiKey;
     @Column(name = "app_name")
     public String appName;
-    @Column(name = "contact_name")
-    public String contactName;
-    @Column(name = "contact_email")
-    public String contactEmail;
     @OneToOne()
     public ApplicationType type;
-    @OneToOne
+    @OneToOne()
     public Person person;
 
     public String toString() {

@@ -43,8 +43,8 @@ public class JdbcBusStopDAO implements BusStopDAO {
         String insertSQL = "INSERT INTO busstop(id, name, name_abbreviation, maintainer, location_id, longitude, latitude) VALUES (?,?,?,?,?,?,?)";
         Connection connection = null;
         try {
-            BusStop busStopFromDb = findBusStopById(busStop.getBusStopId());
-            if (busStopFromDb != null && busStopFromDb.getBusStopId() == busStop.getBusStopId()) {
+            BusStop busStopFromDb = findBusStopByLocationId(Integer.parseInt(busStop.getLocationId()));
+            if (busStopFromDb != null && busStopFromDb.getLocationId().equalsIgnoreCase(busStop.getLocationId())) {
                 if (busStopFromDb.getBusStopMaintainer() == null || busStopFromDb.getNameWithAbbreviations() == null || busStopFromDb.getLongitude() == 0.0 || busStopFromDb.getLatitude() == 0.0) {
                     update(busStop);
                     return;
@@ -79,7 +79,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
 
 
     public void update(BusStop busStop) {
-        String updateSQL = "UPDATE busstop SET name = ?, name_abbreviation = ?, maintainer = ?, longitude = ?, latitude = ?, location_id = ? WHERE id = ?";
+        String updateSQL = "UPDATE busstop SET name = ?, name_abbreviation = ?, maintainer = ?, longitude = ?, latitude = ?, id = ? WHERE location_id = ?";
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -89,12 +89,13 @@ public class JdbcBusStopDAO implements BusStopDAO {
             preparedStatement.setString(3, busStop.getBusStopMaintainer());
             preparedStatement.setFloat(4, busStop.getLongitude());
             preparedStatement.setFloat(5, busStop.getLatitude());
-            preparedStatement.setString(6, busStop.getLocationId());
-            preparedStatement.setInt(7, busStop.getBusStopId());
+            preparedStatement.setInt(6, busStop.getBusStopId());
+            preparedStatement.setString(7, busStop.getLocationId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             System.out.println(String.format("Updated %s", busStop.toString()));
         } catch (SQLException e) {
+            System.out.println("SQL Exception on updating " + busStop.toString());
             throw new RuntimeException(e);
         } finally {
             if (connection != null) {
@@ -116,6 +117,45 @@ public class JdbcBusStopDAO implements BusStopDAO {
             connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(querySQL);
             preparedStatement.setInt(1, busStopId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            BusStop result = null;
+            if (resultSet.next()) {
+                result = new BusStop(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("name_abbreviation"),
+                        resultSet.getString("maintainer"),
+                        resultSet.getString("location_id"),
+                        resultSet.getFloat("longitude"),
+                        resultSet.getFloat("latitude")
+                );
+
+            }
+            resultSet.close();
+            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    // ignore
+                }
+            }
+        }
+    }
+
+    @Override
+    public BusStop findBusStopByLocationId(int locationId) {
+        String querySQL = "SELECT id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop WHERE location_id = ?";
+
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(querySQL);
+            preparedStatement.setString(1, String.valueOf(locationId));
             ResultSet resultSet = preparedStatement.executeQuery();
             BusStop result = null;
             if (resultSet.next()) {
@@ -169,6 +209,31 @@ public class JdbcBusStopDAO implements BusStopDAO {
             }
             resultSet.close();
             return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    // ignore
+                }
+            }
+        }
+    }
+
+    @Override
+    public void delete(int busStopId) {
+        String insertSQL = "DELETE FROM busstop where id = ?";
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
+            preparedStatement.setInt(1, busStopId);
+            preparedStatement.execute();
+            preparedStatement.close();
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

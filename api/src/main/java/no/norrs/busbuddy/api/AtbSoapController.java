@@ -25,6 +25,8 @@ import it.miz.infotransit.WsAuthentication;
 import no.norrs.busbuddy.api.atb.model.BusListsContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
+import no.norrs.busbuddy.pub.api.model.Schedule;
+import no.norrs.busbuddy.pub.api.model.StopsContainer;
 
 import javax.xml.ws.BindingProvider;
 import java.net.MalformedURLException;
@@ -65,6 +67,16 @@ public class AtbSoapController implements AtbController {
     @Override
     public BusListsContainer getAllBusStopsListInTrondheim() {
         return getBusStopsFromJson(soap.getBusStopsList(authentication));
+    }
+
+    @Override
+    public StopsContainer getBusStopsFor(int tripId) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Schedule getSchedulesForecast(int locationId) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

@@ -29,7 +29,7 @@ public class BusStopNodeInfo {
     @SerializedName("nome_Az")
     public String name;
     @SerializedName("codAzNodo")
-    public int nodeId;
+    public String nodeId;
     @SerializedName("nomeNodo")
     public String nodeName;
     @SerializedName("descrNodo")

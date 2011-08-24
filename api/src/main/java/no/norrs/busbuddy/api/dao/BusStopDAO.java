@@ -28,7 +28,9 @@ public interface BusStopDAO {
     public void insertOrUpdate(BusStop busStop);
     public void update(BusStop busStop);
     public BusStop findBusStopById(int busStopId);
+    public BusStop findBusStopByLocationId(int locationId);
     public List<BusStop> findAll();
+    public void delete(int busStopId);
 
     public void insertOrUpdateSkrot(BusStopSkrot busStop);
 }

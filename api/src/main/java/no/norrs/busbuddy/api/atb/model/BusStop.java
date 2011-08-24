@@ -26,7 +26,7 @@ public class BusStop {
     @SerializedName("cinFermata")
     public int stopId;
     @SerializedName("codAzNodo")
-    public int nodeId;
+    public String nodeId;
     @SerializedName("descrizione")
     public String description;
     @SerializedName("lon")

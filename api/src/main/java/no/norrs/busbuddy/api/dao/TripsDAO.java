@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package no.norrs.busbuddy.api;
+package no.norrs.busbuddy.api.dao;
 
+import no.norrs.busbuddy.api.model.Trip;
 
-import no.norrs.busbuddy.api.atb.model.BusListsContainer;
-import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
-import no.norrs.busbuddy.pub.api.model.Schedule;
-import no.norrs.busbuddy.pub.api.model.StopsContainer;
+import java.util.List;
 
 /**
- * @author Roy Sindre Norangshol
+ * Roy Sindre Norangshol
+ * Date: 8/22/11
+ * Time: 12:04 AM
  */
-public interface AtbController {
-    BusStopForecastContainer getUserRealTimeForecast(int busStopId);
-
-    BusListsContainer getAllBusStopsListInTrondheim();
-
-    // todo :  RP metoder her.
-
-    StopsContainer getBusStopsFor(int tripId);
-
-    Schedule getSchedulesForecast(int locationId);
+public interface TripsDAO {
+    public void insertOrUpdate(Trip trips);
+    public void update(Trip trips);
+    public Trip findTripsByTripIdAndLine(int tripId, String line) ;
+    public List<Trip> findAll();
 
 }

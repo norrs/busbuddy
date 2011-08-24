@@ -38,7 +38,7 @@ public class Prosjekter extends Controller {
     @Before
     private static void loadDatasource() {
         JdbcBusBuddyApiKeyDAO foo = new JdbcBusBuddyApiKeyDAO();
-        foo.setDataSource(DB.getDBConfig().getDatasource());
+        foo.setDataSource(DB.datasource);
         busBuddyApiKeyDao = foo;
         em = JPA.em();
 

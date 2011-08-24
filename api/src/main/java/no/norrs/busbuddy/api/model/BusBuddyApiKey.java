@@ -22,8 +22,6 @@ package no.norrs.busbuddy.api.model;
 public class BusBuddyApiKey {
     private String apiKey;
     private String appName;
-    private String contactName;
-    private String contactEmail;
     private ApplicationType applicationType;
 
     public BusBuddyApiKey() {
@@ -56,22 +54,6 @@ public class BusBuddyApiKey {
         this.appName = appName;
     }
 
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
     public ApplicationType getApplicationType() {
         return applicationType;
     }
@@ -102,8 +84,6 @@ public class BusBuddyApiKey {
         return "BusBuddyApiKey{" +
                 "apiKey='" + apiKey + '\'' +
                 ", appName='" + appName + '\'' +
-                ", contactName='" + contactName + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
                 ", applicationType=" + applicationType +
                 '}';
     }

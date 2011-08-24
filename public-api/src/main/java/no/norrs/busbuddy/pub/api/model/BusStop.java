@@ -19,7 +19,7 @@ package no.norrs.busbuddy.pub.api.model;
 /**
  * @author Roy Sindre Norangshol
  */
-public class BusStop {
+public class BusStop implements Comparable<BusStop> {
     private Integer busStopId;
     private String name;
     private String nameWithAbbreviations;
@@ -111,6 +111,9 @@ public class BusStop {
         return locationId.charAt(4) == '1' ? true : false;
     }
 
+    public int compareTo(BusStop n) {
+        return busStopId > n.busStopId ? 1 : busStopId < n.busStopId ? -1 : 0;
+    }
 
     @Override
     public String toString() {

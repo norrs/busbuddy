@@ -23,6 +23,7 @@ import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
 import no.norrs.busbuddy.api.dao.BusStopDAO;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
+import no.norrs.busbuddy.pub.api.HttpUtil;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
 import no.norrs.busbuddy.pub.api.LocalDateTimeTypeConverter;
 import no.norrs.busbuddy.pub.api.model.BusStop;
@@ -33,6 +34,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -61,6 +64,34 @@ public class PullDeparturesAndUpdateBusStops {
             }
         }
     };
+    private Runnable workerSelectedBusStops = new Runnable() {
+        @Override
+        public void run() {
+            final List<BusStop> busStops = busstopDAO.findAll();
+            Collections.sort(busStops);
+            for (BusStop busStop : busStops) {
+
+
+                if (busStop.getLatitude() == 0.0 || busStop.getLongitude() == 0.0) {
+                    //atbService.getUserRealTimeForecast(busStop.getBusStopId());
+
+                    System.out.println(String.format("[%s] Polling %s", getTimestamp(), busStop.getBusStopId()));
+                    fetchResourceAndUpdate(busStop.getBusStopId());
+
+                    try {
+                        Thread.sleep(waitingTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+
+
+                } else {
+                    System.out.println(String.format("[%s] Not needed %s ..", getTimestamp(), busStop.getBusStopId()));
+                }
+            }
+        }
+    };
+
     private AtbWebController atbService;
     private Gson gson;
     private BusStopDAO busstopDAO;
@@ -79,8 +110,8 @@ public class PullDeparturesAndUpdateBusStops {
         boolean skip = true;
 
 
-        if (originalContainer.busStopNodeInfos != null && originalContainer.busStopNodeInfos.size()>0) {
-            if (originalContainer.busStopNodeInfos.get(0).nodeId != 0)
+        if (originalContainer.busStopNodeInfos != null && originalContainer.busStopNodeInfos.size() > 0) {
+            if (originalContainer.busStopNodeInfos.get(0).nodeId != null)
                 skip = false;
         }
 
@@ -130,7 +161,9 @@ public class PullDeparturesAndUpdateBusStops {
 
 
             busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
-            Thread worker = new Thread(workerTask);
+            /*Thread worker = new Thread(workerTask);
+            worker.start();*/
+            Thread worker = new Thread(workerSelectedBusStops);
             worker.start();
 
         } catch (IOException e) {

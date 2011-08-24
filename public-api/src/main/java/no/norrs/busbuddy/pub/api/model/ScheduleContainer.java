@@ -16,39 +16,38 @@
 
 package no.norrs.busbuddy.pub.api.model;
 
-
 import java.util.List;
 
-
 /**
- * @author Roy Sindre Norangshol
+ * Roy Sindre Norangshol
+ * Date: 8/21/11
+ * Time: 4:43 PM
  */
-public class DepartureContainer {
-    private boolean isGoingTowardsCentrum;
-    private List<Departure> departures;
-    public static boolean isValid;
+public class ScheduleContainer {
+    private String busStopName;
+    private List<Schedule> schedules;
 
-    public List<Departure> getDepartures() {
-        return departures;
+    public String getBusStopName() {
+        return busStopName;
     }
 
-    public void setDepartures(List<Departure> departures) {
-        this.departures = departures;
+    public void setBusStopName(String busStopName) {
+        this.busStopName = busStopName;
     }
 
-    public boolean isGoingTowardsCentrum() {
-        return isGoingTowardsCentrum;
+    public List<Schedule> getSchedules() {
+        return schedules;
     }
 
-    public void setGoingTowardsCentrum(int nodeIdAtb) {
-        isGoingTowardsCentrum = (nodeIdAtb/1000)%2==1;
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     @Override
     public String toString() {
-        return "DepartureContainer{" +
-                "isGoingTowardsCentrum=" + isGoingTowardsCentrum +
-                ", departures=" + departures +
+        return "ScheduleContainer{" +
+                "busStopName='" + busStopName + '\'' +
+                ", schedules=" + schedules +
                 '}';
     }
 }

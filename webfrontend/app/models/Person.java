@@ -18,6 +18,7 @@ package models;
 
 import play.db.jpa.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

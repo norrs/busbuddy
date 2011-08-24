@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
 import no.norrs.busbuddy.api.AtbController;
+import no.norrs.busbuddy.api.AtbRpController;
+import no.norrs.busbuddy.api.AtbRpControllerImpl;
 import no.norrs.busbuddy.api.AtbWebController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
@@ -30,10 +32,7 @@ import no.norrs.busbuddy.pub.api.CharSetAdapter;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
 import no.norrs.busbuddy.pub.api.LocalDateTimeTypeConverter;
 import no.norrs.busbuddy.pub.api.OracleServiceController;
-import no.norrs.busbuddy.pub.api.model.BusStop;
-import no.norrs.busbuddy.pub.api.model.BusStopContainer;
-import no.norrs.busbuddy.pub.api.model.DepartureContainer;
-import no.norrs.busbuddy.pub.api.model.Oracle;
+import no.norrs.busbuddy.pub.api.model.*;
 import no.norrs.busbuddy.service.DepartureCache;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
@@ -47,18 +46,14 @@ import java.util.Properties;
 
 /**
  * Roy Sindre Norangshol
- * Date: 5/27/11
- * Time: 4:26 PM
+ * Date: 8/20/11
+ * Time: 4:17 PM
  */
-
-
-@Path("/1.2")
+@Path("/1.3")
 @Singleton
-public class AtbServiceVersion1_2Resource extends SharedResources {
 
-
+public class AtbServiceVersion1_3Resource extends SharedResources {
     private Gson gson;
-
 
     @Context
     UriInfo uriInfo;
@@ -70,9 +65,9 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
     private BusStopDAO busstopDAO;
     private OracleServiceController oracleService;
     private AtbController atbService;
+    private AtbRpController rpController;
 
-
-    public AtbServiceVersion1_2Resource() throws IOException {
+    public AtbServiceVersion1_3Resource() throws IOException {
         super();
 
 /*
@@ -86,12 +81,14 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
 
 
         oracleService = new OracleServiceController();
+        rpController = new AtbRpControllerImpl();
 
         GsonBuilder builder = new GsonBuilder();
         gson = builder
                 .registerTypeAdapter(String.class, new CharSetAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeConverter())
                 .registerTypeAdapter(Instant.class, new InstantTypeConverter())
+                .setPrettyPrinting()
                 .create();
 
         loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
@@ -186,7 +183,6 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
             BusStop busStopFromDB = busstopDAO.findBusStopById(busStopId);
 
             String nodeDescription = atbBusStopNodeInfo.getFixedNodeDescriptionOrFallBackToNormalNodeDescription();
-
             BusStop updateOrInsertIfNeeded = new BusStop(
                     busStopId,
                     nodeDescription,
@@ -228,6 +224,59 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
             return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
         }
     }
+
+    @GET
+    @Path("/schedules/{locationId}")
+    @Produces({"application/json; charset=UTF-8"})
+    public Response getBusStopsFromTrip(@PathParam("locationId") int locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
+      /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
+        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+            loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
+            return Response.status(450).entity("Blocked by Windows Parental Controls").build();
+        } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
+
+
+        try {
+            ScheduleContainer schedules = rpController.getSchedulesForecast(locationId);
+            return Response.ok(gson.toJson(schedules)).build();
+        } catch (IOException e) {
+
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return Response.serverError().build();
+        }
+        /*} else {
+            loggerDAO.incrementHitcounterFor(new ApiKeyLog(apiKey, getTimeStampForHitcounterLogging(), Response.Status.FORBIDDEN.getStatusCode()));
+            return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
+        } */
+    }
+
+    @GET
+    @Path("/trip/{tripId}")
+    @Produces({"application/json; charset=UTF-8"})
+    public Response getTripDepartures(@PathParam("tripId") int tripId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
+      /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
+        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+            loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
+            return Response.status(450).entity("Blocked by Windows Parental Controls").build();
+        } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
+
+
+        try {
+            StopsContainer departures = rpController.getBusStopsFor(tripId);
+            return Response.ok(gson.toJson(departures)).build();
+        } catch (IOException e) {
+
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return Response.serverError().build();
+        }
+        /*} else {
+            loggerDAO.incrementHitcounterFor(new ApiKeyLog(apiKey, getTimeStampForHitcounterLogging(), Response.Status.FORBIDDEN.getStatusCode()));
+            return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
+        } */
+    }
+
+
+
 
     @GET
     @Path("/oracle/{question}")

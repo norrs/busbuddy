@@ -16,24 +16,19 @@
 
 package no.norrs.busbuddy.api;
 
-
-import no.norrs.busbuddy.api.atb.model.BusListsContainer;
-import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.pub.api.model.Schedule;
+import no.norrs.busbuddy.pub.api.model.ScheduleContainer;
 import no.norrs.busbuddy.pub.api.model.StopsContainer;
 
+import java.io.IOException;
+
 /**
- * @author Roy Sindre Norangshol
+ * Roy Sindre Norangshol
+ * Date: 8/20/11
+ * Time: 5:57 PM
  */
-public interface AtbController {
-    BusStopForecastContainer getUserRealTimeForecast(int busStopId);
-
-    BusListsContainer getAllBusStopsListInTrondheim();
-
-    // todo :  RP metoder her.
-
-    StopsContainer getBusStopsFor(int tripId);
-
-    Schedule getSchedulesForecast(int locationId);
+public interface AtbRpController {
+    StopsContainer getBusStopsFor(int tripId) throws IOException;
+    ScheduleContainer getSchedulesForecast(int locationId) throws IOException;
 
 }

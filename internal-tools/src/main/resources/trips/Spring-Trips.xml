@@ -19,11 +19,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <import resource="database/Spring-Datasource.xml"/>
-    <import resource="apikeylog/Spring-ApiKeyLog.xml"/>
-    <import resource="applicationtype/Spring-ApplicationType.xml"/>
-    <import resource="busbuddyapikey/Spring-BusBuddyApiKey.xml"/>
-    <import resource="busstop/Spring-BusStop.xml"/>
-    <import resource="trips/Spring-Trips.xml"/>
+    <bean id="tripsDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcTripsDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
 </beans>
