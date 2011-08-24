@@ -19,8 +19,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="busbuddyapikeyDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcBusBuddyApiKeyDAO">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <import resource="database/Spring-Datasource.xml"/>
+    <import resource="classpath:spring-busbuddy-dao.xml" />
 
 </beans>

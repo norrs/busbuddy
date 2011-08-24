@@ -62,7 +62,7 @@ public class StatsResource extends SharedResources {
 
     public StatsResource() {
         super();
-        context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+        context = new ClassPathXmlApplicationContext("applicationContext.xml");
         GsonBuilder builder = new GsonBuilder();
         gson = builder
                 .registerTypeAdapter(String.class, new CharSetAdapter())

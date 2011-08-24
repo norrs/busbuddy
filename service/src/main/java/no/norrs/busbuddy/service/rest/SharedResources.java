@@ -16,6 +16,7 @@
 
 package no.norrs.busbuddy.service.rest;
 
+import no.norrs.busbuddy.api.AtbControllerFactory;
 import no.norrs.busbuddy.api.dao.BusBuddyApiKeyDAO;
 import no.norrs.busbuddy.api.model.BusBuddyApiKey;
 import no.norrs.busbuddy.service.CacheServiceLocator;
@@ -44,9 +45,11 @@ public class SharedResources {
 
 
     private BusBuddyApiKeyDAO apikeyDAO;
+    protected AtbControllerFactory controllerFactory;
 
     public SharedResources() {
-        context = new ClassPathXmlApplicationContext("classpath:Spring-Module.xml");
+        controllerFactory = new AtbControllerFactory();
+        context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         apikeyDAO = (BusBuddyApiKeyDAO) context.getBean("busbuddyapikeyDAO");
         apiKeys = apikeyDAO.findAll();
 

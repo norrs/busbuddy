@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
 import no.norrs.busbuddy.api.AtbController;
-import no.norrs.busbuddy.api.AtbWebController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
 import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
@@ -43,7 +42,6 @@ import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * Roy Sindre Norangshol
@@ -80,10 +78,8 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
 */
-        Properties atbWebProperties = new Properties();
-        atbWebProperties.load(getClass().getResourceAsStream("/atbweb.properties"));
-        atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));
 
+        atbService = controllerFactory.createRealtimeController();
 
         oracleService = new OracleServiceController();
 

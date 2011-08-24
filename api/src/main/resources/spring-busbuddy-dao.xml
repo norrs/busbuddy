@@ -19,7 +19,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+    <bean id="apikeylogDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcApiKeyLogDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="applicationTypeDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcApplicationTypeDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
     <bean id="busbuddyapikeyDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcBusBuddyApiKeyDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="busstopDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcBusStopDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="tripsDAO" class="no.norrs.busbuddy.api.dao.impl.JdbcTripsDAO">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
