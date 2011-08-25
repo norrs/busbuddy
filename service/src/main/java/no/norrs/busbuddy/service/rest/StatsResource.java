@@ -19,8 +19,7 @@ package no.norrs.busbuddy.service.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
-import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
-import no.norrs.busbuddy.api.dao.BusBuddyApiKeyDAO;
+import no.norrs.busbuddy.api.dao.*;
 import no.norrs.busbuddy.api.model.BusBuddyApiKey;
 import no.norrs.busbuddy.api.model.helper.HitsPerDay;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
@@ -28,8 +27,9 @@ import no.norrs.busbuddy.pub.api.InstantTypeConverter;
 import no.norrs.busbuddy.pub.api.LocalDateTimeTypeConverter;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -43,6 +43,7 @@ import java.util.Map;
 /**
  * @author Roy Sindre Norangshol
  */
+@Component
 @Path("/stats")
 @Singleton
 public class StatsResource extends SharedResources {
@@ -60,17 +61,23 @@ public class StatsResource extends SharedResources {
     private BusBuddyApiKeyDAO apikeyDAO;
     private Gson gson;
 
-    public StatsResource() {
-        super();
-        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    @Autowired
+    public StatsResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) {
+        super(busBuddyApiKeyDAO);
+        //context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        this.loggerDAO = apiKeyLogDAO;
+        this.apikeyDAO = busBuddyApiKeyDAO;
+
+
         GsonBuilder builder = new GsonBuilder();
         gson = builder
                 .registerTypeAdapter(String.class, new CharSetAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeConverter())
                 .registerTypeAdapter(Instant.class, new InstantTypeConverter())
                 .create();
-        loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
-        apikeyDAO = (BusBuddyApiKeyDAO) context.getBean("busbuddyapikeyDAO");
+        /*loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
+        apikeyDAO = (BusBuddyApiKeyDAO) context.getBean("busbuddyapikeyDAO");*/
     }
 
     @GET

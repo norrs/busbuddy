@@ -22,11 +22,9 @@ import com.sun.jersey.spi.resource.Singleton;
 import no.norrs.busbuddy.api.AtbController;
 import no.norrs.busbuddy.api.AtbRpController;
 import no.norrs.busbuddy.api.AtbRpControllerImpl;
-import no.norrs.busbuddy.api.AtbWebController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
-import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
-import no.norrs.busbuddy.api.dao.BusStopDAO;
+import no.norrs.busbuddy.api.dao.*;
 import no.norrs.busbuddy.api.model.ApiKeyLog;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
@@ -36,19 +34,21 @@ import no.norrs.busbuddy.pub.api.model.*;
 import no.norrs.busbuddy.service.DepartureCache;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * Roy Sindre Norangshol
  * Date: 8/20/11
  * Time: 4:17 PM
  */
+@Component
 @Path("/1.3")
 @Singleton
 
@@ -63,25 +63,28 @@ public class AtbServiceVersion1_3Resource extends SharedResources {
     HttpHeaders headers;
     private ApiKeyLogDAO loggerDAO;
     private BusStopDAO busstopDAO;
+    private TripsDAO tripsDAO;
     private OracleServiceController oracleService;
     private AtbController atbService;
     private AtbRpController rpController;
+    ;
 
-    public AtbServiceVersion1_3Resource() throws IOException {
-        super();
+    @Autowired
+    public AtbServiceVersion1_3Resource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
+        super(busBuddyApiKeyDAO);
+        this.loggerDAO = apiKeyLogDAO;
+        this.busstopDAO = busStopDAO;
+        this.tripsDAO = tripsDAO;
 
 /*
         Properties atbProperties = new Properties();
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
 */
-        Properties atbWebProperties = new Properties();
-        atbWebProperties.load(getClass().getResourceAsStream("/atbweb.properties"));
-        atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));
-
+        atbService = controllerFactory.createRealtimeController();
 
         oracleService = new OracleServiceController();
-        rpController = new AtbRpControllerImpl();
+        rpController = new AtbRpControllerImpl(busStopDAO, tripsDAO);
 
         GsonBuilder builder = new GsonBuilder();
         gson = builder
@@ -91,8 +94,8 @@ public class AtbServiceVersion1_3Resource extends SharedResources {
                 .setPrettyPrinting()
                 .create();
 
-        loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
-        busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
+        /*loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
+        busstopDAO = (BusStopDAO) context.getBean("busstopDAO");*/
     }
 
 

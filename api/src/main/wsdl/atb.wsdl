@@ -15,523 +15,544 @@
   ~ limitations under the License.
   -->
 
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://miz.it/infotransit" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://miz.it/infotransit" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://miz.it/infotransit">
-      <s:element name="addNewUser">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="assistanceRequired" type="s:boolean" />
-            <s:element minOccurs="1" maxOccurs="1" name="elapseTimeAnnouncement" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="numberAnnouncement" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="WsAuthentication">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="addNewUserResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="addNewUserResult" type="tns:HandShake" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="HandShake">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="response" type="tns:ResponseOperation" />
-        </s:sequence>
-      </s:complexType>
-      <s:simpleType name="ResponseOperation">
-        <s:restriction base="s:string">
-          <s:enumeration value="NONE" />
-          <s:enumeration value="Success" />
-          <s:enumeration value="GenericError" />
-          <s:enumeration value="NotValidToken" />
-          <s:enumeration value="NoExistingUser" />
-          <s:enumeration value="WsAuthenticationError" />
-        </s:restriction>
-      </s:simpleType>
-      <s:element name="editUser">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="assistanceRequired" type="s:boolean" />
-            <s:element minOccurs="1" maxOccurs="1" name="elapseTimeAnnouncement" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="numberAnnouncement" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="editUserResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="editUserResult" type="tns:ResponseOperation" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="deleteUser">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="deleteUserResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="deleteUserResult" type="tns:ResponseOperation" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getToken">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getTokenResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getTokenResult" type="tns:HandShake" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getUserFavouritePlaces">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getUserFavouritePlacesResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getUserFavouritePlacesResult" type="tns:ArrayOfPrefObject" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfPrefObject">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="PrefObject" nillable="true" type="tns:PrefObject" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="PrefObject">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="idAz" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="stopCode" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="address" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="m_tPref" type="tns:TypePref" />
-        </s:sequence>
-      </s:complexType>
-      <s:simpleType name="TypePref">
-        <s:restriction base="s:string">
-          <s:enumeration value="prefPoint" />
-          <s:enumeration value="prefStop" />
-          <s:enumeration value="reminder" />
-        </s:restriction>
-      </s:simpleType>
-      <s:element name="getUserRealTimeForecast">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getUserRealTimeForecastResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getUserRealTimeForecastEx">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="nForecast" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="nHours" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="getUserRealTimeForecastExResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastExResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetBusStopsList">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetBusStopsListResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetBusStopsListResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddUserFavouriteBusStop">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="AddUserFavouriteBusStopResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="AddUserFavouriteBusStopResult" type="tns:ResponseOperation" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteUserFavouriteBusStop">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
-            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
-            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DeleteUserFavouriteBusStopResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="DeleteUserFavouriteBusStopResult" type="tns:ResponseOperation" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-    </s:schema>
-  </wsdl:types>
-  <wsdl:message name="addNewUserSoapIn">
-    <wsdl:part name="parameters" element="tns:addNewUser" />
-  </wsdl:message>
-  <wsdl:message name="addNewUserSoapOut">
-    <wsdl:part name="parameters" element="tns:addNewUserResponse" />
-  </wsdl:message>
-  <wsdl:message name="editUserSoapIn">
-    <wsdl:part name="parameters" element="tns:editUser" />
-  </wsdl:message>
-  <wsdl:message name="editUserSoapOut">
-    <wsdl:part name="parameters" element="tns:editUserResponse" />
-  </wsdl:message>
-  <wsdl:message name="deleteUserSoapIn">
-    <wsdl:part name="parameters" element="tns:deleteUser" />
-  </wsdl:message>
-  <wsdl:message name="deleteUserSoapOut">
-    <wsdl:part name="parameters" element="tns:deleteUserResponse" />
-  </wsdl:message>
-  <wsdl:message name="getTokenSoapIn">
-    <wsdl:part name="parameters" element="tns:getToken" />
-  </wsdl:message>
-  <wsdl:message name="getTokenSoapOut">
-    <wsdl:part name="parameters" element="tns:getTokenResponse" />
-  </wsdl:message>
-  <wsdl:message name="getUserFavouritePlacesSoapIn">
-    <wsdl:part name="parameters" element="tns:getUserFavouritePlaces" />
-  </wsdl:message>
-  <wsdl:message name="getUserFavouritePlacesSoapOut">
-    <wsdl:part name="parameters" element="tns:getUserFavouritePlacesResponse" />
-  </wsdl:message>
-  <wsdl:message name="getUserRealTimeForecastSoapIn">
-    <wsdl:part name="parameters" element="tns:getUserRealTimeForecast" />
-  </wsdl:message>
-  <wsdl:message name="getUserRealTimeForecastSoapOut">
-    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastResponse" />
-  </wsdl:message>
-  <wsdl:message name="getUserRealTimeForecastExSoapIn">
-    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastEx" />
-  </wsdl:message>
-  <wsdl:message name="getUserRealTimeForecastExSoapOut">
-    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastExResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetBusStopsListSoapIn">
-    <wsdl:part name="parameters" element="tns:GetBusStopsList" />
-  </wsdl:message>
-  <wsdl:message name="GetBusStopsListSoapOut">
-    <wsdl:part name="parameters" element="tns:GetBusStopsListResponse" />
-  </wsdl:message>
-  <wsdl:message name="AddUserFavouriteBusStopSoapIn">
-    <wsdl:part name="parameters" element="tns:AddUserFavouriteBusStop" />
-  </wsdl:message>
-  <wsdl:message name="AddUserFavouriteBusStopSoapOut">
-    <wsdl:part name="parameters" element="tns:AddUserFavouriteBusStopResponse" />
-  </wsdl:message>
-  <wsdl:message name="DeleteUserFavouriteBusStopSoapIn">
-    <wsdl:part name="parameters" element="tns:DeleteUserFavouriteBusStop" />
-  </wsdl:message>
-  <wsdl:message name="DeleteUserFavouriteBusStopSoapOut">
-    <wsdl:part name="parameters" element="tns:DeleteUserFavouriteBusStopResponse" />
-  </wsdl:message>
-  <wsdl:portType name="UserServicesSoap">
-    <wsdl:operation name="addNewUser">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add new user. Returns token related to userIdentifier. HandShake object contains also 'the corret ending/not correct ending' of operation.</wsdl:documentation>
-      <wsdl:input message="tns:addNewUserSoapIn" />
-      <wsdl:output message="tns:addNewUserSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="editUser">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Edit user. Returns the result of operation.</wsdl:documentation>
-      <wsdl:input message="tns:editUserSoapIn" />
-      <wsdl:output message="tns:editUserSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="deleteUser">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete user. Returns the result of operation.</wsdl:documentation>
-      <wsdl:input message="tns:deleteUserSoapIn" />
-      <wsdl:output message="tns:deleteUserSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getToken">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns token related to userIdentifier.</wsdl:documentation>
-      <wsdl:input message="tns:getTokenSoapIn" />
-      <wsdl:output message="tns:getTokenSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getUserFavouritePlaces">
-      <wsdl:input message="tns:getUserFavouritePlacesSoapIn" />
-      <wsdl:output message="tns:getUserFavouritePlacesSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecast">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format</wsdl:documentation>
-      <wsdl:input message="tns:getUserRealTimeForecastSoapIn" />
-      <wsdl:output message="tns:getUserRealTimeForecastSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecastEx">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format, can specify the number of forecast and/or the number of hours</wsdl:documentation>
-      <wsdl:input message="tns:getUserRealTimeForecastExSoapIn" />
-      <wsdl:output message="tns:getUserRealTimeForecastExSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBusStopsList">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return list of bus stop</wsdl:documentation>
-      <wsdl:input message="tns:GetBusStopsListSoapIn" />
-      <wsdl:output message="tns:GetBusStopsListSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="AddUserFavouriteBusStop">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add favoute bus stop</wsdl:documentation>
-      <wsdl:input message="tns:AddUserFavouriteBusStopSoapIn" />
-      <wsdl:output message="tns:AddUserFavouriteBusStopSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="DeleteUserFavouriteBusStop">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add favoute bus stop</wsdl:documentation>
-      <wsdl:input message="tns:DeleteUserFavouriteBusStopSoapIn" />
-      <wsdl:output message="tns:DeleteUserFavouriteBusStopSoapOut" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="UserServicesSoap" type="tns:UserServicesSoap">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="addNewUser">
-      <soap:operation soapAction="http://miz.it/infotransit/addNewUser" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="editUser">
-      <soap:operation soapAction="http://miz.it/infotransit/editUser" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="deleteUser">
-      <soap:operation soapAction="http://miz.it/infotransit/deleteUser" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getToken">
-      <soap:operation soapAction="http://miz.it/infotransit/getToken" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserFavouritePlaces">
-      <soap:operation soapAction="http://miz.it/infotransit/getUserFavouritePlaces" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecast">
-      <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecast" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecastEx">
-      <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastEx" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBusStopsList">
-      <soap:operation soapAction="http://miz.it/infotransit/GetBusStopsList" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddUserFavouriteBusStop">
-      <soap:operation soapAction="http://miz.it/infotransit/AddUserFavouriteBusStop" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteUserFavouriteBusStop">
-      <soap:operation soapAction="http://miz.it/infotransit/DeleteUserFavouriteBusStop" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="UserServicesSoap12" type="tns:UserServicesSoap">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="addNewUser">
-      <soap12:operation soapAction="http://miz.it/infotransit/addNewUser" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="editUser">
-      <soap12:operation soapAction="http://miz.it/infotransit/editUser" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="deleteUser">
-      <soap12:operation soapAction="http://miz.it/infotransit/deleteUser" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getToken">
-      <soap12:operation soapAction="http://miz.it/infotransit/getToken" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserFavouritePlaces">
-      <soap12:operation soapAction="http://miz.it/infotransit/getUserFavouritePlaces" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecast">
-      <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecast" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getUserRealTimeForecastEx">
-      <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastEx" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBusStopsList">
-      <soap12:operation soapAction="http://miz.it/infotransit/GetBusStopsList" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AddUserFavouriteBusStop">
-      <soap12:operation soapAction="http://miz.it/infotransit/AddUserFavouriteBusStop" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteUserFavouriteBusStop">
-      <soap12:operation soapAction="http://miz.it/infotransit/DeleteUserFavouriteBusStop" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="UserServices">
-    <wsdl:port name="UserServicesSoap" binding="tns:UserServicesSoap">
-      <soap:address location="http://st.atb.no/InfoTransit/userservices.asmx" />
-    </wsdl:port>
-    <wsdl:port name="UserServicesSoap12" binding="tns:UserServicesSoap12">
-      <soap12:address location="http://st.atb.no/InfoTransit/userservices.asmx" />
-    </wsdl:port>
-  </wsdl:service>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://miz.it/infotransit"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://miz.it/infotransit"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://miz.it/infotransit">
+            <s:element name="addNewUser">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="assistanceRequired" type="s:boolean"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="elapseTimeAnnouncement" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="numberAnnouncement" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="WsAuthentication">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="addNewUserResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="addNewUserResult" type="tns:HandShake"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="HandShake">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="response" type="tns:ResponseOperation"/>
+                </s:sequence>
+            </s:complexType>
+            <s:simpleType name="ResponseOperation">
+                <s:restriction base="s:string">
+                    <s:enumeration value="NONE"/>
+                    <s:enumeration value="Success"/>
+                    <s:enumeration value="GenericError"/>
+                    <s:enumeration value="NotValidToken"/>
+                    <s:enumeration value="NoExistingUser"/>
+                    <s:enumeration value="WsAuthenticationError"/>
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="editUser">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="assistanceRequired" type="s:boolean"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="elapseTimeAnnouncement" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="numberAnnouncement" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="editUserResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="editUserResult" type="tns:ResponseOperation"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="deleteUser">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="deleteUserResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="deleteUserResult" type="tns:ResponseOperation"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getToken">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userIdentifier" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getTokenResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="getTokenResult" type="tns:HandShake"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getUserFavouritePlaces">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getUserFavouritePlacesResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="getUserFavouritePlacesResult"
+                                   type="tns:ArrayOfPrefObject"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="ArrayOfPrefObject">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="PrefObject" nillable="true"
+                               type="tns:PrefObject"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="PrefObject">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="idAz" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="stopCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="address" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="m_tPref" type="tns:TypePref"/>
+                </s:sequence>
+            </s:complexType>
+            <s:simpleType name="TypePref">
+                <s:restriction base="s:string">
+                    <s:enumeration value="prefPoint"/>
+                    <s:enumeration value="prefStop"/>
+                    <s:enumeration value="reminder"/>
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="getUserRealTimeForecast">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getUserRealTimeForecastResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getUserRealTimeForecastEx">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="nForecast" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="nHours" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="getUserRealTimeForecastExResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastExResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetBusStopsList">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetBusStopsListResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetBusStopsListResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AddUserFavouriteBusStop">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AddUserFavouriteBusStopResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="AddUserFavouriteBusStopResult"
+                                   type="tns:ResponseOperation"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="DeleteUserFavouriteBusStop">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="DeleteUserFavouriteBusStopResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="DeleteUserFavouriteBusStopResult"
+                                   type="tns:ResponseOperation"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="addNewUserSoapIn">
+        <wsdl:part name="parameters" element="tns:addNewUser"/>
+    </wsdl:message>
+    <wsdl:message name="addNewUserSoapOut">
+        <wsdl:part name="parameters" element="tns:addNewUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="editUserSoapIn">
+        <wsdl:part name="parameters" element="tns:editUser"/>
+    </wsdl:message>
+    <wsdl:message name="editUserSoapOut">
+        <wsdl:part name="parameters" element="tns:editUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteUserSoapIn">
+        <wsdl:part name="parameters" element="tns:deleteUser"/>
+    </wsdl:message>
+    <wsdl:message name="deleteUserSoapOut">
+        <wsdl:part name="parameters" element="tns:deleteUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTokenSoapIn">
+        <wsdl:part name="parameters" element="tns:getToken"/>
+    </wsdl:message>
+    <wsdl:message name="getTokenSoapOut">
+        <wsdl:part name="parameters" element="tns:getTokenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getUserFavouritePlacesSoapIn">
+        <wsdl:part name="parameters" element="tns:getUserFavouritePlaces"/>
+    </wsdl:message>
+    <wsdl:message name="getUserFavouritePlacesSoapOut">
+        <wsdl:part name="parameters" element="tns:getUserFavouritePlacesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getUserRealTimeForecastSoapIn">
+        <wsdl:part name="parameters" element="tns:getUserRealTimeForecast"/>
+    </wsdl:message>
+    <wsdl:message name="getUserRealTimeForecastSoapOut">
+        <wsdl:part name="parameters" element="tns:getUserRealTimeForecastResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getUserRealTimeForecastExSoapIn">
+        <wsdl:part name="parameters" element="tns:getUserRealTimeForecastEx"/>
+    </wsdl:message>
+    <wsdl:message name="getUserRealTimeForecastExSoapOut">
+        <wsdl:part name="parameters" element="tns:getUserRealTimeForecastExResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetBusStopsListSoapIn">
+        <wsdl:part name="parameters" element="tns:GetBusStopsList"/>
+    </wsdl:message>
+    <wsdl:message name="GetBusStopsListSoapOut">
+        <wsdl:part name="parameters" element="tns:GetBusStopsListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AddUserFavouriteBusStopSoapIn">
+        <wsdl:part name="parameters" element="tns:AddUserFavouriteBusStop"/>
+    </wsdl:message>
+    <wsdl:message name="AddUserFavouriteBusStopSoapOut">
+        <wsdl:part name="parameters" element="tns:AddUserFavouriteBusStopResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteUserFavouriteBusStopSoapIn">
+        <wsdl:part name="parameters" element="tns:DeleteUserFavouriteBusStop"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteUserFavouriteBusStopSoapOut">
+        <wsdl:part name="parameters" element="tns:DeleteUserFavouriteBusStopResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="UserServicesSoap">
+        <wsdl:operation name="addNewUser">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add new user. Returns token related to
+                userIdentifier. HandShake object contains also 'the corret ending/not correct ending' of operation.
+            </wsdl:documentation>
+            <wsdl:input message="tns:addNewUserSoapIn"/>
+            <wsdl:output message="tns:addNewUserSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="editUser">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Edit user. Returns the result of
+                operation.
+            </wsdl:documentation>
+            <wsdl:input message="tns:editUserSoapIn"/>
+            <wsdl:output message="tns:editUserSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete user. Returns the result of
+                operation.
+            </wsdl:documentation>
+            <wsdl:input message="tns:deleteUserSoapIn"/>
+            <wsdl:output message="tns:deleteUserSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="getToken">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns token related to userIdentifier.
+            </wsdl:documentation>
+            <wsdl:input message="tns:getTokenSoapIn"/>
+            <wsdl:output message="tns:getTokenSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="getUserFavouritePlaces">
+            <wsdl:input message="tns:getUserFavouritePlacesSoapIn"/>
+            <wsdl:output message="tns:getUserFavouritePlacesSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecast">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format
+            </wsdl:documentation>
+            <wsdl:input message="tns:getUserRealTimeForecastSoapIn"/>
+            <wsdl:output message="tns:getUserRealTimeForecastSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecastEx">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format, can
+                specify the number of forecast and/or the number of hours
+            </wsdl:documentation>
+            <wsdl:input message="tns:getUserRealTimeForecastExSoapIn"/>
+            <wsdl:output message="tns:getUserRealTimeForecastExSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetBusStopsList">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return list of bus stop
+            </wsdl:documentation>
+            <wsdl:input message="tns:GetBusStopsListSoapIn"/>
+            <wsdl:output message="tns:GetBusStopsListSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddUserFavouriteBusStop">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add favoute bus stop</wsdl:documentation>
+            <wsdl:input message="tns:AddUserFavouriteBusStopSoapIn"/>
+            <wsdl:output message="tns:AddUserFavouriteBusStopSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteUserFavouriteBusStop">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add favoute bus stop</wsdl:documentation>
+            <wsdl:input message="tns:DeleteUserFavouriteBusStopSoapIn"/>
+            <wsdl:output message="tns:DeleteUserFavouriteBusStopSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="UserServicesSoap" type="tns:UserServicesSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addNewUser">
+            <soap:operation soapAction="http://miz.it/infotransit/addNewUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="editUser">
+            <soap:operation soapAction="http://miz.it/infotransit/editUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <soap:operation soapAction="http://miz.it/infotransit/deleteUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getToken">
+            <soap:operation soapAction="http://miz.it/infotransit/getToken" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserFavouritePlaces">
+            <soap:operation soapAction="http://miz.it/infotransit/getUserFavouritePlaces" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecast">
+            <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecast" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecastEx">
+            <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastEx" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBusStopsList">
+            <soap:operation soapAction="http://miz.it/infotransit/GetBusStopsList" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddUserFavouriteBusStop">
+            <soap:operation soapAction="http://miz.it/infotransit/AddUserFavouriteBusStop" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteUserFavouriteBusStop">
+            <soap:operation soapAction="http://miz.it/infotransit/DeleteUserFavouriteBusStop" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="UserServicesSoap12" type="tns:UserServicesSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="addNewUser">
+            <soap12:operation soapAction="http://miz.it/infotransit/addNewUser" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="editUser">
+            <soap12:operation soapAction="http://miz.it/infotransit/editUser" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <soap12:operation soapAction="http://miz.it/infotransit/deleteUser" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getToken">
+            <soap12:operation soapAction="http://miz.it/infotransit/getToken" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserFavouritePlaces">
+            <soap12:operation soapAction="http://miz.it/infotransit/getUserFavouritePlaces" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecast">
+            <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecast" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserRealTimeForecastEx">
+            <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastEx" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetBusStopsList">
+            <soap12:operation soapAction="http://miz.it/infotransit/GetBusStopsList" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddUserFavouriteBusStop">
+            <soap12:operation soapAction="http://miz.it/infotransit/AddUserFavouriteBusStop" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteUserFavouriteBusStop">
+            <soap12:operation soapAction="http://miz.it/infotransit/DeleteUserFavouriteBusStop" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="UserServices">
+        <wsdl:port name="UserServicesSoap" binding="tns:UserServicesSoap">
+            <soap:address location="http://st.atb.no/InfoTransit/userservices.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="UserServicesSoap12" binding="tns:UserServicesSoap12">
+            <soap12:address location="http://st.atb.no/InfoTransit/userservices.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
 </wsdl:definitions>

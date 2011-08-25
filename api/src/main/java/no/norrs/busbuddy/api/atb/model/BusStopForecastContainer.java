@@ -48,7 +48,7 @@ public class BusStopForecastContainer {
 
         api.isValid = false;
         if (busStopNodeInfos != null) {
-            if (busStopNodeInfos.size()>0)   {
+            if (busStopNodeInfos.size() > 0) {
                 api.setGoingTowardsCentrum(Integer.parseInt(busStopNodeInfos.get(0).nodeId));
                 api.setDepartures(convertBusStopForecastsToApi());
                 api.isValid = true;
@@ -58,7 +58,6 @@ public class BusStopForecastContainer {
         }
         return api;
     }
-
 
 
     private List<Departure> convertBusStopForecastsToApi() {

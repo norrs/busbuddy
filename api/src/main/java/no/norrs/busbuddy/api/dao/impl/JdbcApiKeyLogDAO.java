@@ -20,6 +20,7 @@ import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
 import no.norrs.busbuddy.api.model.ApiKeyLog;
 import no.norrs.busbuddy.api.model.helper.HitsPerDay;
 import org.joda.time.LocalDateTime;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -31,6 +32,7 @@ import java.util.Map;
 /**
  * @author Roy Sindre Norangshol
  */
+@Repository
 public class JdbcApiKeyLogDAO implements ApiKeyLogDAO {
     private DataSource dataSource;
 

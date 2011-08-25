@@ -17,18 +17,17 @@
 package no.norrs.busbuddy.api.dao;
 
 
-
 import no.norrs.busbuddy.api.model.ApplicationType;
 
 import java.util.List;
 
 /**
- * @todo Get rid of DAO's and simply use Play! in the future hopefully.
- *
  * @author Roy Sindre Norangshol
+ * @todo Get rid of DAO's and simply use Play! in the future hopefully.
  */
 public interface ApplicationTypeDAO {
     public ApplicationType findByApplicationType(String applicationType);
+
     public List<ApplicationType> findAll();
 
 }

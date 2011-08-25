@@ -18,7 +18,7 @@ package no.norrs.busbuddy.api.dao.impl;
 
 import no.norrs.busbuddy.api.dao.TripsDAO;
 import no.norrs.busbuddy.api.model.Trip;
-import no.norrs.busbuddy.pub.api.model.BusStop;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -32,6 +32,7 @@ import java.util.List;
  * Date: 8/22/11
  * Time: 12:08 AM
  */
+@Repository
 public class JdbcTripsDAO implements TripsDAO {
     private DataSource dataSource;
 
@@ -121,7 +122,7 @@ public class JdbcTripsDAO implements TripsDAO {
                         resultSet.getInt("tripid"),
                         resultSet.getString("line"),
                         resultSet.getString("line_name")
-                        );
+                );
 
             }
             resultSet.close();

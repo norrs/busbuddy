@@ -28,7 +28,8 @@ public class ApiKeyLog {
     int hitCounter;
     int resultCode;
 
-    public ApiKeyLog() {}
+    public ApiKeyLog() {
+    }
 
     public ApiKeyLog(String apiKey, Timestamp timeStamp) {
         this.apiKey = apiKey;
@@ -40,7 +41,6 @@ public class ApiKeyLog {
         this.timeStamp = timeStamp;
         this.resultCode = resultCode;
     }
-
 
 
     public int getLogid() {

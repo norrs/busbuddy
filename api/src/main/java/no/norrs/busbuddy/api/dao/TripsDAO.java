@@ -27,8 +27,11 @@ import java.util.List;
  */
 public interface TripsDAO {
     public void insertOrUpdate(Trip trips);
+
     public void update(Trip trips);
-    public Trip findTripsByTripIdAndLine(int tripId, String line) ;
+
+    public Trip findTripsByTripIdAndLine(int tripId, String line);
+
     public List<Trip> findAll();
 
 }

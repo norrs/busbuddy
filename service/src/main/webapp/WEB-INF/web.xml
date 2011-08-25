@@ -20,10 +20,20 @@
 
 <web-app>
     <display-name>atb</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
 
     <servlet>
         <servlet-name>RealTimeService</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <servlet-class>com.sun.jersey.spi.container.servlet.SpringServlet</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>no.norrs.busbuddy.service.rest</param-value>
@@ -35,8 +45,6 @@
         <servlet-name>RealTimeService</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-
 
 
 </web-app>

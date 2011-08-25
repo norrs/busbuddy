@@ -27,7 +27,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ import java.util.regex.Pattern;
  * Date: 8/20/11
  * Time: 5:57 PM
  */
+@Component
 public class AtbRpControllerImpl implements AtbRpController {
     //private static final String endpointTrip="http://rp.atb.no/scripts/TravelMagic/TravelMagicWE.dll/turinfo?trip='%s'&date='.$tripDate;"
     private static final String endpointTrip = "http://rp.atb.no/scripts/TravelMagic/TravelMagicWE.dll/turinfo?trip=%s";
@@ -48,15 +51,18 @@ public class AtbRpControllerImpl implements AtbRpController {
     private ClassPathXmlApplicationContext context;
     private TripsDAO tripsDAO;
 
-    public AtbRpControllerImpl() throws IOException {
+    @Autowired
+    public AtbRpControllerImpl(BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
 /*
         Properties atbWebProperties = new Properties();
         atbWebProperties.load(getClass().getResourceAsStream("/atbweb.properties"));
         atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));
 */
-        context = new ClassPathXmlApplicationContext("classpath:Spring-Module.xml");
-        busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
-        tripsDAO = (TripsDAO) context.getBean("tripsDAO");
+        //context = new ClassPathXmlApplicationContext("classpath:Spring-Module.xml");
+        //busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
+        //tripsDAO = (TripsDAO) context.getBean("tripsDAO");
+        this.busstopDAO = busStopDAO;
+        this.tripsDAO = tripsDAO;
     }
 
     @Override
@@ -90,22 +96,22 @@ public class AtbRpControllerImpl implements AtbRpController {
 
         ArrayList<Stops> stops = new ArrayList<Stops>();
 
-       /* int busstopcounter=0,timestampcounter=0,linkscounter  = 0;
-        while (fromBusStop.hasNext()) {
-            System.out.println(fromBusStop.next());
-            busstopcounter++;
-        }
-        while (timestamps.hasNext()) {
-            System.out.println(timestamps.next());
-            timestampcounter++;
-        }
-        while (links.hasNext()) {
-            System.out.println(links.next());
-            linkscounter++;
-        }
-        System.out.println(String.format("busstop %s, timestamps %s, links %s", busstopcounter, timestampcounter, linkscounter));
+        /* int busstopcounter=0,timestampcounter=0,linkscounter  = 0;
+       while (fromBusStop.hasNext()) {
+           System.out.println(fromBusStop.next());
+           busstopcounter++;
+       }
+       while (timestamps.hasNext()) {
+           System.out.println(timestamps.next());
+           timestampcounter++;
+       }
+       while (links.hasNext()) {
+           System.out.println(links.next());
+           linkscounter++;
+       }
+       System.out.println(String.format("busstop %s, timestamps %s, links %s", busstopcounter, timestampcounter, linkscounter));
 
-         */
+        */
         while (fromBusStop.hasNext() && timestamps.hasNext() && links.hasNext()) {
             Element from = fromBusStop.next();
             Element time = timestamps.next();
@@ -135,7 +141,7 @@ public class AtbRpControllerImpl implements AtbRpController {
                 } else {
                     originalRpFromName = from.text().trim();
                 }
-                
+
                 BusStop dbBusStop = null;
                 if (locationId != null)
                     dbBusStop = busstopDAO.findBusStopByLocationId(Integer.parseInt(locationId));
@@ -168,7 +174,6 @@ public class AtbRpControllerImpl implements AtbRpController {
 
         Document schedulesDocument = Jsoup.parse(data);
         //Document schedulesDocument = Jsoup.parse(data);
-
 
 
         Pattern destinationInSchedule = Pattern.compile("^Avganger fra (.*)[\\(<].*");

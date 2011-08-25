@@ -19,6 +19,7 @@ package no.norrs.busbuddy.api.dao.impl;
 import no.norrs.busbuddy.api.dao.BusStopDAO;
 import no.norrs.busbuddy.api.skrot.model.BusStopSkrot;
 import no.norrs.busbuddy.pub.api.model.BusStop;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -31,6 +32,7 @@ import java.util.List;
 /**
  * @author Roy Sindre Norangshol
  */
+@Repository
 public class JdbcBusStopDAO implements BusStopDAO {
     private DataSource dataSource;
 

@@ -28,10 +28,15 @@ import java.util.Map;
  */
 public interface ApiKeyLogDAO {
     public void incrementHitcounterFor(ApiKeyLog log);
+
     public Map<Integer, Integer> getHitCountByApiKeyAndTimestamp(String apiKey, Timestamp timeStamp);
+
     public List<HitsPerDay> getHitCountByApiKeyFor30Days(String apiKey);
+
     public List<HitsPerDay> getSummedHitCountFor30Days();
+
     public Map<Integer, List<HitsPerDay>> getHitCountByApiKeyWithResultCodesLast30Days(String apiKey);
+
     public int getHitCountByApiKeyAndTimestampAndResultCode(String apiKey, Timestamp timeStamp, int resultCode);
 
 }

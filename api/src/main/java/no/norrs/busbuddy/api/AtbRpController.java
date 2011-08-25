@@ -16,7 +16,6 @@
 
 package no.norrs.busbuddy.api;
 
-import no.norrs.busbuddy.pub.api.model.Schedule;
 import no.norrs.busbuddy.pub.api.model.ScheduleContainer;
 import no.norrs.busbuddy.pub.api.model.StopsContainer;
 
@@ -29,6 +28,7 @@ import java.io.IOException;
  */
 public interface AtbRpController {
     StopsContainer getBusStopsFor(int tripId) throws IOException;
+
     ScheduleContainer getSchedulesForecast(int locationId) throws IOException;
 
 }

@@ -22,8 +22,7 @@ import com.sun.jersey.spi.resource.Singleton;
 import no.norrs.busbuddy.api.AtbController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
-import no.norrs.busbuddy.api.dao.ApiKeyLogDAO;
-import no.norrs.busbuddy.api.dao.BusStopDAO;
+import no.norrs.busbuddy.api.dao.*;
 import no.norrs.busbuddy.api.model.ApiKeyLog;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
@@ -36,6 +35,8 @@ import no.norrs.busbuddy.pub.api.model.Oracle;
 import no.norrs.busbuddy.service.DepartureCache;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -50,6 +51,7 @@ import java.net.URISyntaxException;
  */
 
 
+@Component
 @Path("/1.2")
 @Singleton
 public class AtbServiceVersion1_2Resource extends SharedResources {
@@ -69,9 +71,15 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
     private OracleServiceController oracleService;
     private AtbController atbService;
 
+    @Autowired
+    public AtbServiceVersion1_2Resource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
+        super(busBuddyApiKeyDAO);
 
-    public AtbServiceVersion1_2Resource() throws IOException {
-        super();
+        this.loggerDAO = apiKeyLogDAO;
+        this.busstopDAO = busStopDAO;
+
+
+
 
 /*
         Properties atbProperties = new Properties();
@@ -90,8 +98,8 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
                 .registerTypeAdapter(Instant.class, new InstantTypeConverter())
                 .create();
 
-        loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
-        busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
+        //loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
+        //busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
     }
 
 

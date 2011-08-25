@@ -18,6 +18,7 @@ package no.norrs.busbuddy.api.dao.impl;
 
 import no.norrs.busbuddy.api.dao.ApplicationTypeDAO;
 import no.norrs.busbuddy.api.model.ApplicationType;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -30,6 +31,7 @@ import java.util.List;
 /**
  * @author Roy Sindre Norangshol
  */
+@Repository
 public class JdbcApplicationTypeDAO implements ApplicationTypeDAO {
     private DataSource dataSource;
 

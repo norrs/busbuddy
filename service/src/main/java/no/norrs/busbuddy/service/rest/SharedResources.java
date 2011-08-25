@@ -23,8 +23,8 @@ import no.norrs.busbuddy.service.CacheServiceLocator;
 import no.norrs.busbuddy.service.DepartureCache;
 import org.joda.time.LocalDateTime;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -39,6 +39,7 @@ public class SharedResources {
     // appName, appKey
     private static final SimpleDateFormat logDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     static final String BUSBUDDY_HTML_APP_APIKEY = "82NV49lmavKaljw2";
+    @Context
     ApplicationContext context;
     static List<BusBuddyApiKey> apiKeys;
     protected static Map<Integer, DepartureCache> departureCache = null;
@@ -47,10 +48,11 @@ public class SharedResources {
     private BusBuddyApiKeyDAO apikeyDAO;
     protected AtbControllerFactory controllerFactory;
 
-    public SharedResources() {
+    public SharedResources(BusBuddyApiKeyDAO busBuddyApiKeyDAO) {
         controllerFactory = new AtbControllerFactory();
-        context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-        apikeyDAO = (BusBuddyApiKeyDAO) context.getBean("busbuddyapikeyDAO");
+        //context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        //apikeyDAO = (BusBuddyApiKeyDAO) context.getBean("busbuddyapikeyDAO");
+        apikeyDAO = busBuddyApiKeyDAO;
         apiKeys = apikeyDAO.findAll();
 
         departureCache = CacheServiceLocator.getInstance();

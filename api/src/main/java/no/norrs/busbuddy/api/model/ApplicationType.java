@@ -20,7 +20,7 @@ package no.norrs.busbuddy.api.model;
  * @author Roy Sindre Norangshol
  */
 public class ApplicationType {
-     private String type;
+    private String type;
 
     public ApplicationType() {
 

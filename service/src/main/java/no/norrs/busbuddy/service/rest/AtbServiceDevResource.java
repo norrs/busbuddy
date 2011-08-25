@@ -22,13 +22,15 @@ import com.sun.jersey.spi.resource.Singleton;
 import no.norrs.busbuddy.api.AtbSoapController;
 import no.norrs.busbuddy.api.atb.model.BusListsContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
-import no.norrs.busbuddy.api.dao.BusStopDAO;
+import no.norrs.busbuddy.api.dao.*;
 import no.norrs.busbuddy.api.skrot.controller.SkrotToAPIConverterController;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
 import no.norrs.busbuddy.pub.api.LocalDateTimeTypeConverter;
 import org.joda.time.Instant;
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -40,6 +42,7 @@ import java.util.Properties;
 /**
  * @author Roy Sindre Norangshol
  */
+@Component
 @Path("/dev")
 @Singleton
 public class AtbServiceDevResource extends SharedResources {
@@ -56,13 +59,14 @@ public class AtbServiceDevResource extends SharedResources {
     private Gson gson;
 
 
-    public AtbServiceDevResource() throws IOException {
-        super();
+    @Autowired
+    public AtbServiceDevResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
+        super(busBuddyApiKeyDAO);
         Properties atbProperties = new Properties();
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
        // skrotController = new SkrotToAPIConverterController();
-        busStopDAO = (BusStopDAO) context.getBean("busstopDAO");
+        this.busStopDAO = busStopDAO;
 
         GsonBuilder builder = new GsonBuilder();
         gson = builder.serializeNulls()

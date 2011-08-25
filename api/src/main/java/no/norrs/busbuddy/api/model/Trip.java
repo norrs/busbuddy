@@ -26,7 +26,8 @@ public class Trip {
     private String line;
     private String lineName;
 
-    public Trip() {}
+    public Trip() {
+    }
 
     public Trip(int tripId, String line, String lineName) {
         this.tripId = tripId;

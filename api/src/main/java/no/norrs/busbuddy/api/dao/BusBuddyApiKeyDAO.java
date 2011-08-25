@@ -25,6 +25,8 @@ import java.util.List;
  */
 public interface BusBuddyApiKeyDAO {
     public void insert(BusBuddyApiKey apiKey);
+
     public BusBuddyApiKey findByApiKey(String apiKey);
+
     public List<BusBuddyApiKey> findAll();
 }
