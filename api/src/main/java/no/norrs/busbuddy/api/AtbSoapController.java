@@ -52,8 +52,11 @@ public class AtbSoapController implements AtbController {
 
 
         //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
-        UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
-        soap = service.getUserServicesSoap12();
+        //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
+        UserServices service = new UserServices();
+
+        soap  = service.getUserServicesSoap();
+        //soap = service.getUserServicesSoap12();
         BindingProvider bindingProvider = (BindingProvider) soap;
         bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://st.atb.no/InfoTransit/userservices.asmx?wsdl");
 
