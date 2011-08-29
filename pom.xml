@@ -82,6 +82,7 @@
         <module>service</module>
         <module>busbuddy-html5</module>
         <module>internal-tools</module>
+        <module>webfrontend-spring</module>
     </modules>
 
 

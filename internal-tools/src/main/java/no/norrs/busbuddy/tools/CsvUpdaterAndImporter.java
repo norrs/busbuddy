@@ -43,7 +43,7 @@ public class CsvUpdaterAndImporter {
     private AtbWebController atbService;
 
     public CsvUpdaterAndImporter() throws IOException {
-        context = new ClassPathXmlApplicationContext("classpath:Spring-Module.xml");
+        context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         busstopDAO = (BusStopDAO) context.getBean("busstopDAO");
         tripsDAO = (TripsDAO) context.getBean("tripsDAO");
 
@@ -86,9 +86,11 @@ public class CsvUpdaterAndImporter {
         CSVReader reader = null;
         try {
 
-            reader = new CSVReader(new FileReader("/home/rockj/tmp/busset.txt"), '\t');
+            reader = new CSVReader(new FileReader("/home/rockj/tmp/stops29aug2011.txt"), '\t');
             Pattern name = Pattern.compile("(.*) (\\(\\d{0,4}\\))");
 
+            int updatedCounter = 0;
+            int newCounter = 0;
             ArrayList<Integer> busStopsToPullForUpdatingCoordinates = new ArrayList<Integer>();
 
             List<String[]> myEntries = reader.readAll();
@@ -106,6 +108,7 @@ public class CsvUpdaterAndImporter {
                         busStop.setBusStopId(Integer.parseInt(bus[0]));
                         busstopDAO.update(busStop);
                         System.out.println(String.format("UPDATED  id %s , loc %s   ==> %s ", bus[0], bus[1], bus[2]));
+                        updatedCounter++;
                     } else {
                         busStop = new BusStop();
                         busStop.setBusStopId(Integer.parseInt(bus[0]));
@@ -118,6 +121,7 @@ public class CsvUpdaterAndImporter {
                         busStopsToPullForUpdatingCoordinates.add(busStop.getBusStopId());
                         System.out.println(String.format("NEW ENTRY  id %s , loc %s   ==> %s ", bus[0], bus[1], busStop.toString()));
                         busstopDAO.insertOrUpdate(busStop);
+                        newCounter++;
                     }
 
                 } else {
@@ -126,6 +130,9 @@ public class CsvUpdaterAndImporter {
             }
             System.out.println(String.format(" First phase done , updating %s records for coordinates etc", busStopsToPullForUpdatingCoordinates.size()));
             final ArrayList<Integer> busLoop = busStopsToPullForUpdatingCoordinates;
+            final int finalUpdatedCounter = updatedCounter;
+            final int finalNewCounter = newCounter;
+            System.out.println(String.format("updatedCounter = %s, newCounter = %s", finalUpdatedCounter, finalNewCounter));
             Runnable thread = new Runnable() {
                 @Override
                 public void run() {
@@ -138,6 +145,7 @@ public class CsvUpdaterAndImporter {
                             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                         }
                     }
+
                 }
             };
             thread.run();
@@ -185,7 +193,7 @@ public class CsvUpdaterAndImporter {
         CsvUpdaterAndImporter csv = null;
         try {
             csv = new CsvUpdaterAndImporter();
-            csv.updateBusstosWithMissingData();
+            csv.updateBusStopIdsFromNewDataset();
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
