@@ -19,6 +19,7 @@ package no.norrs.busbuddy.service.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
+import no.norrs.busbuddy.api.AtbController;
 import no.norrs.busbuddy.api.AtbSoapController;
 import no.norrs.busbuddy.api.atb.model.BusListsContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
@@ -53,7 +54,7 @@ public class AtbServiceDevResource extends SharedResources {
     @Context
 
     HttpHeaders headers;
-    private AtbSoapController soapService;
+    private AtbController soapService;
     private BusStopDAO busStopDAO;
     private SkrotToAPIConverterController skrotController;
     private Gson gson;
@@ -62,9 +63,11 @@ public class AtbServiceDevResource extends SharedResources {
     @Autowired
     public AtbServiceDevResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
         super(busBuddyApiKeyDAO);
-        Properties atbProperties = new Properties();
+        /*Properties atbProperties = new Properties();
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
-        soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
+        soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));*/
+
+        soapService = controllerFactory.createRealtimeSoapController();
        // skrotController = new SkrotToAPIConverterController();
         this.busStopDAO = busStopDAO;
 

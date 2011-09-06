@@ -87,7 +87,7 @@ public class AtbServiceVersion1_2Resource extends SharedResources {
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
 */
 
-        atbService = controllerFactory.createRealtimeController();
+        atbService = controllerFactory.createRealtimeSoapController();
 
         oracleService = new OracleServiceController();
 

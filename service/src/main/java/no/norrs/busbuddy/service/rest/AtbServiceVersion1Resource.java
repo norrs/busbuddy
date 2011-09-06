@@ -20,6 +20,7 @@ package no.norrs.busbuddy.service.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.spi.resource.Singleton;
+import no.norrs.busbuddy.api.AtbController;
 import no.norrs.busbuddy.api.AtbWebController;
 import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
@@ -60,7 +61,7 @@ public class AtbServiceVersion1Resource extends SharedResources {
     HttpHeaders headers;
     private ApiKeyLogDAO loggerDAO;
     private BusStopDAO busstopDAO;
-    private AtbWebController atbService;
+    private AtbController atbService;
 
 
     @Autowired
@@ -71,9 +72,10 @@ public class AtbServiceVersion1Resource extends SharedResources {
         atbProperties.load(getClass().getResourceAsStream("/atbapikey.properties"));
         soapService = new AtbSoapController(atbProperties.getProperty("username"), atbProperties.getProperty("password"));
 */
-        Properties atbWebProperties = new Properties();
+        /*Properties atbWebProperties = new Properties();
         atbWebProperties.load(getClass().getResourceAsStream("/atbweb.properties"));
-        atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));
+        atbService = new AtbWebController(atbWebProperties.getProperty("endpoint"), atbWebProperties.getProperty("payload"));*/
+        atbService = controllerFactory.createRealtimeSoapController();
 
         GsonBuilder builder = new GsonBuilder();
         gson = builder.serializeNulls()
