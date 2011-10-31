@@ -52,9 +52,19 @@ public class AtbWebController implements AtbController {
 
     }
 
-    @Override
+    /**
+     * WebController can't query on locationId
+     * @deprecated
+     * @param busStopId busStopId (internal AtB index id)
+     * @return BusStopForecastContainer with bus stop forecasts
+     */
     public BusStopForecastContainer getUserRealTimeForecast(int busStopId) {
         return getUserRealTimeForecastFromJson(resolveEndpointWithPayload(busStopId));
+    }
+    
+    @Override
+    public BusStopForecastContainer getUserRealTimeForecast(String locationId) {
+        throw new NoSuchMethodError("Not implemented due to not available to ask webcontroller for forecasts by using location id. sorry");
     }
 
     @Override

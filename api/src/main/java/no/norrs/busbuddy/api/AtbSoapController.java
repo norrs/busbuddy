@@ -63,8 +63,8 @@ public class AtbSoapController implements AtbController {
     }
 
     @Override
-    public BusStopForecastContainer getUserRealTimeForecast(int busStopId) {
-        return getUserRealTimeForecastFromJson(soap.getUserRealTimeForecast(authentication, null, String.valueOf(busStopId)));
+    public BusStopForecastContainer getUserRealTimeForecast(String locationId) {
+        return getUserRealTimeForecastFromJson(soap.getUserRealTimeForecastByStop(authentication, null, locationId.trim()));
     }
 
     @Override

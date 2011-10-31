@@ -26,7 +26,7 @@ import no.norrs.busbuddy.pub.api.model.StopsContainer;
  * @author Roy Sindre Norangshol
  */
 public interface AtbController {
-    BusStopForecastContainer getUserRealTimeForecast(int busStopId);
+    BusStopForecastContainer getUserRealTimeForecast(String locationId);
 
     BusListsContainer getAllBusStopsListInTrondheim();
 
