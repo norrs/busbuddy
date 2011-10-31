@@ -41,6 +41,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import javax.xml.soap.SOAPException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -151,7 +152,7 @@ public class AtbServiceVersionResource extends SharedResources {
 
 
     @GET
-    @Path("/departures/{busStopId}")
+    @Path("/departures/{locationId}")
     @Produces({"application/json; charset=UTF-8"})
     public Response getDepartures(@PathParam("locationId") String locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
         String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
