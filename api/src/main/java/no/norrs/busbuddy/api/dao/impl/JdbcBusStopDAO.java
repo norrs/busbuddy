@@ -45,7 +45,7 @@ public class JdbcBusStopDAO implements BusStopDAO {
         String insertSQL = "INSERT INTO busstop(id, name, name_abbreviation, maintainer, location_id, longitude, latitude) VALUES (?,?,?,?,?,?,?)";
         Connection connection = null;
         try {
-            BusStop busStopFromDb = findBusStopByLocationId(Integer.parseInt(busStop.getLocationId()));
+            BusStop busStopFromDb = findBusStopByLocationId(busStop.getLocationId());
             if (busStopFromDb != null && busStopFromDb.getLocationId().equalsIgnoreCase(busStop.getLocationId())) {
                 if (busStopFromDb.getBusStopMaintainer() == null || busStopFromDb.getNameWithAbbreviations() == null || busStopFromDb.getLongitude() == 0.0 || busStopFromDb.getLatitude() == 0.0) {
                     update(busStop);
@@ -150,14 +150,14 @@ public class JdbcBusStopDAO implements BusStopDAO {
     }
 
     @Override
-    public BusStop findBusStopByLocationId(int locationId) {
+    public BusStop findBusStopByLocationId(String locationId) {
         String querySQL = "SELECT id,name,name_abbreviation, maintainer, location_id, longitude, latitude FROM busstop WHERE location_id = ?";
 
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(querySQL);
-            preparedStatement.setString(1, String.valueOf(locationId));
+            preparedStatement.setString(1, locationId);
             ResultSet resultSet = preparedStatement.executeQuery();
             BusStop result = null;
             if (resultSet.next()) {

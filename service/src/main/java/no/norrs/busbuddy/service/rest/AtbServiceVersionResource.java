@@ -67,7 +67,6 @@ public class AtbServiceVersionResource extends SharedResources {
     private OracleServiceController oracleService;
     private AtbController atbService;
     private AtbRpController rpController;
-    ;
 
     @Autowired
     public AtbServiceVersionResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
@@ -146,7 +145,7 @@ public class AtbServiceVersionResource extends SharedResources {
     @GET
     @Path("/departures/{busStopId}")
     @Produces({"application/json; charset=UTF-8"})
-    public Response getBusStops(@PathParam("busStopId") int busStopId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
+    public Response getDepartures(@PathParam("locationId") String locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
         String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
         if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
             loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
@@ -157,17 +156,17 @@ public class AtbServiceVersionResource extends SharedResources {
             DepartureContainer container = null;
             BusStopForecastContainer originalContainer = null;
             LocalDateTime now = new LocalDateTime();
-            if (departureCache.containsKey(busStopId)) {
-                if (now.isBefore(departureCache.get(busStopId).getRequstTimestamp().plusMinutes(1))) {
-                    container = departureCache.get(busStopId).getDepartureContainer();
-                    originalContainer = departureCache.get(busStopId).getOriginalContainerFromAtb();
-                    //Logger.getLogger(AtbServiceVersion1Resource.class.getName(), String.format("Cache hit on %s", busStopId));
+            if (departureCache.containsKey(locationId)) {
+                if (now.isBefore(departureCache.get(locationId).getRequstTimestamp().plusMinutes(1))) {
+                    container = departureCache.get(locationId).getDepartureContainer();
+                    originalContainer = departureCache.get(locationId).getOriginalContainerFromAtb();
+                    //Logger.getLogger(AtbServiceVersion1Resource.class.getName(), String.format("Cache hit on %s", locationId));
                 }
             }
             if (container == null) {
-                originalContainer = atbService.getUserRealTimeForecast(busStopId);
+                originalContainer = atbService.getUserRealTimeForecast(locationId);
                 container = originalContainer.convertToApi();
-                departureCache.put(busStopId, new DepartureCache(now, container, originalContainer));
+                departureCache.put(locationId, new DepartureCache(now, container, originalContainer));
             }
 
 
@@ -183,11 +182,11 @@ public class AtbServiceVersionResource extends SharedResources {
 
             BusStopNodeInfo atbBusStopNodeInfo = originalContainer.busStopNodeInfos.get(0);
 
-            BusStop busStopFromDB = busstopDAO.findBusStopById(busStopId);
+            BusStop busStopFromDB = busstopDAO.findBusStopByLocationId(locationId);
 
             String nodeDescription = atbBusStopNodeInfo.getFixedNodeDescriptionOrFallBackToNormalNodeDescription();
             BusStop updateOrInsertIfNeeded = new BusStop(
-                    busStopId,
+                    null,
                     nodeDescription,
                     nodeDescription,
                     atbBusStopNodeInfo.name,
@@ -214,7 +213,7 @@ public class AtbServiceVersionResource extends SharedResources {
             try {
                 loggerDAO.incrementHitcounterFor(new ApiKeyLog(apiKey, getTimeStampForHitcounterLogging(), Response.Status.OK.getStatusCode()));
                 URI uri = uriInfo != null ? uriInfo.getAbsolutePath()
-                        : new URI(String.format("%s/%s", "/buss/incoming", busStopId));
+                        : new URI(String.format("%s/%s", "/buss/incoming", locationId));
                 return Response.created(uri)
                         .entity(data)
                         .status(Response.Status.OK)

@@ -24,18 +24,18 @@ import java.util.Map;
  * @author Roy Sindre Norangshol
  */
 public class CacheServiceLocator {
-    private static Map<Integer, DepartureCache> departureCache = null;
+    private static Map<String, DepartureCache> departureCache = null;
 
     static {
         if (departureCache == null) {
-            departureCache = Collections.synchronizedMap(new HashMap<Integer, DepartureCache>());
+            departureCache = Collections.synchronizedMap(new HashMap<String, DepartureCache>());
         }
     }
 
     protected CacheServiceLocator() {
     }
 
-    public static Map<Integer, DepartureCache> getInstance() {
+    public static Map<String, DepartureCache> getInstance() {
         return departureCache;
     }
 }

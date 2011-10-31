@@ -31,7 +31,7 @@ public interface BusStopDAO {
 
     public BusStop findBusStopById(int busStopId);
 
-    public BusStop findBusStopByLocationId(int locationId);
+    public BusStop findBusStopByLocationId(String locationId);
 
     public List<BusStop> findAll();
 

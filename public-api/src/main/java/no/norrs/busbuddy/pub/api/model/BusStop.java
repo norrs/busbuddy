@@ -33,7 +33,7 @@ public class BusStop implements Comparable<BusStop> {
     public BusStop() {
     }
 
-    public BusStop(int busStopId, String name, String nameWithAbbreviations, String busStopMaintainer, String locationId, float longitude, float latitude) {
+    public BusStop(Integer busStopId, String name, String nameWithAbbreviations, String busStopMaintainer, String locationId, float longitude, float latitude) {
         this.busStopId = busStopId;
         this.name = name;
         this.nameWithAbbreviations = nameWithAbbreviations;
@@ -47,7 +47,7 @@ public class BusStop implements Comparable<BusStop> {
         return busStopId;
     }
 
-    public void setBusStopId(int busStopId) {
+    public void setBusStopId(Integer busStopId) {
         this.busStopId = busStopId;
     }
 
@@ -112,7 +112,7 @@ public class BusStop implements Comparable<BusStop> {
     }
 
     public int compareTo(BusStop n) {
-        return busStopId > n.busStopId ? 1 : busStopId < n.busStopId ? -1 : 0;
+        return locationId.compareTo(n.locationId);
     }
 
     @Override

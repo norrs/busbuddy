@@ -42,7 +42,7 @@ public class SharedResources {
     @Context
     ApplicationContext context;
     static List<BusBuddyApiKey> apiKeys;
-    protected static Map<Integer, DepartureCache> departureCache = null;
+    protected static Map<String, DepartureCache> departureCache = null;
 
 
     private BusBuddyApiKeyDAO apikeyDAO;
