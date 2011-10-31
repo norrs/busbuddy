@@ -102,7 +102,7 @@ public class CsvUpdaterAndImporter {
                     //System.out.println(stopName);
 
                     BusStop busStop = null;
-                    busStop = busstopDAO.findBusStopByLocationId(Integer.parseInt(bus[1].trim()));
+                    busStop = busstopDAO.findBusStopByLocationId(bus[1].trim());
 
                     if (busStop != null) {
                         busStop.setBusStopId(Integer.parseInt(bus[0]));

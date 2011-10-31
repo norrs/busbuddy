@@ -22,10 +22,7 @@ import no.norrs.busbuddy.pub.api.model.BusStop;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +51,10 @@ public class JdbcBusStopDAO implements BusStopDAO {
             } else {
                 connection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
-                preparedStatement.setInt(1, busStop.getBusStopId());
+                if (busStop.getBusStopId() != null)
+                    preparedStatement.setInt(1, busStop.getBusStopId());
+                else
+                    preparedStatement.setNull(1, Types.NULL);
                 preparedStatement.setString(2, busStop.getName());
                 preparedStatement.setString(3, busStop.getNameWithAbbreviations());
                 preparedStatement.setString(4, busStop.getBusStopMaintainer());
@@ -91,7 +91,10 @@ public class JdbcBusStopDAO implements BusStopDAO {
             preparedStatement.setString(3, busStop.getBusStopMaintainer());
             preparedStatement.setFloat(4, busStop.getLongitude());
             preparedStatement.setFloat(5, busStop.getLatitude());
-            preparedStatement.setInt(6, busStop.getBusStopId());
+            if (busStop.getBusStopId() != null)
+                preparedStatement.setInt(6, busStop.getBusStopId());
+            else
+                preparedStatement.setNull(6, Types.NULL);
             preparedStatement.setString(7, busStop.getLocationId());
             preparedStatement.executeUpdate();
             preparedStatement.close();

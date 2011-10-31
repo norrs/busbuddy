@@ -144,7 +144,7 @@ public class AtbRpControllerImpl implements AtbRpController {
 
                 BusStop dbBusStop = null;
                 if (locationId != null)
-                    dbBusStop = busstopDAO.findBusStopByLocationId(Integer.parseInt(locationId));
+                    dbBusStop = busstopDAO.findBusStopByLocationId(locationId);
 
                 if (dbBusStop != null)
                     originalRpFromName = dbBusStop.getName();
@@ -163,7 +163,7 @@ public class AtbRpControllerImpl implements AtbRpController {
     }
 
     @Override
-    public ScheduleContainer getSchedulesForecast(int locationId) throws IOException {
+    public ScheduleContainer getSchedulesForecast(String locationId) throws IOException {
         String rpSchedulesEndpoint = "http://rp.atb.no/scripts/TravelMagic/TravelMagicWE.dll/avgangsinfo?hpl=%s&time='%s'&date='%s'";
 
         LocalDateTime now = new LocalDateTime();

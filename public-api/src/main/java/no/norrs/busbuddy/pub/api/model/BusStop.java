@@ -43,7 +43,7 @@ public class BusStop implements Comparable<BusStop> {
         this.latitude = latitude;
     }
 
-    public int getBusStopId() {
+    public Integer getBusStopId() {
         return busStopId;
     }
 

@@ -29,6 +29,6 @@ import java.io.IOException;
 public interface AtbRpController {
     StopsContainer getBusStopsFor(int tripId) throws IOException;
 
-    ScheduleContainer getSchedulesForecast(int locationId) throws IOException;
+    ScheduleContainer getSchedulesForecast(String locationId) throws IOException;
 
 }
