@@ -113,7 +113,7 @@ public class AtbServiceVersionResource extends SharedResources {
 
         String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
 
-        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+        if (apiKeyNotNull(apiKey) && apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
             loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
             return Response.status(450).entity("Blocked by Windows Parental Controls, stop being a scriptkiddie and just email me for an api key ;-)").build();
         } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {
@@ -155,7 +155,7 @@ public class AtbServiceVersionResource extends SharedResources {
     @Produces({"application/json; charset=UTF-8"})
     public Response getDepartures(@PathParam("locationId") String locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
         String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
-        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+        if (apiKeyNotNull(apiKey) && apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
             loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
             return Response.status(450).entity("Blocked by Windows Parental Controls").build();
         } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {
@@ -294,7 +294,7 @@ public class AtbServiceVersionResource extends SharedResources {
     @Produces({"application/json; charset=UTF-8"})
     public Response getBusStops(@PathParam("question") String question, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
         String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
-        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+        if (apiKeyNotNull(apiKey) && apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
             loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
             return Response.status(450).entity("Blocked by Windows Parental Controls").build();
         } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {
