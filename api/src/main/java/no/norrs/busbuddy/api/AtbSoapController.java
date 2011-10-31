@@ -40,26 +40,30 @@ public class AtbSoapController implements AtbController {
     private Gson gson;
 
     public AtbSoapController(String adminUsername, String adminPassword) throws MalformedURLException {
-        authentication = new WsAuthentication();
-        authentication.setUser(adminUsername);
-        authentication.setPassword(adminPassword);
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder
-                .serializeNulls()
-                .registerTypeAdapter(String.class, new CharSetAdapter())
-                .create();
+        if (adminUsername != null && !adminUsername.equalsIgnoreCase("") &&
+                adminPassword != null && !adminPassword.equalsIgnoreCase("")) {
+            authentication = new WsAuthentication();
+            authentication.setUser(adminUsername);
+            authentication.setPassword(adminPassword);
 
 
-        //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
-        //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
-        UserServices service = new UserServices();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gson = gsonBuilder
+                    .serializeNulls()
+                    .registerTypeAdapter(String.class, new CharSetAdapter())
+                    .create();
 
-        soap  = service.getUserServicesSoap();
-        //soap = service.getUserServicesSoap12();
-        BindingProvider bindingProvider = (BindingProvider) soap;
-        bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://st.atb.no/InfoTransit/userservices.asmx?wsdl");
 
+            //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
+            //UserServices service = new UserServices(getClass().getResource("wsdl/atb.wsdl"));
+            UserServices service = new UserServices();
+
+            soap = service.getUserServicesSoap();
+            //soap = service.getUserServicesSoap12();
+            BindingProvider bindingProvider = (BindingProvider) soap;
+            bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://st.atb.no/InfoTransit/userservices.asmx?wsdl");
+
+        } else throw new RuntimeException("Missing username and password towards AtB service");
     }
 
     @Override

@@ -31,13 +31,6 @@
     <packaging>war</packaging>
 
 
-    <properties>
-        <cxf.version>2.2.3</cxf.version>
-        <jersey.version>1.8</jersey.version>
-        <jetty.version>6.1.10</jetty.version>
-        <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
-
-    </properties>
 
     <build>
         <plugins>
@@ -58,6 +51,7 @@
             </plugin>
         </plugins>
     </build>
+
 
 
     <dependencies>

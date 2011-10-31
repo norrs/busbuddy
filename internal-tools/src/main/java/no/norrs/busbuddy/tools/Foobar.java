@@ -16,27 +16,10 @@
 
 package no.norrs.busbuddy.tools;
 
-import no.norrs.busbuddy.api.AtbRpController;
-import no.norrs.busbuddy.api.AtbRpControllerImpl;
-import no.norrs.busbuddy.pub.api.model.*;
-import org.apache.cxf.transport.servlet.ServletDestination;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import sun.jdbc.odbc.JdbcOdbcDatabaseMetaData;
 
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.BufferedReader;
+import java.io.File;
 
 /**
  * Roy Sindre Norangshol

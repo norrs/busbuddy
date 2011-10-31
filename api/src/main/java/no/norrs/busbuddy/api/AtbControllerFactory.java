@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Properties;
 
 /**
@@ -27,15 +28,26 @@ import java.util.Properties;
  */
 public class AtbControllerFactory {
 
-    public AtbController createRealtimeController() {
-        Properties properties = loadProperties();
+    public AtbController createRealtimeWebHackController() {
+        Properties properties = loadProperties("atbweb");
         return new AtbWebController(properties.getProperty("endpoint"), properties.getProperty("payload"));
     }
 
-    private Properties loadProperties() {
+    public AtbController createRealtimeSoapController() {
+
+        Properties properties = loadProperties("atbapikey");
+        System.out.println("properties: "+properties.toString());
+        try {
+            return new AtbSoapController(properties.getProperty("username"), properties.getProperty("password"));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Properties loadProperties(String firstNameOnFileName) {
         Properties properties = new Properties();
         try {
-            InputStream stream = getClass().getResourceAsStream("/atbweb.properties");
+            InputStream stream = getClass().getResourceAsStream(String.format("/%s.properties",firstNameOnFileName));
             if (stream != null) {
                 try {
                     properties.load(stream);
@@ -43,7 +55,7 @@ public class AtbControllerFactory {
                     stream.close();
                 }
             }
-            File file = new File("/etc/busbuddy/atbweb.properties");
+            File file = new File(String.format("/etc/busbuddy/%s.properties", firstNameOnFileName));
             if (file.exists()) {
                 stream = new FileInputStream(file);
                 try {
