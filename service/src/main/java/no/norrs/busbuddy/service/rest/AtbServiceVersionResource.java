@@ -241,7 +241,7 @@ public class AtbServiceVersionResource extends SharedResources {
     @GET
     @Path("/schedules/{locationId}")
     @Produces({"application/json; charset=UTF-8"})
-    public Response getBusStopsFromTrip(@PathParam("locationId") int locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
+    public Response getBusStopsFromTrip(@PathParam("locationId") String locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
         /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
   if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
       loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
