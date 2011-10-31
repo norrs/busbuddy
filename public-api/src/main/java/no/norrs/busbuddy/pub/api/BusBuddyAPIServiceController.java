@@ -37,7 +37,7 @@ import java.io.InputStream;
  * @author Roy Sindre Norangshol
  */
 public class BusBuddyAPIServiceController {
-    private final String END_POINT = "http://api.busbuddy.no:8080/api/1.2/";
+    private final String END_POINT = "http://api.busbuddy.no:8080/api/1.3/";
     private final String GET_BUS_STOPS = "busstops/";
     private final String GET_BUS_STOP_FORECASTS = "departures/%s";
 
@@ -82,12 +82,12 @@ public class BusBuddyAPIServiceController {
     /**
      * Retreives bus stop forecasts encapsuled in an @see DepartureContainer .
      *
-     * @param busStopId bus stop id you want bus stop forecasts for
+     * @param locationId location id you want bus stop forecasts for
      * @return DepartureContainer A container can have an empty list if it contains no departures for that bus stop. Return's null if http request is not 200 or 204.
      * @throws IOException Any IO error on the service side.
      */
-    public DepartureContainer getBusStopForecasts(int busStopId) throws IOException {
-        HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, String.format(GET_BUS_STOP_FORECASTS, busStopId)));
+    public DepartureContainer getBusStopForecasts(String locationId) throws IOException {
+        HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, String.format(GET_BUS_STOP_FORECASTS, locationId)));
 
         if (response.getStatusLine().getStatusCode() == 200) {
             return gson.fromJson(HttpUtil.readString(response.getEntity().getContent()), DepartureContainer.class);

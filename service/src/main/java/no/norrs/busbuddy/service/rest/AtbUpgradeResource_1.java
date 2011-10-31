@@ -84,7 +84,6 @@ public class AtbUpgradeResource_1 {
                 dummyDepartureTellingUserToNagOwnerOfApp3,
                 dummyDepartureTellingUserToNagOwnerOfApp4})));
 
-
         String data = null;
         if (callbackQueryParam != null) {
             data = String.format("busbuddyResponse%s(%s)", callbackQueryParam, gson.toJson(dummyContainer));

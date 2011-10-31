@@ -59,50 +59,6 @@ public class AtbUpgradeResource {
     @Path("/departures/{locationId}")
     @Produces({"application/json; charset=UTF-8"})
     public Response getDepartures(@QueryParam("callback") String callbackQueryParam) {
-        DepartureContainer dummyContainer = new DepartureContainer();
-        dummyContainer.setGoingTowardsCentrum(1001);
-        Departure dummyDepartureTellingUserToNagOwnerOfApp = new Departure();
-        dummyDepartureTellingUserToNagOwnerOfApp.setLine("500");
-        dummyDepartureTellingUserToNagOwnerOfApp.setDestination("AppAuthor");
-        dummyDepartureTellingUserToNagOwnerOfApp.setRegisteredDepartureTime(new LocalDateTime().plusMinutes(5));
-        Departure dummyDepartureTellingUserToNagOwnerOfApp2 = new Departure();
-        dummyDepartureTellingUserToNagOwnerOfApp2.setLine("501");
-        dummyDepartureTellingUserToNagOwnerOfApp2.setDestination("Must");
-        dummyDepartureTellingUserToNagOwnerOfApp2.setRegisteredDepartureTime(new LocalDateTime().plusMinutes(5));
-        Departure dummyDepartureTellingUserToNagOwnerOfApp3 = new Departure();
-        dummyDepartureTellingUserToNagOwnerOfApp3.setLine("502");
-        dummyDepartureTellingUserToNagOwnerOfApp3.setDestination("UPGRADE");
-        dummyDepartureTellingUserToNagOwnerOfApp3.setRegisteredDepartureTime(new LocalDateTime().plusMinutes(5));
-        Departure dummyDepartureTellingUserToNagOwnerOfApp4 = new Departure();
-        dummyDepartureTellingUserToNagOwnerOfApp4.setLine("503");
-        dummyDepartureTellingUserToNagOwnerOfApp4.setDestination("TO API 1.3 ASAP");
-        dummyDepartureTellingUserToNagOwnerOfApp4.setRegisteredDepartureTime(new LocalDateTime().plusMinutes(5));
-
-        dummyContainer.setDepartures(new ArrayList<Departure>(Arrays.asList(new Departure[]{
-                dummyDepartureTellingUserToNagOwnerOfApp,
-                dummyDepartureTellingUserToNagOwnerOfApp2,
-                dummyDepartureTellingUserToNagOwnerOfApp3,
-                dummyDepartureTellingUserToNagOwnerOfApp4})));
-
-
-        String data = null;
-        if (callbackQueryParam != null) {
-            data = String.format("busbuddyResponse%s(%s)", callbackQueryParam, gson.toJson(dummyContainer));
-        } else {
-            data = gson.toJson(dummyContainer);
-        }
-
-
-        try {
-
-            URI uri = uriInfo != null ? uriInfo.getAbsolutePath()
-                    : new URI(String.format("%s/%s", "/buss/incoming", "666"));
-            return Response.created(uri)
-                    .entity(data)
-                    .status(Response.Status.OK)
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException("Failed to create uri", e);
-        }
+        return Response.serverError().entity("client need to upgrade api").build();
     }
 }
