@@ -44,7 +44,7 @@ import java.util.Map;
  * @author Roy Sindre Norangshol
  */
 @Component
-@Path("/stats")
+@Path("/1.3/stats")
 @Singleton
 public class StatsResource extends SharedResources {
     @Context
