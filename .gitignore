@@ -33,3 +33,4 @@ webfrontend/lib/
 webfrontend/modules/
 webfrontend/precompiled/
 webfrontend/tmp/
+internal-tools/src/main/java/no/norrs/busbuddy/tools/Testing.java
