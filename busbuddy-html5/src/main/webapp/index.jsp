@@ -94,7 +94,7 @@
 		holdeplasser = new Array();
 		markers = new Array();
 		
-		busbuddyFetch(apiHost+"/api/1.2/busstops?apiKey="+apikey+"&callback");
+		busbuddyFetch(apiHost+"/api/1.3/busstops?apiKey="+apikey+"&callback");
 	}
 	
 	function getHoldeplasser(data) {
