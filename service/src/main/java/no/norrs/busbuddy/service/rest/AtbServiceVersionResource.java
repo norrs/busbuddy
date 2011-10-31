@@ -26,6 +26,8 @@ import no.norrs.busbuddy.api.atb.model.BusStopForecastContainer;
 import no.norrs.busbuddy.api.atb.model.BusStopNodeInfo;
 import no.norrs.busbuddy.api.dao.*;
 import no.norrs.busbuddy.api.model.ApiKeyLog;
+import no.norrs.busbuddy.api.ping.BusbuddyPing;
+import no.norrs.busbuddy.api.ping.CedlindBusmapPing;
 import no.norrs.busbuddy.pub.api.CharSetAdapter;
 import no.norrs.busbuddy.pub.api.InstantTypeConverter;
 import no.norrs.busbuddy.pub.api.LocalDateTimeTypeConverter;
@@ -42,6 +44,9 @@ import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Roy Sindre Norangshol
@@ -67,6 +72,7 @@ public class AtbServiceVersionResource extends SharedResources {
     private OracleServiceController oracleService;
     private AtbController atbService;
     private AtbRpController rpController;
+    private List<BusbuddyPing> pingList;
 
     @Autowired
     public AtbServiceVersionResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
@@ -92,6 +98,8 @@ public class AtbServiceVersionResource extends SharedResources {
                 .registerTypeAdapter(Instant.class, new InstantTypeConverter())
                 .setPrettyPrinting()
                 .create();
+
+        this.pingList = new ArrayList<BusbuddyPing>(Arrays.asList(new BusbuddyPing[]{new CedlindBusmapPing()}));
 
         /*loggerDAO = (ApiKeyLogDAO) context.getBean("apikeylogDAO");
         busstopDAO = (BusStopDAO) context.getBean("busstopDAO");*/
@@ -209,6 +217,9 @@ public class AtbServiceVersionResource extends SharedResources {
                 data = gson.toJson(container);
             }
 
+            for(BusbuddyPing ping : pingList) {
+                ping.ping(locationId, container);
+            }
 
             try {
                 loggerDAO.incrementHitcounterFor(new ApiKeyLog(apiKey, getTimeStampForHitcounterLogging(), Response.Status.OK.getStatusCode()));
@@ -231,11 +242,11 @@ public class AtbServiceVersionResource extends SharedResources {
     @Path("/schedules/{locationId}")
     @Produces({"application/json; charset=UTF-8"})
     public Response getBusStopsFromTrip(@PathParam("locationId") int locationId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
-      /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
-        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
-            loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
-            return Response.status(450).entity("Blocked by Windows Parental Controls").build();
-        } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
+        /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
+  if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+      loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
+      return Response.status(450).entity("Blocked by Windows Parental Controls").build();
+  } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
 
 
         try {
@@ -256,11 +267,11 @@ public class AtbServiceVersionResource extends SharedResources {
     @Path("/trip/{tripId}")
     @Produces({"application/json; charset=UTF-8"})
     public Response getTripDepartures(@PathParam("tripId") int tripId, @QueryParam("apiKey") String apiKeyQueryParam, @QueryParam("callback") String callbackQueryParam) {
-      /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
-        if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
-            loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
-            return Response.status(450).entity("Blocked by Windows Parental Controls").build();
-        } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
+        /*  String apiKey = getApiKeyFromRequest(apiKeyQueryParam, headers);
+  if (apiKey.equalsIgnoreCase(BUSBUDDY_HTML_APP_APIKEY) && !validateIfLocalRequest(headers)) {
+      loggerDAO.incrementHitcounterFor(new ApiKeyLog(BUSBUDDY_HTML_APP_APIKEY, getTimeStampForHitcounterLogging(), 450));
+      return Response.status(450).entity("Blocked by Windows Parental Controls").build();
+  } else if (apiKeyNotNull(apiKey) && isValidKey(apiKey)) {*/
 
 
         try {
@@ -276,8 +287,6 @@ public class AtbServiceVersionResource extends SharedResources {
             return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
         } */
     }
-
-
 
 
     @GET
