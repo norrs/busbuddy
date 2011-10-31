@@ -25,5 +25,7 @@
     <import resource="database/Spring-Datasource.xml"/>
     <import resource="classpath:spring-busbuddy-dao.xml"/>
     <!--<context:component-scan base-package="no.norrs.busbuddy.api.dao.impl"/>-->
+    <!-- this little tricky one scans the rest services and inserts the DAO's defined in spring-busbuddy-dao.xmls into the constructor
+    I think -->
     <context:component-scan base-package="no.norrs.busbuddy.service.rest"/>
 </beans>
