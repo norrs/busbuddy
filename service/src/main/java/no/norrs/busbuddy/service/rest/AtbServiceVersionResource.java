@@ -52,7 +52,7 @@ import java.net.URISyntaxException;
 @Path("/1.3")
 @Singleton
 
-public class AtbServiceVersion1_3Resource extends SharedResources {
+public class AtbServiceVersionResource extends SharedResources {
     private Gson gson;
 
     @Context
@@ -70,7 +70,7 @@ public class AtbServiceVersion1_3Resource extends SharedResources {
     ;
 
     @Autowired
-    public AtbServiceVersion1_3Resource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
+    public AtbServiceVersionResource(ApiKeyLogDAO apiKeyLogDAO, ApplicationTypeDAO applicationTypeDAO, BusBuddyApiKeyDAO busBuddyApiKeyDAO, BusStopDAO busStopDAO, TripsDAO tripsDAO) throws IOException {
         super(busBuddyApiKeyDAO);
         this.loggerDAO = apiKeyLogDAO;
         this.busstopDAO = busStopDAO;

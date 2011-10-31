@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://miz.it/infotransit" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://miz.it/infotransit" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
@@ -211,6 +212,40 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="getUserRealTimeForecastByStop">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
+            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
+            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserRealTimeForecastByStopResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastByStopResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserRealTimeForecastExByStop">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="auth" type="tns:WsAuthentication" />
+            <s:element minOccurs="0" maxOccurs="1" name="handShakeUser" type="tns:HandShake" />
+            <s:element minOccurs="0" maxOccurs="1" name="busStopId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="nForecast" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="nHours" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserRealTimeForecastExByStopResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserRealTimeForecastExByStopResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="addNewUserSoapIn">
@@ -273,6 +308,18 @@
   <wsdl:message name="GetBusStopsListSoapOut">
     <wsdl:part name="parameters" element="tns:GetBusStopsListResponse" />
   </wsdl:message>
+  <wsdl:message name="getUserRealTimeForecastByStopSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastByStop" />
+  </wsdl:message>
+  <wsdl:message name="getUserRealTimeForecastByStopSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastByStopResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUserRealTimeForecastExByStopSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastExByStop" />
+  </wsdl:message>
+  <wsdl:message name="getUserRealTimeForecastExByStopSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserRealTimeForecastExByStopResponse" />
+  </wsdl:message>
   <wsdl:portType name="UserServicesSoap">
     <wsdl:operation name="addNewUser">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add new user. Returns token related to userIdentifier. HandShake object contains also 'the corret ending/not correct ending' of operation.</wsdl:documentation>
@@ -322,6 +369,16 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return list of bus stop</wsdl:documentation>
       <wsdl:input message="tns:GetBusStopsListSoapIn" />
       <wsdl:output message="tns:GetBusStopsListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastByStop">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format</wsdl:documentation>
+      <wsdl:input message="tns:getUserRealTimeForecastByStopSoapIn" />
+      <wsdl:output message="tns:getUserRealTimeForecastByStopSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastExByStop">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Return forecast in json format, can specify the number of forecast and/or the number of hours</wsdl:documentation>
+      <wsdl:input message="tns:getUserRealTimeForecastExByStopSoapIn" />
+      <wsdl:output message="tns:getUserRealTimeForecastExByStopSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="UserServicesSoap" type="tns:UserServicesSoap">
@@ -416,6 +473,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastByStop">
+      <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastByStop" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastExByStop">
+      <soap:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastExByStop" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="UserServicesSoap12" type="tns:UserServicesSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -502,6 +577,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetBusStopsList">
       <soap12:operation soapAction="http://miz.it/infotransit/GetBusStopsList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastByStop">
+      <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastByStop" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserRealTimeForecastExByStop">
+      <soap12:operation soapAction="http://miz.it/infotransit/getUserRealTimeForecastExByStop" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
