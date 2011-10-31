@@ -43,7 +43,7 @@ public class Application extends Controller {
 
         InputStream input = null;
         try {
-            input = new URL(apiHost + "/api/stats/total/lastdays/30").openStream();
+            input = new URL(apiHost + "/api/1.3/stats/total/lastdays/30").openStream();
             return String.format("var last30DaysStats = %s", HttpUtil.readString(input));
         } finally {
             if (input != null)
