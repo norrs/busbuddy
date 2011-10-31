@@ -22,7 +22,7 @@
     <groupId>no.norrs.busbuddy</groupId>
     <artifactId>platform</artifactId>
     <name>BusBuddy :: Platform</name>
-    <version>1.3.2</version>
+    <version>1.3.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
 
