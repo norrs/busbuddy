@@ -8,11 +8,11 @@
 	<meta name="author" content="Tri M. Nguyen <mail@trimn.net>"> 
  	<link rel="stylesheet" type="text/css" href="css/main.css">
 	
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-	<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
-	<script type="text/javascript" src="js/timeAndDate.js"></script>
-	<script type="text/javascript" src="js/infobox.js"></script>
-	<script type="text/javascript" src="js/holdeplass.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+	<script src="js/jquery-1.6.1.min.js"></script>
+	<script src="js/timeAndDate.js"></script>
+	<script src="js/infobox.js"></script>
+	<script src="js/holdeplass.js"></script>
 	<script src="js/busbuddy.js"></script> 
 </head> 
 <body onload="initialize()"> 
