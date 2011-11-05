@@ -74,3 +74,41 @@ header {
 		width: 400px;
 		margin-top:-7px;
 	}
+
+#orakel_answer {
+	background: #222;
+	color: #FFF;
+	font-size: 12px;
+	line-height: 18px;
+	border-bottom: 1px solid #FFF;
+	padding: 0 40px;
+
+	-webkit-transition-property: padding;
+	-webkit-transition-duration: 0.4s;
+	-webkit-transition-delay: 0.1s;
+	-webkit-transition-timing-function: ease-in-out;
+
+	-o-transition-property: padding;
+	-o-transition-duration: 0.4s;
+	-o-transition-delay: 0.1s;
+	-o-transition-timing-function: ease-in-out;
+
+	-moz-transition-property: padding;
+	-moz-transition-duration: 0.4s;
+	-moz-transition-delay: 0.1s;
+	-moz-transition-timing-function: ease-in-out;
+	
+	transition-property: padding;
+	transition-duration: 0.4s;
+	transition-delay: 0.1s;
+	ttransition-timing-function: ease-in-out;
+}
+	#orakel_answer.expanded {
+		padding: 10px 40px;
+	}
+
+
+
+
+
+

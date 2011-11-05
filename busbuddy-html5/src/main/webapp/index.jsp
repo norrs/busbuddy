@@ -15,17 +15,24 @@
 	<script src="js/holdeplass.js"></script>
 	<script src="js/busbuddy.js"></script> 
 	<script src="js/oracle.js"></script> 
+	<script src="js/geolocation.js"></script> 
 
 	<script>
+	var update_map_size = function() {
+		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px");
+	};
 
 	$(document).ready(function() {
-		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px")
+		update_map_size();
+
+		$('form[name|="orakel_form"]').submit(function() {
+			ask_oracle($('input[name|="orakel"]').val());
+			return false;
+		});
 	});
 
 	$(window).resize(function() {
-		$(document).ready(function() {
-			$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px")
-		});
+		update_map_size();
 	});
 
 	</script>
@@ -33,8 +40,9 @@
 <body onload="initialize()">
 	<header>
 		<h1>Busbuddy</h1>
-		<form method="post" action=""><input type="text" name="orakel" placeholder="Søk / spør orakelet"></form>
+		<form method="post" action="" name="orakel_form"><input type="text" name="orakel" placeholder="Spør orakelet"></form>
 	</header>
+	<div id="orakel_answer"></div>
 	<img src="images/bb_100x100.png" alt="" id="busbuddy"> 
 	<div id="desc"> 
 		<h2>Om BusBuddy for web</h2>
