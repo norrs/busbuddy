@@ -26,7 +26,7 @@ var search_stops = function() {
 	}
 
 	if (counter == 0) {
-		$("#result_list ul").prepend('<li>No results...</li>');
+		$("#result_list ul").prepend('<li>Fant ingen holdeplasser. Trykk enter for å spørre orakelet.</li>');
 	}
 
 	update_map_size();

@@ -84,7 +84,7 @@
 	</header>
 
 	<div id="result_list">
-	<h4>Search result (search the oracle or pick a stop from the result list)</h4>
+	<h4>Søkeresultater (spør orakelet, eller velg holdeplass fra listen)</h4>
 		<ul></ul>
 	</div>
 
