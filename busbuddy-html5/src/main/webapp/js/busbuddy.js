@@ -8,6 +8,7 @@ var tmpMarker = null;
 var map;
 var lastClickMarker;
 var markerClicked = new Array();
+
 // var data;
 
 var search_stops = function() {
@@ -44,7 +45,7 @@ function initialize() {
 	
 	// ========== Geolocation	
 	var error = function(msg) {
-		alert(msg)
+		// TODO: display error message
 	};
 
 	var success = function(position) {
@@ -225,17 +226,15 @@ function showOverlays() {
 }
 
 
+// quickfix
 // låner fra http://bartebuss.no/
 
 function direction(direction){
-	if(direction == 1 || parseInt(direction/1000) % 2 == 1) {
+	if(direction == 1 || parseInt(direction/1000) % 2 == 1) 
 		return 'Til byen';
-	}
-	else if(direction == 0 || parseInt(direction/1000) % 2 == 0) {
+	else if(direction == 0 || parseInt(direction/1000) % 2 == 0) 
 		return 'Fra byen';
-	}
-	else {
+	else
 		return 'Ukjent retning';
-	}
 }
 

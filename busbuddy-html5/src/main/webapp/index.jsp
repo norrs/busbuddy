@@ -24,60 +24,66 @@
 	<script>
 	
 
-	$(document).ready(function() {
+	$(document).ready(function()
+	{
 		update_map_size();
 
+		var oracle_is_active = 0;
+
 		// ========== 
-
-		$('input[name|="orakel"]').keyup(function(event) {
-			
-
-			if (event.which == 13) {
-				ask_oracle($('input[name|="orakel"]').val());
-			}
-			else if (event.which == 27) {
+		$(document).keyup(function()
+		{
+			if (event.which == 27)
+			{
 				$('input[name|="orakel"]').val("");
+				hide_result_list();
+				update_map_size();
 			}
+		});
+
+		$('input[name|="orakel"]').keyup(function(event)
+		{
+			if (event.which == 13)
+				ask_oracle($('input[name|="orakel"]').val());
 			else {
-				
-				if (!($("#result_list").hasClass("visible"))) {
+				if (!($("#result_list").hasClass("visible")))
 					render_result_list();
-				}
 
 				search_stops();
 			}
 
-			if ( $('input[name|="orakel"]').val().length <= 0 ) {
+			if ( $('input[name|="orakel"]').val().length <= 0 )
 				hide_result_list();
-			}
 
 			update_map_size();
 		});
 
-		$("#result_list li").live('click', function() {
-
-			if ($(this).attr('data-lat') && $(this).attr('data-lng')) {
+		$("#result_list li").live('click', function()
+		{
+			if ($(this).attr('data-lat') && $(this).attr('data-lng'))
+			{
 				var latlng = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
 				map.setCenter(latlng);
 				map.setZoom(16);
 			}
-
 			search_result_click($(this).attr('data-listid'));
-			
 		});
 		// ========== 
 
 	});
 
-	var render_result_list = function() {
+	var render_result_list = function()
+	{
 		$("#result_list").addClass("visible");
 	};
 
-	var hide_result_list = function() {
+	var hide_result_list = function()
+	{
 		$("#result_list").removeClass("visible");
 	};
 
-	$(window).resize(function() {
+	$(window).resize(function()
+	{
 		update_map_size();
 	});
 
@@ -86,12 +92,13 @@
 <body onload="initialize()">
 	<header>
 		<h1>Busbuddy</h1>
-		<input type="text" name="orakel" placeholder="Spør orakelet">
+		<input type="text" name="orakel" placeholder="Søk på holdeplass, eller spør orakelet">
 	</header>
 
 	<div id="result_list">
 	<h4>Søkeresultater (spør orakelet, eller velg holdeplass fra listen)</h4>
 		<ul></ul>
+	<h4>Skriv spørsmål og trykk enter for å spørre orakelet</h4>
 	</div>
 
 	<div id="orakel_answer"></div>

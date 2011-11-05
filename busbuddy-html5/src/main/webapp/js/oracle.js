@@ -4,7 +4,7 @@ var ask_oracle = function(question) {
 
 		$.ajax({
 			url: "http://api.trimini.no/oracle.php",
-			data: "q=" + question + "&callback=?",
+			data: "q="+question+"&callback=?",
 			crossDomain: true,
 			dataType: "jsonp",
 			timeout: 10000,
@@ -20,9 +20,11 @@ var ask_oracle = function(question) {
 			error: function(j, t, e) {
 				if (t === "timeout") {
 					$("#orakel_answer").html('<span style="color: red;">En feil har oppstått. Orakelet ser ut til å være utilgjengelig.</span>');
+					console.log(t);
 				}
 				else {
 					$("#orakel_answer").html('<span style="color: red;">En feil har oppstått. Orakelet ser ut til å være er utilgjengelig.</span>');
+					console.log(t);
 				}
 			}
 		});
