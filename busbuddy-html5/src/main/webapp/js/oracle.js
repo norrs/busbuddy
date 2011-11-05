@@ -19,10 +19,10 @@ var ask_oracle = function(question) {
 			},
 			error: function(j, t, e) {
 				if (t === "timeout") {
-					$("#orakel_answer").html('<span color="red">En feil har oppstått. Orakelet ser ut til å være utilgjengelig.</span>');
+					$("#orakel_answer").html('<span style="color: red;">En feil har oppstått. Orakelet ser ut til å være utilgjengelig.</span>');
 				}
 				else {
-					$("#orakel_answer").html('<span color="red">En feil har oppstått. Orakelet ser ut til å være er utilgjengelig.</span>');
+					$("#orakel_answer").html('<span style="color: red;">En feil har oppstått. Orakelet ser ut til å være er utilgjengelig.</span>');
 				}
 			}
 		});

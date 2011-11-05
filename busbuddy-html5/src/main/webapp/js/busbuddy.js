@@ -4,6 +4,7 @@ var apikey = "L420Jvg7mrXx507T";
 var apiHost = "http://api.busbuddy.no:8080";
 var holdeplasser;
 var markers;
+var tmpMarker = null;
 var map;
 var lastClickMarker;
 var markerClicked = new Array();
@@ -16,7 +17,7 @@ var search_stops = function() {
 	for (var i = 0; i < holdeplasser.length; i++) {
 
 		if (holdeplasser[i].getName().toLowerCase().indexOf( $('input[name|="orakel"]').val().toLowerCase() ) >= 0) {
-			$("#result_list ul").append('<li data-lat="'+holdeplasser[i].getLat()+'" data-lng="'+holdeplasser[i].getLng()+'" data-id="'+ holdeplasser[i].getId() +'">'+holdeplasser[i].getName()+'</li>');
+			$("#result_list ul").append('<li data-direction="'+direction(holdeplasser[i].getId())+'" data-listid="'+i+'" data-lat="'+holdeplasser[i].getLat()+'" data-lng="'+holdeplasser[i].getLng()+'" data-id="'+ holdeplasser[i].getId() +'" data-name="'+holdeplasser[i].getName()+'">'+holdeplasser[i].getName() + ' <span style="color: #AAA; padding:0 0 0 8px;">'+direction(holdeplasser[i].getId())+'</span> ' + '</li>');
 			// var courseCode = courses.getItem(index).substring(0, courses.getItem(index).indexOf(' '));
 			// var courseName = courses.getItem(index).substring(courses.getItem(index).indexOf(' ')+1);
 			
@@ -95,9 +96,12 @@ function addMarker(holdeplass) {
 	var marker = new google.maps.Marker({
 		position: holdeplass.getLatLng(),
 		map: map,
+		title: holdeplass.getName(),
+		clickable: true,
+		icon: 'images/15x15_4.png',
 		title: holdeplass.getName()
 	});
-	marker.setIcon('images/15x15_4.png');
+
 
 	markers.push(marker);
 
@@ -148,11 +152,52 @@ function busbuddyResponse(data) {
 	else if (data.departures){
 		addMessage(data, markerClicked);
 	}
+}
 
+function search_result_click(index) {
+	markerClicked[1] = holdeplasser[index];
 
+	var marker = new google.maps.Marker({
+		position: markerClicked[1].getLatLng(),
+		map: map,
+		clickable: false,
+		visible: false
+	});
 
-	
+	if (tmpMarker != null)
+		tmpMarker.setMap(null);
+	tmpMarker = marker;
 
+	var infoBox = document.createElement("div");
+	infoBox.style.cssText = "border-radius: 5px; border: 1px solid black; margin-top: 8px; background: #020c1c; padding: 0 15px 15px 15px;";
+	infoBox.innerHTML = '<h2>' + markerClicked[1].getName() + '</h2><img src="images/loader2.gif" alt="loader"><p style="color: #ffffff;">laster inn data...</p>';
+
+	var infoOptions = {
+		content: infoBox,
+		disableAutoPan: false,
+		maxWidth: 0,
+		pixelOffset: new google.maps.Size(-140, 0),
+		zIndex: null,
+		boxStyle: { 
+	  		background: "url('images/arrow.gif') no-repeat",
+	  		opacity: 0.9,
+	  		width: "280px"
+	  	},
+		closeBoxMargin: "10px 2px 2px 2px",
+		closeBoxURL: "images/close2.gif",
+		infoBoxClearance: new google.maps.Size(1, 1),
+		isHidden: false,
+		pane: "floatPane",
+		enableEventPropagation: false
+	};
+
+	markerClicked[2] = new InfoBox(infoOptions);
+
+	if (lastClickMarker) lastClickMarker.close();
+	lastClickMarker = markerClicked[2];
+
+	markerClicked[2].open(map, tmpMarker);
+	busbuddyFetch(apiHost+"/api/1.3/departures/" + markerClicked[1].getId() + "?apiKey="+apikey+"&callback");
 }
 
 function addMessage(data) {
@@ -178,3 +223,19 @@ function showOverlays() {
 		for (var i in markers)
 			markers[i].setMap(map);
 }
+
+
+// låner fra http://bartebuss.no/
+
+function direction(direction){
+	if(direction == 1 || parseInt(direction/1000) % 2 == 1) {
+		return 'Til byen';
+	}
+	else if(direction == 0 || parseInt(direction/1000) % 2 == 0) {
+		return 'Fra byen';
+	}
+	else {
+		return 'Ukjent retning';
+	}
+}
+

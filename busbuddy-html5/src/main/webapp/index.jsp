@@ -55,9 +55,15 @@
 		});
 
 		$("#result_list li").live('click', function() {
-			var latlng = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-			map.setCenter(latlng);
-			map.setZoom(16);
+
+			if ($(this).attr('data-lat') && $(this).attr('data-lng')) {
+				var latlng = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+				map.setCenter(latlng);
+				map.setZoom(16);
+			}
+
+			search_result_click($(this).attr('data-listid'));
+			
 		});
 		// ========== 
 
