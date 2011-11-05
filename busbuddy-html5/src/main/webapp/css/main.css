@@ -1,7 +1,7 @@
 html { height: 100%; }
 body { height: 100%; margin: 0; padding: 0; font: 11px/18px arial, sans-serif; }
 
-#map_canvas { height: 100%; }
+#map_canvas { height: 100%; width: 100%; }
 
 .dynInfo { color: #fee164; }
 .dynInfoNor { color: #ffffff; }
@@ -54,3 +54,23 @@ p { margin: 0; padding: 0 0 0 7px; }
 #desc a { color: #AAA; }
 #desc a:hover { text-decoration: none; }
 #desc p { margin: 0 0 10px 0; padding: 0; }
+
+header {
+	padding: 20px 0 15px 40px;
+	border-bottom: 1px solid #AAA;
+	background: #efefef;
+
+}
+	header h1 { float: left;
+		border-right: 1px dotted #888;
+		margin: 0 30px 0 0;
+		padding: 0 30px 0 0;
+	}
+	header input[type=text] {
+		border: 1px solid #aaa;
+		padding: 5px;
+		font-size: 14px;
+		color: #444;
+		width: 400px;
+		margin-top:-7px;
+	}
