@@ -17,7 +17,6 @@ function initialize() {
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	map = new google.maps.Map(document.getElementById('map_canvas'), infoOptions);
-
 	
 	// ========== Geolocation	
 	var error = function(msg) {
@@ -38,7 +37,8 @@ function initialize() {
 
 	if (navigator.geolocation) {
 	  navigator.geolocation.getCurrentPosition(success, error);
-	} else {
+	}
+	else {
 	  error('geolocation not supported');
 	}
 	// ========== /Geolocation	
@@ -141,5 +141,7 @@ function addMessage(data) {
 }
 
 function showOverlays() {
-	if (markers) for (var i in markers) markers[i].setMap(map);
-	}
+	if (markers)
+		for (var i in markers)
+			markers[i].setMap(map);
+}
