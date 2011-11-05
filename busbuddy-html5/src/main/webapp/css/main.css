@@ -1,6 +1,8 @@
 html { height: 100%; }
 body { height: 100%; margin: 0; padding: 0; font: 11px/18px arial, sans-serif; }
 
+strong { font-weight: bold; }
+
 #map_canvas { height: 100%; width: 100%; }
 
 .dynInfo { color: #fee164; }
@@ -107,6 +109,32 @@ header {
 		padding: 10px 40px;
 	}
 
+#result_list {
+	display: none;
+}
+	#result_list.visible {
+		display: block;
+
+	}
+	#result_list h4 {
+		padding: 3px 40px;
+		margin: 0;
+		background: #222;
+		color: rgb(253, 224, 64);
+	}
+	#result_list ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	#result_list ul li {
+		padding: 2px 40px;
+		cursor: pointer;
+	}
+	#result_list ul li:hover {
+		background: #efefef;
+
+	}
 
 
 

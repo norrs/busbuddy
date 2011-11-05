@@ -9,6 +9,29 @@ var lastClickMarker;
 var markerClicked = new Array();
 // var data;
 
+var search_stops = function() {
+	$("#result_list ul").html("");
+
+	var counter = 0;
+	for (var i = 0; i < holdeplasser.length; i++) {
+
+		if (holdeplasser[i].getName().toLowerCase().indexOf( $('input[name|="orakel"]').val().toLowerCase() ) >= 0) {
+			$("#result_list ul").append('<li data-lat="'+holdeplasser[i].getLat()+'" data-lng="'+holdeplasser[i].getLng()+'" data-id="'+ holdeplasser[i].getId() +'">'+holdeplasser[i].getName()+'</li>');
+			// var courseCode = courses.getItem(index).substring(0, courses.getItem(index).indexOf(' '));
+			// var courseName = courses.getItem(index).substring(courses.getItem(index).indexOf(' ')+1);
+			
+			// $('#searchResult').append('<li data-code="' + courseCode + '">' + courseName + '</li>');
+			counter = 1;
+		}
+	}
+
+	if (counter == 0) {
+		$("#result_list ul").prepend('<li>No results...</li>');
+	}
+
+	update_map_size();
+};
+
 function initialize() {
 	var latlng = new google.maps.LatLng(63.4186338, 10.3920824);
 	var infoOptions = {
@@ -47,6 +70,11 @@ function initialize() {
 	markers = new Array();
 
 	busbuddyFetch(apiHost+"/api/1.3/busstops?apiKey="+apikey+"&callback");
+
+
+	
+	
+
 }
 
 function getHoldeplasser(data) {
@@ -116,10 +144,15 @@ function busbuddyResponse(data) {
 			holdeplasser[i] = new Holdeplass(data.busStops[i].locationId, data.busStops[i].name, data.busStops[i].latitude, data.busStops[i].longitude);
 			addMarker(holdeplasser[i]);
 		}
-
-	} else if (data.departures){
+	}
+	else if (data.departures){
 		addMessage(data, markerClicked);
 	}
+
+
+
+	
+
 }
 
 function addMessage(data) {

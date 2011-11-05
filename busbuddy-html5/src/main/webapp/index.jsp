@@ -7,7 +7,11 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
 	<meta name="author" content="Tri M. Nguyen <mail@trimn.net>"> 
  	<link rel="stylesheet" type="text/css" href="css/main.css">
-	
+	<script>
+	var update_map_size = function() {
+		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px");
+	};
+	</script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 	<script src="js/jquery-1.6.1.min.js"></script>
 	<script src="js/timeAndDate.js"></script>
@@ -18,18 +22,54 @@
 	<script src="js/geolocation.js"></script> 
 
 	<script>
-	var update_map_size = function() {
-		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px");
-	};
+	
 
 	$(document).ready(function() {
 		update_map_size();
 
-		$('form[name|="orakel_form"]').submit(function() {
-			ask_oracle($('input[name|="orakel"]').val());
-			return false;
+		// ========== 
+
+		$('input[name|="orakel"]').keyup(function(event) {
+			
+
+			if (event.which == 13) {
+				ask_oracle($('input[name|="orakel"]').val());
+			}
+			else if (event.which == 27) {
+				$('input[name|="orakel"]').val("");
+			}
+			else {
+				
+				if (!($("#result_list").hasClass("visible"))) {
+					render_result_list();
+				}
+
+				search_stops();
+			}
+
+			if ( $('input[name|="orakel"]').val().length <= 0 ) {
+				hide_result_list();
+			}
+
+			update_map_size();
 		});
+
+		$("#result_list li").live('click', function() {
+			var latlng = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+			map.setCenter(latlng);
+			map.setZoom(16);
+		});
+		// ========== 
+
 	});
+
+	var render_result_list = function() {
+		$("#result_list").addClass("visible");
+	};
+
+	var hide_result_list = function() {
+		$("#result_list").removeClass("visible");
+	};
 
 	$(window).resize(function() {
 		update_map_size();
@@ -40,8 +80,14 @@
 <body onload="initialize()">
 	<header>
 		<h1>Busbuddy</h1>
-		<form method="post" action="" name="orakel_form"><input type="text" name="orakel" placeholder="Spør orakelet"></form>
+		<input type="text" name="orakel" placeholder="Spør orakelet">
 	</header>
+
+	<div id="result_list">
+	<h4>Search result (search the oracle or pick a stop from the result list)</h4>
+		<ul></ul>
+	</div>
+
 	<div id="orakel_answer"></div>
 	<img src="images/bb_100x100.png" alt="" id="busbuddy"> 
 	<div id="desc"> 
