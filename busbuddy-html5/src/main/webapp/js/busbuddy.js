@@ -1,5 +1,5 @@
-// var apikey = "82NV49lmavKaljw2";
-var apikey = "L420Jvg7mrXx507T";
+var apikey = "82NV49lmavKaljw2";
+
 
 var apiHost = "http://api.busbuddy.no:8080";
 var holdeplasser;
@@ -222,7 +222,6 @@ function showOverlays() {
 
 
 // quickfix
-// låner litt http://bartebuss.no/
 
 function direction(direction){
 	if(direction == 1 || parseInt(direction/1000) % 2 == 1) 
