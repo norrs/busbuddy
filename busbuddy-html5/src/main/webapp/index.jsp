@@ -4,12 +4,14 @@
 <head> 
 	<meta charset=utf-8> 
 	<title>BusBuddy</title>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes"> 
+
 	<meta name="author" content="Tri M. Nguyen <mail@trimn.net>"> 
  	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script>
 	var update_map_size = function() {
-		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop) + "px");
+		$("#map_canvas").css("height", (window.innerHeight - document.getElementById("map_canvas").offsetTop - 35) + "px");
 	};
 	</script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
@@ -24,8 +26,12 @@
 	<script>
 	
 
+
 	$(document).ready(function()
 	{
+		// ========= Initiate
+	$("#result_list").hide();
+
 		update_map_size();
 
 		var oracle_is_active = 0;
@@ -66,6 +72,9 @@
 				map.setCenter(latlng);
 				map.setZoom(16);
 			}
+
+			hide_result_list();
+
 			search_result_click($(this).attr('data-listid'));
 		});
 		// ========== 
@@ -74,13 +83,28 @@
 
 	var render_result_list = function()
 	{
-		$("#result_list").addClass("visible");
+		$("#result_list").slideDown(300, function() {
+			update_map_size();
+		});
 	};
-
 	var hide_result_list = function()
 	{
-		$("#result_list").removeClass("visible");
+		$("#result_list").slideUp(300, function() {
+			update_map_size();
+		});
 	};
+
+	
+
+	var show_desc = function() {
+		$("#desc").addClass("visible");
+	};
+	var hide_desc = function() {
+		$("#desc").removeClass("visible");
+	};
+
+
+	// ========== cool default stuff
 
 	$(window).resize(function()
 	{
@@ -98,17 +122,28 @@
 	<div id="result_list">
 	<h4>Søkeresultater (spør orakelet, eller velg holdeplass fra listen)</h4>
 		<ul></ul>
-	<h4>Skriv spørsmål og trykk enter for å spørre orakelet</h4>
+	<!--<h4>Skriv spørsmål og trykk enter for å spørre orakelet</h4>-->
 	</div>
 
 	<div id="orakel_answer"></div>
 	<img src="images/bb_100x100.png" alt="" id="busbuddy"> 
-	<div id="desc"> 
+	
+	<div id="map_canvas"></div>
+
+	<footer>
+		<ul>
+			<li><a href="#" onclick="show_desc(); return false;">About</a></li>
+			<!--<li><a href="#">Historie</a></li>-->
+		</ul>
+	</footer>
+
+	<div id="desc">
 		<h2>Om BusBuddy for web</h2>
 		<p>Busbuddy for web er en webapplikasjon laget av <a href="http://trimn.net/">Tri M. Nguyen</a> som benytter seg av sanntidsdata-API fra <a href="http://api.busbuddy.no:8080/">BusBuddy API</a>.</p>
 		<p>Med BusBuddy får du informasjon om bussavgangene i Trondheim ved valgt holdeplass.</p>
-	</div> 
-	<div id="map_canvas"></div> 
+		<p><a href="#" onclick="hide_desc(); return false;" class="button">Close</a></p>
+	</div>
+
 </body>
 <script type="text/javascript">
   var _gaq = _gaq || [];

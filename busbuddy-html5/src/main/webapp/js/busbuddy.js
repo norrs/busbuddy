@@ -17,12 +17,8 @@ var search_stops = function() {
 	var counter = 0;
 	for (var i = 0; i < holdeplasser.length; i++) {
 
-		if (holdeplasser[i].getName().toLowerCase().indexOf( $('input[name|="orakel"]').val().toLowerCase() ) >= 0) {
+		if (holdeplasser[i].getName().toLowerCase().indexOf( $('input[name|="orakel"]').val().toLowerCase() ) >= 0 && $('input[name|="orakel"]').val().length > 1) {
 			$("#result_list ul").append('<li data-direction="'+direction(holdeplasser[i].getId())+'" data-listid="'+i+'" data-lat="'+holdeplasser[i].getLat()+'" data-lng="'+holdeplasser[i].getLng()+'" data-id="'+ holdeplasser[i].getId() +'" data-name="'+holdeplasser[i].getName()+'">'+holdeplasser[i].getName() + ' <span style="color: #AAA; padding:0 0 0 8px;">'+direction(holdeplasser[i].getId())+'</span> ' + '</li>');
-			// var courseCode = courses.getItem(index).substring(0, courses.getItem(index).indexOf(' '));
-			// var courseName = courses.getItem(index).substring(courses.getItem(index).indexOf(' ')+1);
-			
-			// $('#searchResult').append('<li data-code="' + courseCode + '">' + courseName + '</li>');
 			counter = 1;
 		}
 	}
