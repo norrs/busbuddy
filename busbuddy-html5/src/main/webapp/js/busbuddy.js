@@ -234,3 +234,105 @@ function direction(direction){
 		return 'Ukjent retning';
 }
 
+
+
+
+
+
+
+// extracted
+
+
+$(document).ready(function()
+{
+	// ========= Initiate
+	$("#result_list").hide();
+	$("#orakel_answer").hide();
+
+	update_map_size();
+
+	var oracle_is_active = 0;
+
+	// ========== 
+	$(document).keyup(function()
+	{
+		if (event.which == 27)
+		{
+			$('input[name|="orakel"]').val("");
+			hide_result_list();
+			hide_oracle_answer();
+			update_map_size();
+		}
+	});
+
+	$('input[name|="orakel"]').keyup(function(event)
+	{
+		if (event.which == 13)
+			ask_oracle($('input[name|="orakel"]').val());
+		else {
+			if (!($("#result_list").hasClass("visible")))
+				render_result_list();
+
+			search_stops();
+		}
+
+		if ( $('input[name|="orakel"]').val().length <= 0 )
+			hide_result_list();
+
+		update_map_size();
+	});
+
+	$("#result_list li").live('click', function()
+	{
+		if ($(this).attr('data-lat') && $(this).attr('data-lng'))
+		{
+			var latlng = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+			map.setCenter(latlng);
+			map.setZoom(16);
+		}
+
+		hide_result_list();
+
+		search_result_click($(this).attr('data-listid'));
+	});
+	// ========== 
+
+});
+
+var render_result_list = function()
+{
+	$("#result_list").slideDown(300, function() {
+		update_map_size();
+	});
+};
+var hide_result_list = function()
+{
+	$("#result_list").slideUp(300, function() {
+		update_map_size();
+	});
+};
+
+
+
+var hide_oracle_answer = function() {
+	$("#orakel_answer").slideUp(200, function() {
+		update_map_size();
+	});
+};
+
+
+
+var show_desc = function() {
+	$("#desc").addClass("visible");
+};
+var hide_desc = function() {
+	$("#desc").removeClass("visible");
+};
+
+
+// ========== cool default stuff
+
+$(window).resize(function()
+{
+	update_map_size();
+});

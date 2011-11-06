@@ -9,9 +9,11 @@ var ask_oracle = function(question) {
 			dataType: "jsonp",
 			timeout: 10000,
 			beforeSend: function() {
-				$("#orakel_answer").addClass('expanded');
-				setTimeout("pre_oracle()", 200);
-				update_map_size();
+				$("#orakel_answer").slideDown(200, function() {
+					$("#orakel_answer").html("Vent mens jeg spør orakelet...");
+					update_map_size();
+				});
+				
 			},
 			success: function(data) {
 				$("#orakel_answer").html(data[0].answer);
@@ -34,5 +36,5 @@ var ask_oracle = function(question) {
 };
 
 var pre_oracle = function() {
-	$("#orakel_answer").html("Vent mens jeg spør orakelet...");
+	
 };
