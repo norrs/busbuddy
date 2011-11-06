@@ -24,11 +24,13 @@
 	<script src="js/jquery-1.6.1.min.js"></script>
 	<script src="js/timeAndDate.js"></script>
 	<script src="js/infobox.js"></script>
-	<script src="js/holdeplass.js"></script>
-	<script src="js/busbuddy.js"></script> 
-	<script src="js/oracle.js"></script> 
-	<script src="js/geolocation.js"></script> 
 
+	<script src="js/holdeplass.js"></script>
+	<script src="js/geolocation.js"></script> 
+	<script src="js/oracle.js"></script> 
+
+	<script src="js/busbuddy.js"></script> 
+	
 </head> 
 <body onload="initialize()">
 	<header>
