@@ -9,8 +9,6 @@ var map;
 var lastClickMarker;
 var markerClicked = new Array();
 
-// var data;
-
 var search_stops = function() {
 	$("#result_list ul").html("");
 
@@ -68,12 +66,8 @@ function initialize() {
 	markers = new Array();
 
 	busbuddyFetch(apiHost+"/api/1.3/busstops?apiKey="+apikey+"&callback");
-
-
-	
-	
-
 }
+
 
 function getHoldeplasser(data) {
 	for (var i = 0; i < data.stops.length; i++) {
@@ -82,12 +76,14 @@ function getHoldeplasser(data) {
 	}
 }
 
+
 function busbuddyFetch(url) {
 	var script = document.createElement("script");
 	script.setAttribute("src", url);
 	script.setAttribute("type", "text/javascript");
 	document.body.appendChild(script);
 }
+
 
 function addMarker(holdeplass) {
 	var marker = new google.maps.Marker({
@@ -98,7 +94,6 @@ function addMarker(holdeplass) {
 		icon: 'images/15x15_4.png',
 		title: holdeplass.getName()
 	});
-
 
 	markers.push(marker);
 
@@ -139,6 +134,7 @@ function addMarker(holdeplass) {
 	});
 }
 
+
 function busbuddyResponse(data) {
 	if (data.busStops) {
 		for (var i = 0; i < data.busStops.length; i++) {
@@ -150,6 +146,7 @@ function busbuddyResponse(data) {
 		addMessage(data, markerClicked);
 	}
 }
+
 
 function search_result_click(index) {
 	markerClicked[1] = holdeplasser[index];
@@ -197,6 +194,7 @@ function search_result_click(index) {
 	busbuddyFetch(apiHost+"/api/1.3/departures/" + markerClicked[1].getId() + "?apiKey="+apikey+"&callback");
 }
 
+
 function addMessage(data) {
 	var content = '<div style="border-radius: 5px; border: 1px solid black; margin-top: 8px; background: #020c1c; padding: 0 15px 15px 15px;"><h2>' + markerClicked[1].getName() + '</h2>';
 
@@ -215,6 +213,7 @@ function addMessage(data) {
 	markerClicked[2].setContent(content);
 }
 
+
 function showOverlays() {
 	if (markers)
 		for (var i in markers)
@@ -223,7 +222,7 @@ function showOverlays() {
 
 
 // quickfix
-// låner fra http://bartebuss.no/
+// låner litt http://bartebuss.no/
 
 function direction(direction){
 	if(direction == 1 || parseInt(direction/1000) % 2 == 1) 
