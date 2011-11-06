@@ -239,6 +239,7 @@ $(document).ready(function()
 
 		hide_result_list();
 		hide_oracle_answer();
+		update_map_size();
 
 		search_result_click($(this).attr('data-listid'));
 	});
