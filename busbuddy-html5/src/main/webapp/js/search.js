@@ -12,7 +12,7 @@ var search_stops = function(stops) {
 		}
 	}
 
-	if ($("#result_list ul").val()=="")
+	if ($("#result_list ul").html()=="" && $('input[name|="orakel"]').val().length > 2)
 	{
 		$("#result_list ul").prepend('<li>Fant ingen holdeplasser. Trykk enter for å spørre orakelet.</li>');
 	}
