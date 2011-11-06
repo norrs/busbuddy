@@ -2,8 +2,8 @@ var apikey = "82NV49lmavKaljw2";
 
 
 var apiHost = "http://api.busbuddy.no:8080";
-var holdeplasser;
-var markers;
+var holdeplasser = new Array();
+var markers = new Array();
 var tmpMarker = null;
 var map;
 var lastClickMarker;
@@ -29,6 +29,8 @@ var search_stops = function() {
 };
 
 function initialize() {
+
+	// center the map over Gløshaugen by default
 	var latlng = new google.maps.LatLng(63.4186338, 10.3920824);
 	var infoOptions = {
 		zoom: 13,
@@ -37,34 +39,10 @@ function initialize() {
 	};
 	map = new google.maps.Map(document.getElementById('map_canvas'), infoOptions);
 	
-	// ========== Geolocation	
-	var error = function(msg) {
-		// TODO: display error message
-	};
+	// geolocation.js
+	find_my_location(map);
 
-	var success = function(position) {
-		var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		map.setCenter(latlng);
-		map.setZoom(16);
-
-		var marker = new google.maps.Marker({
-			position: latlng, 
-			map: map, 
-			title:"You are here!"
-		});
-	}
-
-	if (navigator.geolocation) {
-	  navigator.geolocation.getCurrentPosition(success, error);
-	}
-	else {
-	  error('geolocation not supported');
-	}
-	// ========== /Geolocation	
-
-	holdeplasser = new Array();
-	markers = new Array();
-
+	// get stop list from API
 	busbuddyFetch(apiHost+"/api/1.3/busstops?apiKey="+apikey+"&callback");
 }
 
