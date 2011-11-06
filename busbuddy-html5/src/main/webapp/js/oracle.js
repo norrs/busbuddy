@@ -4,7 +4,7 @@ var ask_oracle = function(question) {
 
 		$.ajax({
 			url: "http://api.trimini.no/oracle.php",
-			data: "q="+question+"&callback=?",
+			data: "q="+question.replace(/\?/g, '')+"&callback=?",
 			crossDomain: true,
 			dataType: "jsonp",
 			timeout: 10000,
