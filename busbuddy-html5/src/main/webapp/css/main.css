@@ -32,25 +32,24 @@ a.button { border-radius: 3px; border: 1px solid #444; text-decoration: none; pa
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 
-
 	height: 0;
 	overflow: hidden;
 
 	-webkit-transition-property: height;
-	-webkit-transition-delay: .2s;
-	-webkit-transition-duration: .6s;
+	-webkit-transition-delay: .1s;
+	-webkit-transition-duration: .4s;
 
 	-o-transition-property: height;
-	-o-transition-delay: .2s;
-	-o-transition-duration: .6s;
+	-o-transition-delay: .1s;
+	-o-transition-duration: .4s;
 
 	-moz-transition-property: height;
-	-moz-transition-delay: .2s;
-	-moz-transition-duration: .6s;
+	-moz-transition-delay: .1s;
+	-moz-transition-duration: .4s;
 
 	transition-property: height;
-	transition-delay: .2s;
-	transition-duration: .6s;
+	transition-delay: .1s;
+	transition-duration: .4s;
 }
 
 	#desc h2 { margin: 0; padding: 15px 15px 0 15px; }

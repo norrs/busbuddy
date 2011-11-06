@@ -1,5 +1,5 @@
-var apikey = "82NV49lmavKaljw2";
-
+// var apikey = "82NV49lmavKaljw2";
+var apikey = "L420Jvg7mrXx507T";
 
 var apiHost = "http://api.busbuddy.no:8080";
 var holdeplasser;
@@ -9,6 +9,10 @@ var map;
 var lastClickMarker;
 var markerClicked = new Array();
 
+
+/**
+ * TODO: optimalisere søk
+ */
 var search_stops = function() {
 	$("#result_list ul").html("");
 
@@ -21,9 +25,8 @@ var search_stops = function() {
 		}
 	}
 
-	if (counter == 0) {
-		$("#result_list ul").prepend('<li>Fant ingen holdeplasser. Trykk enter for å spørre orakelet.</li>');
-	}
+	if (counter == 0)
+		$("#result_list ul").append('<li>Fant ingen holdeplasser. Trykk enter for å spørre orakelet.</li>');
 
 	update_map_size();
 };
