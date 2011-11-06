@@ -1,5 +1,5 @@
-// var apikey = "82NV49lmavKaljw2";
-var apikey = "L420Jvg7mrXx507T";
+var apikey = "82NV49lmavKaljw2";
+
 
 var apiHost = "http://api.busbuddy.no:8080";
 var holdeplasser = new Array();
