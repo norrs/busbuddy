@@ -25,9 +25,11 @@
 	<script src="js/timeAndDate.js"></script>
 	<script src="js/infobox.js"></script>
 
+	<script src="js/Oracle.js"></script> 
 	<script src="js/holdeplass.js"></script>
+	<script src="js/search.js"></script>
 	<script src="js/geolocation.js"></script> 
-	<script src="js/oracle.js"></script> 
+	
 
 	<script src="js/busbuddy.js"></script> 
 	

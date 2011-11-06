@@ -1,5 +1,12 @@
-var ask_oracle = function(question) {
 
+// oracle
+
+var Oracle = function() {
+	this.state = 0;
+}
+
+Oracle.prototype.ask_oracle = function(question) {
+	var that = this;
 	if (question.length > 0) {
 
 		$.ajax({
@@ -13,7 +20,8 @@ var ask_oracle = function(question) {
 					$("#orakel_answer").html("Vent mens jeg spør orakelet...");
 					update_map_size();
 				});
-				
+				console.log(that.state)
+				that.state = 1;
 			},
 			success: function(data) {
 				$("#orakel_answer").html(data[0].answer);
@@ -28,6 +36,9 @@ var ask_oracle = function(question) {
 					$("#orakel_answer").html('<span style="color: red;">En feil har oppstått. Orakelet ser ut til å være er utilgjengelig.</span>');
 					console.log(t);
 				}
+			},
+			complete: function() {
+				that.state = 0;
 			}
 		});
 
@@ -35,6 +46,6 @@ var ask_oracle = function(question) {
 
 };
 
-var pre_oracle = function() {
-	
+Oracle.prototype.is_active = function() {
+	return parseInt(this.state);
 };
