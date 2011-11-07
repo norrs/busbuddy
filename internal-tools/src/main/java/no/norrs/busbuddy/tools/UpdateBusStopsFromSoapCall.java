@@ -70,7 +70,7 @@ public class UpdateBusStopsFromSoapCall {
                         (float)coords[1],
                         (float)coords[0]
                         ));
-                System.out.println(String.format("Updated location id %s with busStopId %s  (%s)", busStop.nodeId.trim(), busStop.stopId, dbBusStop));
+                System.out.println(String.format("New location id %s with busStopId %s  (%s)", busStop.nodeId.trim(), busStop.stopId, dbBusStop));
             }
 
 
