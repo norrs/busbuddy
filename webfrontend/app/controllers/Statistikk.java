@@ -30,10 +30,10 @@ import java.net.URL;
 public class Statistikk extends Controller {
 
     public static void index() throws IOException {
-        String last30DaysStats = loadAPIUsageData("/api/stats/total/lastdays/30", "last30DaysStats");
-        String last30DaysStatsForEachApp = loadAPIUsageData("/api/stats/total/apikeys/lastdays/30", "last30DaysStatsForEachApp");
+        String last30DaysStats = loadAPIUsageData("/api/1.3/stats/total/lastdays/30", "last30DaysStats");
+        String last30DaysStatsForEachApp = loadAPIUsageData("/api/1.3/stats/total/apikeys/lastdays/30", "last30DaysStatsForEachApp");
         String appDetailsName = "var appDetailsName = 'Busbuddy (HTML5)';";
-        String last30DaysStatsForAppDetails = loadAPIUsageData("/api/stats/82NV49lmavKaljw2/lastdays/30", "last30DaysStatsForAppDetails");
+        String last30DaysStatsForAppDetails = loadAPIUsageData("/api/1.3/stats/82NV49lmavKaljw2/lastdays/30", "last30DaysStatsForAppDetails");
         render(last30DaysStats,last30DaysStatsForEachApp, appDetailsName, last30DaysStatsForAppDetails);
     }
 

@@ -94,7 +94,7 @@
 		holdeplasser = new Array();
 		markers = new Array();
 		
-		busbuddyFetch(apiHost+"/api/1.2/busstops?apiKey="+apikey+"&callback");
+		busbuddyFetch(apiHost+"/api/1.3/busstops?apiKey="+apikey+"&callback");
 	}
 	
 	function getHoldeplasser(data) {
@@ -154,14 +154,14 @@
 			lastClickMarker = markerClicked[2];
 			
 			markerClicked[2].open(map, marker);
-			busbuddyFetch(apiHost+"/api/1.2/departures/" + holdeplass.getId() + "?apiKey="+apikey+"&callback");
+			busbuddyFetch(apiHost+"/api/1.3/departures/" + holdeplass.getId() + "?apiKey="+apikey+"&callback");
 		});
 	}
 	
 	function busbuddyResponse(data) {
 		if (data.busStops) {
 			for (var i = 0; i < data.busStops.length; i++) {
-				holdeplasser[i] = new Holdeplass(data.busStops[i].busStopId, data.busStops[i].name, data.busStops[i].latitude, data.busStops[i].longitude);
+				holdeplasser[i] = new Holdeplass(data.busStops[i].locationId, data.busStops[i].name, data.busStops[i].latitude, data.busStops[i].longitude);
 				addMarker(holdeplasser[i]);
 			}
 			
