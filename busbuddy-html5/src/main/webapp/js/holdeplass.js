@@ -1,9 +1,9 @@
-function Holdeplass(id, name, lat, lng) {
+var Holdeplass = function(id, name, lat, lng) {
 	this.id = id;
     this.name = name;
 	this.lat = lat;
 	this.lng = lng;
-}
+};
 Holdeplass.prototype.getLat = function() {
 	return this.lat;
 }
