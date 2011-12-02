@@ -22,12 +22,8 @@ import org.apache.http.HttpVersion;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
@@ -45,7 +41,7 @@ import java.net.URL;
  */
 public class HttpUtil {
 
-    private static final String USER_AGENT = "BusBuddy/1.2";
+    private static final String USER_AGENT = "BusBuddy/1.3.3";
 
     public static HttpResponse GET(String url) throws IOException, SSLException {
         return GET(null, url, null);
@@ -67,10 +63,6 @@ public class HttpUtil {
         // in milliseconds which is the timeout for waiting for data.
         //int timeoutSocket = 60000*5;
 
-        SchemeRegistry registry = new SchemeRegistry();
-        registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-        //registry.register(new Scheme("https", new LocalTrustSSLSocketFactory(url), 443));
-
         HttpParams httpParams = new BasicHttpParams();
         //HttpConnectionParams.setConnectionTimeout(httpParams, timeoutConnection);
         //HttpConnectionParams.setSoTimeout(httpParams, timeoutSocket);
@@ -80,7 +72,7 @@ public class HttpUtil {
         ;
 
 
-        DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager(httpParams, registry), httpParams);
+        DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
 
 
         HttpGet httpGet = new HttpGet(url);
@@ -91,8 +83,7 @@ public class HttpUtil {
             httpGet.addHeader("X-norrs-busbuddy-apikey", apiKey);
         }
         InputStream response = null;
-        HttpResponse httpResponse = httpClient.execute(httpGet);
-        return httpResponse;
+        return httpClient.execute(httpGet);
 
 
     }
@@ -108,9 +99,7 @@ public class HttpUtil {
         post.setEntity(entity);
 
 
-        HttpResponse response = httpClient.execute(post);
-
-        return response;
+         return httpClient.execute(post);
     }
 
 
