@@ -3,7 +3,7 @@
     <parent>
         <artifactId>platform</artifactId>
         <groupId>no.norrs.busbuddy</groupId>
-        <version>1.3.3-SNAPSHOT</version>
+        <version>1.3.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -37,12 +37,12 @@
         <dependency>
             <groupId>no.norrs.busbuddy</groupId>
             <artifactId>api</artifactId>
-            <version>1.3.3-SNAPSHOT</version>
+            <version>1.3.3</version>
         </dependency>
         <dependency>
             <groupId>no.norrs.busbuddy</groupId>
             <artifactId>public-api</artifactId>
-            <version>1.3.3-SNAPSHOT</version>
+            <version>1.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
