@@ -26,7 +26,7 @@ public enum OracleServiceEnum {
 
     private OracleServiceEnum self;
     private String[] endpoints = {
-            "http://www.atb.no/xmlhttprequest.php?service=routeplannerOracle.getOracleAnswer&question=%s",
+            "https://www.atb.no/xmlhttprequest.php?service=routeplannerOracle.getOracleAnswer&question=%s",
             "http://www.idi.ntnu.no/~tagore/cgi-bin/busstuc/busq.cgi?ques=%s"};
 
     OracleServiceEnum() {
