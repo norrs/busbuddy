@@ -127,6 +127,11 @@
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.norrs.busbuddy</groupId>
+            <artifactId>api</artifactId>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

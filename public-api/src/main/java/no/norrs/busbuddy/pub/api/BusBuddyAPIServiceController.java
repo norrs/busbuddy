@@ -18,15 +18,18 @@ package no.norrs.busbuddy.pub.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import no.norrs.busbuddy.pub.api.model.BusStop;
 import no.norrs.busbuddy.pub.api.model.BusStopContainer;
 import no.norrs.busbuddy.pub.api.model.DepartureContainer;
 import no.norrs.busbuddy.pub.api.model.Oracle;
 import org.apache.http.HttpResponse;
-import org.joda.time.Instant;
-import org.joda.time.LocalDateTime;
+import org.joda.time.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Bus Buddy API Service Controller deals with communicating with Bus Buddy API
@@ -40,6 +43,7 @@ public class BusBuddyAPIServiceController {
     private final String END_POINT = "http://api.busbuddy.no:8080/api/1.3/";
     private final String GET_BUS_STOPS = "busstops/";
     private final String GET_BUS_STOP_FORECASTS = "departures/%s";
+    private final String SEARCH_BUSSTOP = "search/q=%s";
 
     private String apiKey;
     private Gson gson;
@@ -111,6 +115,15 @@ public class BusBuddyAPIServiceController {
         }
         return null;
     }
+    
+    public BusStopContainer getBusStopForecastsByBusStopSearch(String busStopName) throws IOException {
+        HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, SEARCH_BUSSTOP));
+        if (response.getStatusLine().getStatusCode() == 200) {
+            return gson.fromJson(HttpUtil.readString(response.getEntity().getContent()), BusStopContainer.class);
+        }
+        return null; 
+    }
+
 
     /**
      * Ask's the bus oracle a question and get a text reply with departures.
