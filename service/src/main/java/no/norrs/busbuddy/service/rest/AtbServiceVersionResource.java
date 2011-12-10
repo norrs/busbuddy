@@ -221,7 +221,7 @@ public class AtbServiceVersionResource extends SharedResources {
                 data = gson.toJson(container);
             }
 
-            for(BusbuddyPing ping : pingList) {
+            for (BusbuddyPing ping : pingList) {
                 ping.ping(locationId, container);
             }
 
@@ -241,7 +241,7 @@ public class AtbServiceVersionResource extends SharedResources {
             return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
         }
     }
-    
+
     @GET
     @Path("/search")
     @Produces({"application/json; charset=UTF-8"})
@@ -281,8 +281,7 @@ public class AtbServiceVersionResource extends SharedResources {
 
             }
             return Response.noContent().build();
-        }
-        else {
+        } else {
             loggerDAO.incrementHitcounterFor(new ApiKeyLog(apiKey, getTimeStampForHitcounterLogging(), Response.Status.FORBIDDEN.getStatusCode()));
             return Response.status(Response.Status.FORBIDDEN).entity("Missing api-key, contact busbuddy 'at' norrs.no requesting api-key. Include application name, link to application and contact information and set subject with 'Request BusBuddy API key - appname'").build();
         }
@@ -379,7 +378,7 @@ public class AtbServiceVersionResource extends SharedResources {
                 System.out.println(String.format("%s got %s", busStop.getName(), score));
 
                 int lowestIndexSoFar = -1;
-                for (int i=scoreClosestBusStops.length-1; i>=0; i--) {
+                for (int i = scoreClosestBusStops.length - 1; i >= 0; i--) {
                     if (score < scoreClosestBusStops[i])
                         break;
                     else if (score > scoreClosestBusStops[i])
@@ -392,7 +391,7 @@ public class AtbServiceVersionResource extends SharedResources {
                     BusStop tmpBusMove;
                     BusStop tmpBusInsert = busStop;
 
-                    for (int j=lowestIndexSoFar; j<scoreClosestBusStops.length; j++) {
+                    for (int j = lowestIndexSoFar; j < scoreClosestBusStops.length; j++) {
                         tmpMove = scoreClosestBusStops[j];
                         tmpBusMove = closestBusStops[j];
 
@@ -410,16 +409,16 @@ public class AtbServiceVersionResource extends SharedResources {
     }
 
 
-   //     http://www.catalysoft.com/articles/StrikeAMatch.html
+    //     http://www.catalysoft.com/articles/StrikeAMatch.html
     private static double compareStrings(String str1, String str2) {
         ArrayList pairs1 = wordLetterPairs(str1.toUpperCase());
         ArrayList pairs2 = wordLetterPairs(str2.toUpperCase());
         int intersection = 0;
         int union = pairs1.size() + pairs2.size();
-        for (int i=0; i<pairs1.size(); i++) {
-            Object pair1=pairs1.get(i);
-            for(int j=0; j<pairs2.size(); j++) {
-                Object pair2=pairs2.get(j);
+        for (int i = 0; i < pairs1.size(); i++) {
+            Object pair1 = pairs1.get(i);
+            for (int j = 0; j < pairs2.size(); j++) {
+                Object pair2 = pairs2.get(j);
                 if (pair1.equals(pair2)) {
                     intersection++;
                     pairs2.remove(j);
@@ -427,32 +426,35 @@ public class AtbServiceVersionResource extends SharedResources {
                 }
             }
         }
-        return (2.0*intersection)/union;
+        return (2.0 * intersection) / union;
     }
-    /** @return an ArrayList of 2-character Strings. */
+
+    /**
+     * @return an ArrayList of 2-character Strings.
+     */
     private static ArrayList wordLetterPairs(String str) {
         ArrayList allPairs = new ArrayList();
         // Tokenize the string and put the tokens/words into an array
         String[] words = str.split("\\s");
         // For each word
-        for (int w=0; w < words.length; w++) {
+        for (int w = 0; w < words.length; w++) {
             // Find the pairs of characters
             String[] pairsInWord = letterPairs(words[w]);
-            for (int p=0; p < pairsInWord.length; p++) {
+            for (int p = 0; p < pairsInWord.length; p++) {
                 allPairs.add(pairsInWord[p]);
             }
         }
         return allPairs;
     }
-    
+
     /*
-        @return an array of adjacent letter pairs contained in the input string
-     */
+       @return an array of adjacent letter pairs contained in the input string
+    */
     private static String[] letterPairs(String str) {
-        int numPairs = str.length()-1;
+        int numPairs = str.length() - 1;
         String[] pairs = new String[numPairs];
-        for (int i=0; i < numPairs; i++) {
-            pairs[i] = str.substring(i, i+2);
+        for (int i = 0; i < numPairs; i++) {
+            pairs[i] = str.substring(i, i + 2);
         }
         return pairs;
     }
