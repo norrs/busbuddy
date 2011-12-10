@@ -374,35 +374,33 @@ public class AtbServiceVersionResource extends SharedResources {
             if (busStop.getName().contains("("))
                 continue;
             double score = compareStrings(searchWord, busStop.getName());
-            if (score > 0.6) {
-                System.out.println(String.format("%s got %s", busStop.getName(), score));
 
-                int lowestIndexSoFar = -1;
-                for (int i = scoreClosestBusStops.length - 1; i >= 0; i--) {
-                    if (score < scoreClosestBusStops[i])
-                        break;
-                    else if (score > scoreClosestBusStops[i])
-                        lowestIndexSoFar = i;
+            System.out.println(String.format("%s got %s", busStop.getName(), score));
+
+            int lowestIndexSoFar = -1;
+            for (int i = scoreClosestBusStops.length - 1; i >= 0; i--) {
+                if (score < scoreClosestBusStops[i])
+                    break;
+                else if (score > scoreClosestBusStops[i])
+                    lowestIndexSoFar = i;
+            }
+
+            if (lowestIndexSoFar != -1) {
+                double tmpMove;
+                double tmpInsert = score;
+                BusStop tmpBusMove;
+                BusStop tmpBusInsert = busStop;
+
+                for (int j = lowestIndexSoFar; j < scoreClosestBusStops.length; j++) {
+                    tmpMove = scoreClosestBusStops[j];
+                    tmpBusMove = closestBusStops[j];
+
+                    scoreClosestBusStops[j] = tmpInsert;
+                    closestBusStops[j] = tmpBusInsert;
+
+                    tmpInsert = tmpMove;
+                    tmpBusInsert = tmpBusMove;
                 }
-
-                if (lowestIndexSoFar != -1) {
-                    double tmpMove;
-                    double tmpInsert = score;
-                    BusStop tmpBusMove;
-                    BusStop tmpBusInsert = busStop;
-
-                    for (int j = lowestIndexSoFar; j < scoreClosestBusStops.length; j++) {
-                        tmpMove = scoreClosestBusStops[j];
-                        tmpBusMove = closestBusStops[j];
-
-                        scoreClosestBusStops[j] = tmpInsert;
-                        closestBusStops[j] = tmpBusInsert;
-
-                        tmpInsert = tmpMove;
-                        tmpBusInsert = tmpBusMove;
-                    }
-                }
-                System.out.println(Arrays.toString(scoreClosestBusStops));
             }
         }
         return Arrays.asList(closestBusStops);
