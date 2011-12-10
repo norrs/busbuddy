@@ -55,7 +55,7 @@ import java.util.List;
  * Time: 4:17 PM
  */
 @Component
-@Path("/1.4")
+@Path("/")
 @Singleton
 
 public class AtbServiceVersionResource extends SharedResources {
