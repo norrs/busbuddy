@@ -115,7 +115,13 @@ public class BusBuddyAPIServiceController {
         }
         return null;
     }
-    
+
+    /**
+     * Query our service given "busStopName" and it will try to give the 6 bests results
+     * @param busStopName Search word
+     * @return BusStopContainer with a BusStops lists containing 6 results. index 0 being the one who ranks best and the rest follows ..
+     * @throws IOException
+     */
     public BusStopContainer getBusStopForecastsByBusStopSearch(String busStopName) throws IOException {
         HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, SEARCH_BUSSTOP));
         if (response.getStatusLine().getStatusCode() == 200) {
