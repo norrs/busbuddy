@@ -1,6 +1,9 @@
 package no.norrs.busbuddy.pub.api.model;
 
 /**
+ * Thanks to Håvard for providing regex matcher used in Oracle.java and the the main tests provided with it ;-)
+ *
+ * @author Roy Sindre Norangshol
  * @author Håvard Slettvold
  */
 
@@ -8,69 +11,67 @@ package no.norrs.busbuddy.pub.api.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class OracleTest {
-    private Pattern pattern1;
-    private Matcher matcher;
+    private Oracle oracle;
+
 
     @Before
     public void setUp() {
-        pattern1 = Pattern.compile("(?:Holdeplassen nærmest (?:\\w.+?) er|Buss? \\d+ (?:passerer|går fra|goes from)) (\\w.+?)(?:\\.| (?:kl|at))");
-        //pattern2 = Pattern.compile("Buss? \\d+ (?:passerer|går fra|goes from) (\\w.+?) (?:kl|at)");
+        oracle = new Oracle();
     }
 
     @Test
     public void testNearestFromDestinationMatching() {
-        String oracleAnswer = "Holdeplassen nærmest Gløshaugen er Gløshaugen Syd. Buss 5 passerer  Dronningens gate D3 kl. 1617  og  kommer til Gløshaugen Syd, 8 minutter senere. Buss 52 passerer  Munkegata M3 kl. 1625  og  kommer til  Gløshaugen Syd,  7 minutter senere. Buss 52 passerer  Torget kl. 1626  og  kommer til  Gløshaugen Syd,  6 minutter senere.  Tidene angir tidligste passeringer av holdeplassene.";
+        oracle.setAnswer("Holdeplassen nærmest Gløshaugen er Gløshaugen Syd. Buss 5 passerer  Dronningens gate D3 kl. 1617  og  kommer til Gløshaugen Syd, 8 minutter senere. Buss 52 passerer  Munkegata M3 kl. 1625  og  kommer til  Gløshaugen Syd,  7 minutter senere. Buss 52 passerer  Torget kl. 1626  og  kommer til  Gløshaugen Syd,  6 minutter senere.  Tidene angir tidligste passeringer av holdeplassene.");
         System.out.println("--- Test 1 ---");
-        matcher = pattern1.matcher(oracleAnswer);
-        assertEquals(true, matcher.find());
-        assertEquals("Gløshaugen Syd", matcher.group(1));
-        System.out.println("Holdeplass fra: " + matcher.group(1));
+        assertEquals("Gløshaugen Syd", oracle.getDestinationFrom());
+        System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
     }
 
     @Test
     public void testPassingByFromDestinationMatching() {
         String oracleAnswer2 = "Buss 5 passerer Glxshaugen Nord kl. 0931 og kl. 1001 og kommer til Sentrumsterminalen, 5-8 minutter senere. Buss 52 passerer Gløshaugen Nord kl. 1010 og kommer til Munkegata M3, 6 minutter senere. Tidene angir tidligste passeringer av holdeplassene.";
         System.out.println("--- Test 2 ---");
-        matcher = pattern1.matcher(oracleAnswer2);
-        assertEquals(true, matcher.find());
-        assertEquals("Glxshaugen Nord", matcher.group(1));
-        System.out.println("Holdeplass fra: " + matcher.group(1));
+        assertEquals("Glxshaugen Nord", oracle.getDestinationFrom());
+        System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
     }
 
     @Test
     public void testGoesFromDestinationMatching() {
         String oracleAnswer3 = "Buss 5 går fra Ila kl. 1055 til Dronningens gate D3 kl. 1100 og buss 9 går fra Torget kl. 1117 til Heimdal sentrum kl. 1135. Tidene angir tidligste passeringer av holdeplassene.";
         System.out.println("--- Test 3 ---");
-        matcher = pattern1.matcher(oracleAnswer3);
-        assertEquals(true, matcher.find());
-        assertEquals("Ila", matcher.group(1));
-        System.out.println("Holdeplass fra: " + matcher.group(1));
+        assertEquals("Ila", oracle.getDestinationFrom());
+        System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
     }
 
     @Test
     public void testPassingByInFutureFromDestinationMatching() {
         String oracleAnswer4 = "17. Des. 2011 er en lørdag. For denne dato gjelder AtB Vinterruter. Buss 52 passerer Nardokrysset kl. 0722 og kl. 0752 og kommer til Munkegata M3, 9 minutter senere. Buss 8 passerer Nardokrysset kl. 0728 og kommer til Sentrumsterminalen, 10-13 minutter senere. Tidene angir tidligste passeringer av holdeplassene.";
         System.out.println("--- Test 4 ---");
-        matcher = pattern1.matcher(oracleAnswer4);
-        assertEquals(true, matcher.find());
-        assertEquals("Nardokrysset", matcher.group(1));
-        System.out.println("Holdeplass fra: " + matcher.group(1));
+        assertEquals("Nardokrysset", oracle.getDestinationFrom());
+        System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
     }
 
     @Test
     public void testGoesFromEnglishFromDestinationMatching() {
         String oracleAnswer5 = "Bus 7 goes from Reppe at 3.43 pm to Strandveien at 4.07 pm and bus 4 goes from Strandveien at 4.25 pm to Lade allé 80 at 4.40 pm. The hours indicate the earliest passing times.";
         System.out.println("--- Test 5 ---");
-        matcher = pattern1.matcher(oracleAnswer5);
-        assertEquals(true, matcher.find());
-        assertEquals("Reppe", matcher.group(1));
-        System.out.println("Holdeplass fra: " + matcher.group(1));
+        assertEquals("Reppe", oracle.getDestinationFrom());
+        System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
+    }
+
+    @Test
+    public void testNullIfNoAnswerIsRetreivedOrNotFound() {
+        assertNull(oracle.getDestinationFrom());
+        oracle.setAnswer(null);
+        assertNull(oracle.getDestinationFrom());
+        oracle.setAnswer("");
+        assertNull(oracle.getDestinationFrom());
+        oracle.setAnswer("Silly text which doesn't match the regex at all");
+        assertNull(oracle.getDestinationFrom());
     }
 
 }
