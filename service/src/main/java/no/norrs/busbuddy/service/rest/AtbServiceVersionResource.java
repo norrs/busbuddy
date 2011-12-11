@@ -407,6 +407,8 @@ public class AtbServiceVersionResource extends SharedResources {
     }
 
     // http://www.merriampark.com/ldjava.htm
+    // not in use atm, maybe it can be used to make a better scoring
+    // atm the similarity algorythm method listed after this method is doing a good job.
     private static int getLevenshteinDistance(String s, String t) {
         if (s == null || t == null) {
             throw new IllegalArgumentException("Strings must not be null");
