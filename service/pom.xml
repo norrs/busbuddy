@@ -46,6 +46,7 @@
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <contextPath>/busbuddy</contextPath>
                 </configuration>
+                <version>6.1.26</version>
             </plugin>
         </plugins>
     </build>
