@@ -21,6 +21,7 @@ import org.joda.time.LocalDateTime;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -33,7 +34,7 @@ public class Oracle {
     private String question;
     private String answer;
     private LocalDateTime timestamp;
-    private static final Pattern fromDestinationPattern = Pattern.compile("(?:Holdeplassen nærmest (?:\\w.+?) er|Buss? \\d+ (?:passerer|går fra|goes from)) (\\w.+?)(?:\\.| (?:kl|at))");
+    private final static Pattern fromDestinationPattern = Pattern.compile("(?:Holdeplassen nærmest (?:\\w.+?) er|Buss? \\d+ (?:passerer|går fra|goes from)) (\\w.+?)(?:\\.| (?:kl|at))");
     //pattern2 = Pattern.compile("Buss? \\d+ (?:passerer|går fra|goes from) (\\w.+?) (?:kl|at)");
 
     public Oracle() {
@@ -85,11 +86,12 @@ public class Oracle {
      * @return null if no match is found or answer has not been retrived yet, if not it will return destination from analyzed by oracle's answer.
      */
     public String getDestinationFrom() {
-        try {
-            return (answer != null ? fromDestinationPattern.matcher(answer).group(1) : null);
-        } catch (java.lang.IllegalStateException ise) { // No match found , illegal state exception.
-            return null;
+        if (answer != null && !answer.isEmpty()) {
+            Matcher matcher = fromDestinationPattern.matcher(answer);
+            if (matcher.find())
+                return matcher.group(1);
         }
+        return null;
     }
 
     public void setAnswer(String answer) {

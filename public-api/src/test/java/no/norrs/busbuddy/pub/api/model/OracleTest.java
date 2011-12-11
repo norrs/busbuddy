@@ -33,7 +33,7 @@ public class OracleTest {
 
     @Test
     public void testPassingByFromDestinationMatching() {
-        String oracleAnswer2 = "Buss 5 passerer Glxshaugen Nord kl. 0931 og kl. 1001 og kommer til Sentrumsterminalen, 5-8 minutter senere. Buss 52 passerer Gløshaugen Nord kl. 1010 og kommer til Munkegata M3, 6 minutter senere. Tidene angir tidligste passeringer av holdeplassene.";
+        oracle.setAnswer("Buss 5 passerer Glxshaugen Nord kl. 0931 og kl. 1001 og kommer til Sentrumsterminalen, 5-8 minutter senere. Buss 52 passerer Gløshaugen Nord kl. 1010 og kommer til Munkegata M3, 6 minutter senere. Tidene angir tidligste passeringer av holdeplassene.");
         System.out.println("--- Test 2 ---");
         assertEquals("Glxshaugen Nord", oracle.getDestinationFrom());
         System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
@@ -41,7 +41,7 @@ public class OracleTest {
 
     @Test
     public void testGoesFromDestinationMatching() {
-        String oracleAnswer3 = "Buss 5 går fra Ila kl. 1055 til Dronningens gate D3 kl. 1100 og buss 9 går fra Torget kl. 1117 til Heimdal sentrum kl. 1135. Tidene angir tidligste passeringer av holdeplassene.";
+        oracle.setAnswer("Buss 5 går fra Ila kl. 1055 til Dronningens gate D3 kl. 1100 og buss 9 går fra Torget kl. 1117 til Heimdal sentrum kl. 1135. Tidene angir tidligste passeringer av holdeplassene.");
         System.out.println("--- Test 3 ---");
         assertEquals("Ila", oracle.getDestinationFrom());
         System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
@@ -49,7 +49,7 @@ public class OracleTest {
 
     @Test
     public void testPassingByInFutureFromDestinationMatching() {
-        String oracleAnswer4 = "17. Des. 2011 er en lørdag. For denne dato gjelder AtB Vinterruter. Buss 52 passerer Nardokrysset kl. 0722 og kl. 0752 og kommer til Munkegata M3, 9 minutter senere. Buss 8 passerer Nardokrysset kl. 0728 og kommer til Sentrumsterminalen, 10-13 minutter senere. Tidene angir tidligste passeringer av holdeplassene.";
+        oracle.setAnswer("17. Des. 2011 er en lørdag. For denne dato gjelder AtB Vinterruter. Buss 52 passerer Nardokrysset kl. 0722 og kl. 0752 og kommer til Munkegata M3, 9 minutter senere. Buss 8 passerer Nardokrysset kl. 0728 og kommer til Sentrumsterminalen, 10-13 minutter senere. Tidene angir tidligste passeringer av holdeplassene.");
         System.out.println("--- Test 4 ---");
         assertEquals("Nardokrysset", oracle.getDestinationFrom());
         System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
@@ -57,7 +57,7 @@ public class OracleTest {
 
     @Test
     public void testGoesFromEnglishFromDestinationMatching() {
-        String oracleAnswer5 = "Bus 7 goes from Reppe at 3.43 pm to Strandveien at 4.07 pm and bus 4 goes from Strandveien at 4.25 pm to Lade allé 80 at 4.40 pm. The hours indicate the earliest passing times.";
+        oracle.setAnswer("Bus 7 goes from Reppe at 3.43 pm to Strandveien at 4.07 pm and bus 4 goes from Strandveien at 4.25 pm to Lade allé 80 at 4.40 pm. The hours indicate the earliest passing times.");
         System.out.println("--- Test 5 ---");
         assertEquals("Reppe", oracle.getDestinationFrom());
         System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
