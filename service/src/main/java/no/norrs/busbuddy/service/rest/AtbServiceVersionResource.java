@@ -371,21 +371,20 @@ public class AtbServiceVersionResource extends SharedResources {
         BusStop[] closestBusStops = new BusStop[6];
 
         for (BusStop busStop : busStopContainerCache) {
-            if (busStop.getName().contains("("))
+            if (busStop.getName().contains("(")) // skips bogus bus stop names ..
                 continue;
-            double score = compareStrings(searchWord, busStop.getName());
 
-            System.out.println(String.format("%s got %s", busStop.getName(), score));
+            double score = compareStrings(searchWord, busStop.getName()); // similarity score between 1 and 0. (1 is full match)
 
             int lowestIndexSoFar = -1;
-            for (int i = scoreClosestBusStops.length - 1; i >= 0; i--) {
+            for (int i = scoreClosestBusStops.length - 1; i >= 0; i--) { // fetches where in score list to be placed..
                 if (score < scoreClosestBusStops[i])
                     break;
                 else if (score > scoreClosestBusStops[i])
                     lowestIndexSoFar = i;
             }
 
-            if (lowestIndexSoFar != -1) {
+            if (lowestIndexSoFar != -1) { // only bumps the scores that needs to be bumped when inserting the new score
                 double tmpMove;
                 double tmpInsert = score;
                 BusStop tmpBusMove;
