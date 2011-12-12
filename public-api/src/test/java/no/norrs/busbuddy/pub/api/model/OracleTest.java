@@ -27,7 +27,7 @@ public class OracleTest {
     public void testNearestFromDestinationMatching() {
         oracle.setAnswer("Holdeplassen nærmest Gløshaugen er Gløshaugen Syd. Buss 5 passerer  Dronningens gate D3 kl. 1617  og  kommer til Gløshaugen Syd, 8 minutter senere. Buss 52 passerer  Munkegata M3 kl. 1625  og  kommer til  Gløshaugen Syd,  7 minutter senere. Buss 52 passerer  Torget kl. 1626  og  kommer til  Gløshaugen Syd,  6 minutter senere.  Tidene angir tidligste passeringer av holdeplassene.");
         System.out.println("--- Test 1 ---");
-        assertEquals("Gløshaugen Syd", oracle.getDestinationFrom());
+        assertEquals("Dronningens gate D3", oracle.getDestinationFrom());
         System.out.println("Holdeplass fra: " + oracle.getDestinationFrom());
     }
 
