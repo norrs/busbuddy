@@ -43,7 +43,7 @@ public class BusBuddyAPIServiceController {
     private final String END_POINT = "http://api.busbuddy.no:8080/api/1.4/";
     private final String GET_BUS_STOPS = "busstops/";
     private final String GET_BUS_STOP_FORECASTS = "departures/%s";
-    private final String SEARCH_BUSSTOP = "search/q=%s";
+    private final String SEARCH_BUSSTOP = "search/?q=%s";
 
     private String apiKey;
     private Gson gson;
