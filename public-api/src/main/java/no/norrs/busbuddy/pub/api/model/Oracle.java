@@ -21,6 +21,7 @@ import org.joda.time.LocalDateTime;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,8 +35,6 @@ public class Oracle {
     private String question;
     private String answer;
     private LocalDateTime timestamp;
-    private final static Pattern fromDestinationPattern = Pattern.compile("(?:Holdeplassen nærmest (?:\\w.+?) er|Buss? \\d+ (?:passerer|går fra|goes from)) (\\w.+?)(?:\\.| (?:kl|at))");
-    //pattern2 = Pattern.compile("Buss? \\d+ (?:passerer|går fra|goes from) (\\w.+?) (?:kl|at)");
 
     public Oracle() {
     }
@@ -87,9 +86,9 @@ public class Oracle {
      */
     public String getDestinationFrom() {
         if (answer != null && !answer.isEmpty()) {
-            Matcher matcher = fromDestinationPattern.matcher(answer);
-            if (matcher.find())
-                return matcher.group(1);
+            List<MetaAnswer> metaAnswers = MetaAnswerFactory.getMetaAnswers(answer);
+            if (metaAnswers.size() > 0)
+                return metaAnswers.get(0).getStart();
         }
         return null;
     }
