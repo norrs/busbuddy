@@ -9,8 +9,11 @@ import java.util.regex.Pattern;
 
 public class RegexBuilder {
 
-    /* Regexes used for semantic searching */
-    private static String startingPhrase = "Buss? (\\d+) (?:passerer|går fra|passes by|goes from) ";
+    /* Regex for fetching date */
+    private static String date = "(?:(?:\\w+\\. )?(\\d{1,2})[.,](?: \\w+\\.)?) \\d{4} (?:er en|is a) [\\w\\p{InLATIN_1_SUPPLEMENT}]+(?:dag|day)\\.";
+
+    /* Regexes used for semantics of travel */
+    private static String busRoute = "(?:natt)?buss? ([\\d\\w-]+) (?:passerer|går fra|passes by|goes from) ";
     private static String station = "((?:[.\\w\\s\\p{InLATIN_1_SUPPLEMENT}](?!(?:kl\\.|at) ))+) ?"; //
     private static String timeSuffix = "(?:[,. ]| og(?: kommer)?| and) ?";
     private static String norwegianTime = "kl\\. (\\d{4})";
@@ -21,13 +24,25 @@ public class RegexBuilder {
 
     public static Pattern getOracleRegex() {
         return Pattern.compile(
-                startingPhrase + station + time + station + "(?:" + timePart + "|" + duration + ")",
+                busRoute + station + time + station + "(?:" + timePart + "|" + duration + ")",
                 Pattern.CASE_INSENSITIVE
                                 );
     }
 
-    public static String getStartingPhrase() {
-        return startingPhrase;
+    public static Pattern getDateRegex() {
+        return Pattern.compile(date, Pattern.CASE_INSENSITIVE);
+    }
+
+    /*
+     * These methods are meant to be used only for testing purposes.
+     * Alone, many of these regexes will not work properly on full oracle answers.
+     */
+    public static String getDate() {
+        return date;
+    }
+
+    public static String getBusRoute() {
+        return busRoute;
     }
 
     public static String getStation() {

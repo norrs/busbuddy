@@ -1,5 +1,7 @@
 package no.norrs.busbuddy.pub.api.model.answer;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
@@ -11,11 +13,11 @@ public class MetaAnswer {
 
     private String start;
     private String destination;
-    private int busRoute;
-    private List<Integer> times;
+    private String busRoute;
+    private List<DateTime> times;
     private int duration;
 
-    public MetaAnswer(String start, String destination, int busRoute, List<Integer> times, int duration) {
+    public MetaAnswer(String start, String destination, String busRoute, List<DateTime> times, int duration) {
         this.start = start;
         this.destination = destination;
         this.busRoute = busRoute;
@@ -31,11 +33,11 @@ public class MetaAnswer {
         return destination;
     }
 
-    public int getBusRoute() {
+    public String getBusRoute() {
         return busRoute;
     }
 
-    public List<Integer> getTimes() {
+    public List<DateTime> getTimes() {
         return times;
     }
 
@@ -46,13 +48,13 @@ public class MetaAnswer {
     public boolean compareTo(MetaAnswer ma) {
         boolean result = true;
 
-        if (    ma.getBusRoute() == this.busRoute &&
+        if (    ma.getBusRoute().equals(this.busRoute) &&
                 ma.getStart().equals(this.start) &&
                 ma.getDestination().equals(this.destination) &&
                 ma.getDuration() == this.duration &&
                 ma.getTimes().size() == this.times.size()
                 ) {
-            for (int time : ma.getTimes()) {
+            for (DateTime time : ma.getTimes()) {
                 if (!times.contains(time)) {
                     result = false;
                 }

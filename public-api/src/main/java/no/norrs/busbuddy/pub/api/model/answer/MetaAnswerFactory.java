@@ -1,6 +1,7 @@
 package no.norrs.busbuddy.pub.api.model.answer;
 
-import no.norrs.busbuddy.pub.api.model.answer.MetaAnswer;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +15,36 @@ import java.util.regex.Pattern;
 
 public class MetaAnswerFactory {
 
-    private final static Pattern fromDestinationPattern = RegexBuilder.getOracleRegex();
+    private final static Pattern oracleDateRegex = RegexBuilder.getDateRegex();
+    private final static Pattern oracleSemanticsRegex = RegexBuilder.getOracleRegex();
 
+    /**
+     * The actual Factory method which produces MetaAnswers
+     *
+     * @param answer String obtained from {@link no.norrs.busbuddy.pub.api.model.Oracle}.
+     * @return List of MetaAnswer objects made from parsing the answer supplied.
+     */
     public static List<MetaAnswer> getMetaAnswers(String answer) {
-        List<MetaAnswer> metaAnswers = new ArrayList<MetaAnswer>();
-        Matcher matcher = fromDestinationPattern.matcher(answer.replaceAll("\\s+", " "));
+        Matcher dateMatcher = oracleDateRegex.matcher(answer);
+        DateTime basicDateTimeWithDate = new DateTime();
+        if (dateMatcher.find()) {
+            basicDateTimeWithDate = basicDateTimeWithDate.withDayOfMonth(Integer.parseInt(dateMatcher.group(1)));
+        }
 
-        List<Integer> times;
-        String match, start, destination;
-        int routenum = -1, duration = -1;
+        List<MetaAnswer> metaAnswers = new ArrayList<MetaAnswer>();
+        Matcher matcher = oracleSemanticsRegex.matcher(answer.replaceAll("\\s+", " "));
+
+        List<DateTime> times;
+        String match, start, destination, busRoute;
+        int duration = -1;
 
         while (matcher.find()) {
-            times = new ArrayList<Integer>();
+            times = new ArrayList<DateTime>();
 
-            routenum = Integer.parseInt(matcher.group(1));
+            busRoute = matcher.group(1);
             start = matcher.group(2);
             destination = matcher.group(9);
-            times = findTimes(matcher);
+            times = findTimes(basicDateTimeWithDate, matcher);
 
             /* Need to calc duration from end time.
              * This happens when there is only one start time.
@@ -47,14 +61,32 @@ public class MetaAnswerFactory {
             }
 
             /* Make a MetaAnswer and add to the list */
-            metaAnswers.add(new MetaAnswer(start, destination, routenum, times, duration));
+            metaAnswers.add(new MetaAnswer(start, destination, busRoute, times, duration));
         }
 
         return metaAnswers;
     }
 
-    private static List<Integer> findTimes(Matcher matcher) {
-        List<Integer> times = new ArrayList<Integer>();
+    /**
+     * Updates the DateTime with the specified date
+     *
+     * @param dateTime DateTime object to use for update
+     * @param time The desired time specified in a 4 digit 24 hour format
+     * @return DateTime updated with the specified time
+     */
+    private static DateTime getDateTimeForTime(DateTime dateTime, int time) {
+        return dateTime.withTime((int)time/100, time%100, 0, 0);
+    }
+
+    /**
+     * Finds departure times from the routes start, based on the matcher from oracleSemanticRegex
+     *
+     * @param basicDateTimeWithDate Premade DateTime that has had it's date adjusted.
+     * @param matcher The matcher object from oracleSemanticRegex.
+     * @return Departure times from route start.
+     */
+    public static List<DateTime> findTimes(DateTime basicDateTimeWithDate, Matcher matcher) {
+        List<DateTime> times = new ArrayList<DateTime>();
         String match;
 
         for (int i=3; i < 9; i++) {
@@ -62,10 +94,10 @@ public class MetaAnswerFactory {
             if (match != null) {
                 /* Norwegian times are odd groups, needs no fixing. */
                 if (i%2 == 1) {
-                    times.add(Integer.parseInt(matcher.group(i)));
+                    times.add(getDateTimeForTime(basicDateTimeWithDate, Integer.parseInt(matcher.group(i))));
                 }
                 else {
-                    times.add(fixTime(matcher.group(i)));
+                    times.add(getDateTimeForTime(basicDateTimeWithDate, fixTime(matcher.group(i))));
                 }
             }
         }
@@ -73,7 +105,14 @@ public class MetaAnswerFactory {
         return times;
     }
 
-    private static int fixTime(String time) {
+    /**
+     * Converts english times like "2.34 pm" to "1434" or "10.45 am" to "1045".
+     * Also casts to int.
+     *
+     * @param time String with the following format; HH.MM am/pm
+     * @return int representation of the Sting time.
+     */
+    public static int fixTime(String time) {
         /*
          * Norwegian times are already in a 4 digit format; HHMM
          * English times are in the format;                 HH.MM am/pm
@@ -94,6 +133,13 @@ public class MetaAnswerFactory {
         }
     }
 
+    /**
+     * Finds duration of a busRoute from start to destination when a time was given
+     * instead of a duration in the answer.
+     *
+     * @param matcher The matcher object from oracleSemanticRegex.
+     * @return int Time in minutes.
+     */
     public static int findDuration(Matcher matcher) {
         int duration = -1;
         int start, end;

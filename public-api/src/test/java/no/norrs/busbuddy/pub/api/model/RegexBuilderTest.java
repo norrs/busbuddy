@@ -16,7 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 
 public class RegexBuilderTest {
-    private String startingPhrase = RegexBuilder.getStartingPhrase();
+    private String date = RegexBuilder.getDate();
+    private String busRoute = RegexBuilder.getBusRoute();
     private String station = RegexBuilder.getStation();
     private String timeSuffix = RegexBuilder.getTimeSuffix();
     private String norwegianTime = RegexBuilder.getNorwegianTime();
@@ -31,12 +32,32 @@ public class RegexBuilderTest {
     String source1, source2, source3, source4, source5;
 
     @Test
-    public void testStartingPhrase() {
-        pattern = Pattern.compile(startingPhrase, Pattern.CASE_INSENSITIVE);
+    public void testDate() {
+        pattern = Pattern.compile(date, Pattern.CASE_INSENSITIVE);
+        source1 = "17. Des. 2011 er en lørdag.";
+        source2 = "Dec. 24, 2011 is a Saturday.";
+
+        try {
+            matcher = pattern.matcher(source1);
+            assertTrue(matcher.find());
+            assertEquals("17", matcher.group(1));
+            matcher = pattern.matcher(source2);
+            assertTrue(matcher.find());
+            assertEquals("24", matcher.group(1));
+        } catch (AssertionError e) {
+            System.err.println("Regex: "+pattern.toString());
+            throw e;
+        }
+    }
+
+    @Test
+    public void testBusRoute() {
+        pattern = Pattern.compile(busRoute, Pattern.CASE_INSENSITIVE);
         source1 = "Buss 5 passerer ";
-        source2 = "Buss 5 går fra ";
-        source3 = "Bus 7 goes from ";
+        source2 = "Buss 16-199 går fra ";
+        source3 = "Bus 6A goes from ";
         source4 = "Bus 5 passes by ";
+        source5 = "Nattbuss 155 passerer ";
 
         try {
             matcher = pattern.matcher(source1);
@@ -47,10 +68,12 @@ public class RegexBuilderTest {
             assertTrue(matcher.find());
             matcher = pattern.matcher(source4);
             assertTrue(matcher.find());
+            matcher = pattern.matcher(source5);
+            assertTrue(matcher.find());
         } catch (AssertionError e) {
             System.err.println("Regex: "+pattern.toString());
             throw e;
-        }
+    }
     }
 
     @Test
