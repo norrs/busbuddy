@@ -40,10 +40,10 @@ import java.util.List;
  * @author Roy Sindre Norangshol
  */
 public class BusBuddyAPIServiceController {
-    private final String END_POINT = "http://api.busbuddy.no:8080/api/1.4/";
+    private final String END_POINT = "http://api.busbuddy.no:8080/api/1.4.4/";
     private final String GET_BUS_STOPS = "busstops/";
     private final String GET_BUS_STOP_FORECASTS = "departures/%s";
-    private final String SEARCH_BUSSTOP = "search/q=%s";
+    private final String SEARCH_BUSSTOP = "search/?q=%s";
 
     private String apiKey;
     private Gson gson;
@@ -117,13 +117,13 @@ public class BusBuddyAPIServiceController {
     }
 
     /**
-     * Query our service given "busStopName" and it will try to give the 6 bests results
-     * @param busStopName Search word
+     * Query our service given "searchTerms" and it will try to give the 6 bests results
+     * @param searchTerms Search word
      * @return BusStopContainer with a BusStops lists containing 6 results. index 0 being the one who ranks best and the rest follows ..
      * @throws IOException
      */
-    public BusStopContainer getBusStopForecastsByBusStopSearch(String busStopName) throws IOException {
-        HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, SEARCH_BUSSTOP));
+    public BusStopContainer getBusStopsBySearchTerms(String searchTerms) throws IOException {
+        HttpResponse response = HttpUtil.GET(apiKey, String.format("%s%s", END_POINT, String.format(SEARCH_BUSSTOP, searchTerms)));
         if (response.getStatusLine().getStatusCode() == 200) {
             return gson.fromJson(HttpUtil.readString(response.getEntity().getContent()), BusStopContainer.class);
         }

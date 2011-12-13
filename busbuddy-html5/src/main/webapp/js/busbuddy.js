@@ -37,7 +37,7 @@ var request_data = function(type, data)
 	data = (data == undefined) ? "" : "/"+data;
 
 	$.ajax({
-		url: "http://api.busbuddy.no:8080/api/1.3/"+type+data,
+		url: "http://api.busbuddy.no:8080/api/1.4.4/"+type+data,
 		data: "apiKey="+apikey+"&callback",
 		crossDomain: true,
 		dataType: "jsonp",

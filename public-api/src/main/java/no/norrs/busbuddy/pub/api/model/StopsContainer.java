@@ -28,6 +28,8 @@ public class StopsContainer {
     private String destination;
     private String lineName;
 
+    public StopsContainer() {}
+
     private List<Stops> stops;
 
     @Override
