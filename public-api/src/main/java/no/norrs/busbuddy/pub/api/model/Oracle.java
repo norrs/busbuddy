@@ -17,13 +17,13 @@
 package no.norrs.busbuddy.pub.api.model;
 
 
+import no.norrs.busbuddy.pub.api.model.answer.MetaAnswer;
+import no.norrs.busbuddy.pub.api.model.answer.MetaAnswerFactory;
 import org.joda.time.LocalDateTime;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Roy Sindre Norangshol
