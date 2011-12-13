@@ -27,6 +27,8 @@ public class ScheduleContainer {
     private String busStopName;
     private List<Schedule> schedules;
 
+    public ScheduleContainer() {}
+
     public String getBusStopName() {
         return busStopName;
     }

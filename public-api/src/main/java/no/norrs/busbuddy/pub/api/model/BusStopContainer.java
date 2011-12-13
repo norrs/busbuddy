@@ -24,6 +24,8 @@ import java.util.List;
 public class BusStopContainer {
     private List<BusStop> busStops;
 
+    public BusStopContainer() {}
+
     public BusStopContainer(List<BusStop> busStops) {
         this.busStops = busStops;
     }

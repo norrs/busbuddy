@@ -28,6 +28,8 @@ public class DepartureContainer {
     private List<Departure> departures;
     public static boolean isValid;
 
+    public DepartureContainer() {}
+
     public List<Departure> getDepartures() {
         return departures;
     }
