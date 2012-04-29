@@ -44,4 +44,13 @@ public class MetaAnswerTest {
         assertFalse(metaAnswer1.equals(metaAnswer2));
     }
 
+    @Test
+    public void testInaccuracy() {
+        /* Both of these durations will produce an average of 5, but should be different when compared. */
+        metaAnswer1.setInaccurate("3-7");
+        metaAnswer2.setInaccurate("2-8");
+
+        assertFalse(metaAnswer1.compareTo(metaAnswer2));
+    }
+
 }
