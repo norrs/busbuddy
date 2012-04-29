@@ -1,7 +1,6 @@
 package no.norrs.busbuddy.pub.api.model.answer;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,23 +44,20 @@ public class MetaAnswerFactory {
             start = matcher.group(2);
             destination = matcher.group(9);
             times = findTimes(basicDateTimeWithDate, matcher);
-
-            /* Need to calc duration from end time.
-             * This happens when there is only one start time.
-             * Multiple end times is not possible.
-             */
-            if (matcher.group(12) == null) {
-                duration = findDuration(matcher);
-            }
-            /* Duration was given as a number in the answer.
-             * This only happens when there are multiple start times.
-             */
-            else {
-                duration = Integer.parseInt(matcher.group(12));
-            }
+            duration = findDuration(matcher);
 
             /* Make a MetaAnswer and add to the list */
-            metaAnswers.add(new MetaAnswer(start, destination, busRoute, times, duration));
+            MetaAnswer ma = new MetaAnswer(start, destination, busRoute, times, duration);
+
+            /* Check if the duration was inaccurate, and modify the MetaAnswer to reflect that */
+            if (matcher.group(12) != null && matcher.group(12).indexOf('-') != -1) {
+                ma.setInaccurate(matcher.group(12));
+            }
+            
+            metaAnswers.add(ma);
+
+            
+
         }
 
         return metaAnswers;
@@ -133,6 +129,43 @@ public class MetaAnswerFactory {
         }
     }
 
+    private static int findDuration(Matcher matcher) {
+        /* Need to calc duration from end time.
+         * This happens when there is only one start time.
+         * Multiple end times is not possible as of november 2011.
+         */
+        if (matcher.group(12) == null) {
+            return calculateDurationFromTimes(matcher);
+        }
+        /* Duration was given as a number in the answer.
+         * This only happens when there are multiple start times.
+         */
+        else {
+            /* Check if duration is a whole number.
+             * If it isn't, it most likely contains "-", which makes it an estimate.
+             */
+            try {
+                return Integer.parseInt(matcher.group(12));
+            } catch (NumberFormatException nfe) {
+                if (matcher.group(12).indexOf('-') != -1) {
+                    String[] parts = matcher.group(12).split("-");
+                    int min = Integer.parseInt(parts[0]);
+                    int max = Integer.parseInt(parts[1]);
+
+                    return (min + max) / 2;
+                }
+                else {
+                    nfe.printStackTrace();
+                }
+            }
+        }
+        
+        /* If all else fails, return -1. 
+         * Should never happen unless duration contains something other than "\d+-\d+"  
+         */
+        return -1;
+    }
+    
     /**
      * Finds duration of a busRoute from start to destination when a time was given
      * instead of a duration in the answer.
@@ -140,7 +173,7 @@ public class MetaAnswerFactory {
      * @param matcher The matcher object from oracleSemanticRegex.
      * @return int Time in minutes.
      */
-    public static int findDuration(Matcher matcher) {
+    public static int calculateDurationFromTimes(Matcher matcher) {
         int duration = -1;
         int start, end;
 
