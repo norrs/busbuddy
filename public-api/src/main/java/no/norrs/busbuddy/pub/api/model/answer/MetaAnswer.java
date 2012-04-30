@@ -16,6 +16,9 @@ public class MetaAnswer {
     private String busRoute;
     private List<DateTime> times;
     private int duration;
+    
+    private boolean isInaccurate = false;
+    private String detailedDuration = "";
 
     public MetaAnswer(String start, String destination, String busRoute, List<DateTime> times, int duration) {
         this.start = start;
@@ -44,6 +47,31 @@ public class MetaAnswer {
     public int getDuration() {
         return duration;
     }
+    
+    public void setInaccurate(String details) {
+        this.isInaccurate = true;
+        this.detailedDuration = details;
+        
+    }
+
+    /**
+     * Whether the duration from the oracle answer was not a whole number of minutes, but an interval.
+     *
+     * @return boolean for accuracy of duration
+     */
+    public boolean isInaccurate() {
+        return isInaccurate;
+    }
+
+    /**
+     * Returns the details duration from the oracle answer.
+     * getDuration() will return the average, this will return the actual text from the answer.
+     *
+     * @return String containing duration in "x-y" format, where x and y are minutes
+     */
+    public String getDetailedDuration() {
+        return detailedDuration;
+    }
 
     public boolean compareTo(MetaAnswer ma) {
         boolean result = true;
@@ -52,7 +80,9 @@ public class MetaAnswer {
                 ma.getStart().equals(this.start) &&
                 ma.getDestination().equals(this.destination) &&
                 ma.getDuration() == this.duration &&
-                ma.getTimes().size() == this.times.size()
+                ma.getTimes().size() == this.times.size() &&
+                ma.isInaccurate() == this.isInaccurate &&
+                ma.getDetailedDuration().equals(this.detailedDuration)
                 ) {
             for (DateTime time : ma.getTimes()) {
                 if (!times.contains(time)) {
@@ -70,7 +100,12 @@ public class MetaAnswer {
 
     @Override
     public String toString() {
-        return start+", "+destination+", "+busRoute+", "+times+", "+duration;
+        if (isInaccurate) {
+            return start+", "+destination+", "+busRoute+", "+times+", "+duration+", "+detailedDuration;
+        }
+        else {
+            return start+", "+destination+", "+busRoute+", "+times+", "+duration;
+        }
     }
 
 }

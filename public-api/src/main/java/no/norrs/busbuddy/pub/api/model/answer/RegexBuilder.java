@@ -20,7 +20,7 @@ public class RegexBuilder {
     private static String englishTime = "at (\\d{1,2}\\.\\d{2} (?:a|p)m)";
     private static String timePart = "(?:"+norwegianTime+"|"+englishTime+")"+timeSuffix;
     private static String time = timePart+"(?:(?:"+timePart+")?"+timePart+")?(?:til|to|arrives at) ";
-    private static String duration = ", (\\d+) (?:minutter senere|minutes later)\\.";
+    private static String duration = ", (\\d+(?:-\\d+)?) (?:minutter senere|minutes later)\\.";
 
     public static Pattern getOracleRegex() {
         return Pattern.compile(

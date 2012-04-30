@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -58,6 +59,29 @@ public class MetaAnswerFactoryTest {
         testMetaAnswer = new MetaAnswer("Torget","Gløshaugen Syd","52",Arrays.asList(new DateTime[]{new DateTime().withTime(16, 26, 0, 0)}),6);
         ma = metaAnswers.get(2);
         assertEquals(testMetaAnswer.toString(), ma.toString());
+    }
+
+    @Test
+    public void testAdvancedNorwegianAnswer() {
+        String answer = "Buss 5 passerer Glxshaugen Nord kl. 0931 og kl. 1001 og kommer til Sentrumsterminalen, 5-8 minutter senere. " +
+                "Buss 52 passerer Gløshaugen Nord kl. 1010 og kommer til Munkegata M3, 6 minutter senere. " +
+                "Tidene angir tidligste passeringer av holdeplassene.";
+        List<MetaAnswer> metaAnswers = MetaAnswerFactory.getMetaAnswers(answer);
+        MetaAnswer testMetaAnswer;
+        MetaAnswer ma;
+
+        assertEquals(2, metaAnswers.size());
+
+        testMetaAnswer = new MetaAnswer("Glxshaugen Nord", "Sentrumsterminalen", "5", Arrays.asList(new DateTime[]{new DateTime().withTime(9,31,0,0),new DateTime().withTime(10,01,0,0)}), 6);
+        testMetaAnswer.setInaccurate("5-8");
+        ma = metaAnswers.get(0);
+        assertEquals(testMetaAnswer.toString(), ma.toString());
+
+        testMetaAnswer = new MetaAnswer("Gløshaugen Nord", "Munkegata M3", "52", Arrays.asList(new DateTime[]{new DateTime().withTime(10,10,0,0)}), 6);
+        ma = metaAnswers.get(1);
+        assertEquals(testMetaAnswer.toString(), ma.toString());
+        assertFalse(testMetaAnswer.isInaccurate());
+
     }
 
     @Test
@@ -129,13 +153,13 @@ public class MetaAnswerFactoryTest {
     }
 
     @Test
-    public void testFindDuration() {
+    public void testCalculateDurationFromTimes() {
         String answer = "Buss 5 går fra Ila kl. 1055 til Dragvoll kl. 1114.";
         Matcher matcher = RegexBuilder.getOracleRegex().matcher(answer);
 
         assertTrue(matcher.find());
 
-        int duration = MetaAnswerFactory.findDuration(matcher);
+        int duration = MetaAnswerFactory.calculateDurationFromTimes(matcher);
 
         assertEquals(19, duration);
     }
