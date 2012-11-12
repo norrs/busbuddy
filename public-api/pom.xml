@@ -21,12 +21,12 @@
     <parent>
         <groupId>no.norrs.busbuddy</groupId>
         <artifactId>platform</artifactId>
-        <version>1.4.6-SNAPSHOT</version>
+        <version>1.4.6</version>
     </parent>
 
     <name>BusBuddy :: PUBLIC API</name>
     <artifactId>public-api</artifactId>
-    <version>1.4.6-SNAPSHOT</version>
+    <version>1.4.6</version>
     <packaging>jar</packaging>
 
 
