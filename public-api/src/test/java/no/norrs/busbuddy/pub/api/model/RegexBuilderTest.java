@@ -189,11 +189,15 @@ public class RegexBuilderTest {
     public void testDuration() {
         pattern = Pattern.compile(duration, Pattern.CASE_INSENSITIVE);
         source1 = "Bus 5 passes by Gløshaugen Syd at 10.48 pm, at 11.08 pm and at 11.28 pm and arrives at Moholt, 5 minutes later.";
+        source2 = "Buss 5 passerer Glxshaugen Nord kl. 0931 og kl. 1001 og kommer til Sentrumsterminalen, 5-8 minutter senere.";
 
         try {
             matcher = pattern.matcher(source1);
             assertTrue(matcher.find());
             assertEquals("5", matcher.group(1));
+            matcher = pattern.matcher(source2);
+            assertTrue(matcher.find());
+            assertEquals("5-8", matcher.group(1));
         } catch (AssertionError e) {
             System.err.println("Regex: "+pattern.toString());
             throw e;
