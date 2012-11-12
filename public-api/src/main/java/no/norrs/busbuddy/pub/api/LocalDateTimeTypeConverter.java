@@ -28,7 +28,8 @@ import java.text.SimpleDateFormat;
  * @author Roy Sindre Norangshol
  */
 public class LocalDateTimeTypeConverter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
-    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
 
     @Override
     public JsonElement serialize(LocalDateTime src, Type srcType, JsonSerializationContext context) {

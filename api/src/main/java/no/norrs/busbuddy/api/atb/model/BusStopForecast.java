@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
  * @author Roy Sindre Norangshol
  */
 public class BusStopForecast {
-    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
     @SerializedName("codAzLinea")
     public String lineId;
